@@ -16,6 +16,10 @@ body {
     max-width: 1200px; /* Establecer un ancho máximo para evitar que el contenido se extienda demasiado */
     margin: 0 auto; /* Centrar el contenedor */
 }
+img {
+    max-width: 100%;
+    height: auto;
+}
 
 header {
     background-color:#B2FFFF;

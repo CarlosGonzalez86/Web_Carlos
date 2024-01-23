@@ -1,4 +1,12 @@
+/* Estilos para pantallas más grandes (ej. tabletas y computadoras) */
+@media screen and (min-width: 600px) {
+    /* Estilos para pantallas más grandes aquí */
+}
 
+/* Estilos para pantallas más pequeñas (ej. dispositivos móviles) */
+@media screen and (max-width: 599px) {
+    /* Estilos para pantallas más pequeñas aquí */
+}
 
 header {
     background-color:#B2FFFF;

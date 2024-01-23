@@ -7,6 +7,15 @@
 @media screen and (max-width: 599px) {
     /* Estilos para pantallas más pequeñas aquí */
 }
+body {
+    font-size: 16px; /* Establecer un tamaño de fuente base */
+}
+
+.container {
+    width: 80%; /* Utilizar porcentajes en lugar de píxeles para el ancho */
+    max-width: 1200px; /* Establecer un ancho máximo para evitar que el contenido se extienda demasiado */
+    margin: 0 auto; /* Centrar el contenedor */
+}
 
 header {
     background-color:#B2FFFF;

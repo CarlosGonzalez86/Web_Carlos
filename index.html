@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Oficina de Seguridad HIdeLT</title>
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="./imagenes/LogoOfi.png">
+
+    <style>
+       button {
+    padding: 10px;
+    font-size: 16px;
+    margin: 10px;
+    cursor: pointer;
+    background-color: #4CAF50; /* Color de fondo del botón */
+    color: #000000; /* Color del texto del botón */
+    border: none;
+    border-radius: 25px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #B2FFFF /* Cambia el color de fondo al pasar el ratón por encima */
+
+}
+
+.dark-mode {
+    background-color: #333;
+    color: #f0f0f0;
+
+}
+ </style>
+    
+    <script>
+        // Cambia el modo oscuro y guarda la preferencia en localStorage
+        function cambiarModo() {
+            const body = document.body;
+            body.classList.toggle("dark-mode");
+            const modoActual = body.classList.contains("dark-mode") ? "Modo Claro" : "Modo Oscuro";
+            document.getElementById("btnModo").textContent = modoActual;
+            localStorage.setItem("modo-oscuro", body.classList.contains("dark-mode"));
+        }
+
+        // Verifica la preferencia del modo oscuro en localStorage al cargar la página
+        document.addEventListener("DOMContentLoaded", function () {
+            const modoOscuroGuardado = localStorage.getItem("modo-oscuro") === "true";
+            if (modoOscuroGuardado) {
+                document.body.classList.add("dark-mode");
+                document.getElementById("btnModo").textContent = "Modo Claro";
+            }
+        });
+    </script>
+</head>
+<body>
+    <button id="btnModo" onclick="cambiarModo()">Modo Oscuro</button>
+
+    <header>
+        <div class="caja">
+            <h1> <img class="logo" src="./imagenes/LogoOfi.png"></h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div>
+        <h1 class="titulo-principal"> <strong>OFICINA DEL DEPARTAMENTO DE SEGURIDAD</strong>.</h1>
+    </div>
+
+    <div class="video">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/T2nwLSuFCQk?si=UPJk3ETK2_XN0LZX"
+            title="YouTube video player" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen></iframe>
+    </div>
+        <main>
+            <section class="principal">
+
+                <h3 class="titulo-principal"> <strong> <em>HOSPITAL IRMA DE LOURDES TZANETATOS</strong>.</em></h3>
+
+                <img class="LogoOficina"  src="./imagenes/css.logo1.png" alt="Logo de la Oficina.">
+    
+                <p>Con el fin de trabajar en conjunto <strong>La oficina del Departamento de Seguridad  trae a ustedes nuestra primera pagina web </strong> creada para dar respuesta a sus interrogantes inquietudes.</p>
+    
+                <p id="mision"><em>Contando un poco de nuestra historia presentamos una: <strong>"Reseña Histórica"</strong>.</em></p>
+    
+                <p>
+Después de su apertura, fue un hospital dependiente del Ministerio de Salud llamado Hospital Regional Docente de 24 de diciembre, que comenzó con una ambulancia.
+El 27 de mayo de 2012, el Consejo de Gabinete aprobó una ley que nombra al Hospital Regional Irma De Lourdes Tzanetatos Docente de 24 de diciembre en memoria de Irma De Lourdes Tzanetatos, quien falleció en 2003 y era la hija menor. Comerciante Haralambos Tzanetatos. La seguridad inicial en este Hospital fue la empresa privada Block Secuirity, despues estuvo la empresa de seguridad Millenium, luego pasa a manos del Departamento Seguridad de la Caja de Seguro Social y actualmente nos mantenemos en custodia de esta instalacion brindando nuestro servicios de custodia a los activos e insumos.</p> 
+
+</section>
+<section class="mapa">
+                <h3 class="titulo-principal">Nuestra Ubicación</h3>
+                <p> Nos hubicamos en un punto estrategico para atenciones </p>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3939.6641228154162!2d-79.39449392519793!3d9.094329987963322!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8fab54c5ebfb8961%3A0xd326a0911a96d510!2sHospital%20Irma%20De%20Lourdes%20Tzanetatos!5e0!3m2!1ses-419!2spa!4v1703012238930!5m2!1ses-419!2spa" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+ </section> 
+ <section class="diferenciales">
+    
+             <h3 class="titulo-principal">Caracteristicas</h3>
+             <ul>
+                    <li class="items">Atenciones que  brinda</li>
+                    <li class="items">Servicio de Urgencias las 24 horas</li>
+                    <li class="items">Hospitalizaciones</li>
+                    <li class="items">Obtetricia</li>
+             </ul>
+
+            <h1 class="titulo-principal"> <strong>Hospital del Este</strong>.</h1>
+            </div>
+                    <img src=" "class="imagenArea">
+
+             <img src="./imagenes/Hospital.png">
+
+      
+          </section>
+         </main>
+
+    <footer>
+        <img class="bandera" src="./imagenes/LogoOfi.png"> <alt="Logo">
+        <p class="copyright">© Copyright Creado Por Licdo. Carlos E. Gonzalez C.</p>
+    </footer>
+          
+    <script src="./script.js"></script>
+ </body>
+</html>>

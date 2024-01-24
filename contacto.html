@@ -1,41 +1,93 @@
+
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contactactanos</title>
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="Imagenes/LogoOfi.png">
 
-        <title>Contactactanos</title>
-        <link rel="stylesheet" href="reset.css">
-        <link rel="stylesheet" href="style.css">
-        <link rel="shortcut icon" href="Imagenes/LogoOfi.png">
-        <button id="btnModo" onclick="cambiarModo()">Modo Oscuro</button>
+    <style>
+        button {
+            padding: 8px;
+            font-size: 14px;
+            margin: 10px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
 
-<style>
-       button {
-    padding: 10px;
-    font-size: 16px;
-    margin: 10px;
-    cursor: pointer;
-    background-color: #4CAF50; /* Color de fondo del botón */
-    color: #fff; /* Color del texto del botón */
-    border: none;
-    border-radius: 5px;
-    transition: background-color 0.3s;
-}
+        button:hover {
+            background-color: #45a049;
+        }
 
-button:hover {
-    background-color: #45a049; /* Cambia el color de fondo al pasar el ratón por encima */
-}
+        .dark-mode {
+            background-color: #333;
+            color: #f0f0f0;
+        }
 
-.dark-mode {
-    background-color: #333;
-    color: #f0f0f0;
-}
- </style>
-    
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            margin: 0;
+            padding: 0;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .productos {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .productos li {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        main {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        fieldset {
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        legend {
+            font-weight: bold;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+    </style>
+
     <script>
-        // Cambia el modo oscuro y guarda la preferencia en localStorage
         function cambiarModo() {
             const body = document.body;
             body.classList.toggle("dark-mode");
@@ -44,7 +96,6 @@ button:hover {
             localStorage.setItem("modo-oscuro", body.classList.contains("dark-mode"));
         }
 
-        // Verifica la preferencia del modo oscuro en localStorage al cargar la página
         document.addEventListener("DOMContentLoaded", function () {
             const modoOscuroGuardado = localStorage.getItem("modo-oscuro") === "true";
             if (modoOscuroGuardado) {
@@ -54,10 +105,11 @@ button:hover {
         });
     </script>
 </head>
-    <body>
-        <header>
+
+<body>
+    <header>
         <div class="caja">
-            <h1> <img class="logo" src="Imagenes/LogoOfi.png"></h1>
+            <h1><img class="logo" src="Imagenes/LogoOfi.png"></h1>
             <nav>
                 <ul>
                     <li><a href="index.html">Inicio</a></li>
@@ -65,11 +117,10 @@ button:hover {
                 </ul>
             </nav>
         </div>
-        </header>
+    </header>
+
     <div>
-        <h1 class="titulo-principal"> <strong>Solicitudes que puedes escribirme en el Formulario en linea</strong>.</h1>
-
-
+        <h1 class="titulo-principal"><strong>Solicitudes que puedes escribirme en el Formulario en linea</strong>.</h1>
     <ul class="productos">
         <li>
             <h2>Tiempo Compensatorio</h2>

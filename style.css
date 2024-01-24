@@ -7,78 +7,81 @@
 @media screen and (max-width: 599px) {
     /* Estilos para pantallas más pequeñas aquí */
 }
+
 body {
-    font-size: 16px; /* Establecer un tamaño de fuente base */
+    font-size: 16px;
 }
 
 .container {
-    width: 80%; /* Utilizar porcentajes en lugar de píxeles para el ancho */
-    max-width: 1200px; /* Establecer un ancho máximo para evitar que el contenido se extienda demasiado */
-    margin: 0 auto; /* Centrar el contenedor */
+    width: 80%;
+    max-width: 1200px;
+    margin: 0 auto;
 }
+
 img {
     max-width: 100%;
     height: auto;
 }
 
 header {
-    background-color:#B2FFFF;
-    padding: 20px 10;
+    background-color: #B2FFFF;
+    padding: 20px 10px;
 }
 
-.logo{
-      width: 150px;
-      padding: 5px
+.logo {
+    width: 150px;
+    padding: 5px;
 }
 
-.caja{
-    width: 940px;
-    margin: 25;
+.caja {
+    width: 100%;
+    max-width: 940px;
+    margin: 25px auto;
     position: relative;
 }
-.Baner{
-     width: 500px;
-     padding-right: : 940px;
- }
-          @keyframes shake {
-            0% {
-                transform: translateX(0);
-            }
 
-            25% {
-                transform: translateX(-5px) rotate(-5deg);
-            }
-
-            50% {
-                transform: translateX(5px) rotate(5deg);
-            }
-
-            75% {
-                transform: translateX(-5px) rotate(-5deg);
-            }
-
-            100% {
-                transform: translateX(0);
-            }
-        }
-
-        .animation__shake {
-            animation: shake 1500ms infinite;
-        }
-nav{
-    right: 850px
-    top:85px;
-    right: 0;
+.Baner {
+    width: 500px;
+    padding-right: 940px;
 }
 
-nav li{
+@keyframes shake {
+    0% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-5px) rotate(-5deg);
+    }
+
+    50% {
+        transform: translateX(5px) rotate(5deg);
+    }
+
+    75% {
+        transform: translateX(-5px) rotate(-5deg);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+.animation__shake {
+    animation: shake 1500ms infinite;
+}
+
+nav {
+    text-align: right;
+}
+
+nav li {
     display: inline;
-    margin: 0 0 0 15px;
+    margin: 0 15px;
     padding: 30px 20px;
-    
 }
 
-nav a{
+nav a {
     text-transform: uppercase;
     color: #000000;
     font-weight: bold;
@@ -86,18 +89,19 @@ nav a{
     text-decoration: none;
 }
 
-nav a:hover{
+nav a:hover {
     color: #c78c19;
     text-decoration: underline;
 }
 
-.productos{
-    width: 940px;
+.productos {
+    width: 100%;
+    max-width: 940px;
     margin: 0 auto;
     padding: 50px;
 }
 
-.productos li{
+.productos li {
     display: inline-block;
     text-align: center;
     width: 30%;
@@ -107,67 +111,64 @@ nav a:hover{
     box-sizing: border-box;
     border: 2px solid #000000;
     border-radius: 10px;
+}
 
-}
-.tiempo {
-    width: 85%;
-    align-content: 
-}
-.Permiso {
-    width: 85%;
-    align-content: 
-}
+.tiempo,
+.Permiso,
 .horarios {
     width: 85%;
-    align-content: 
-}
-.productos li:hover{
-    border-color:#c78c19;
 }
 
-.productos li:active{
-    border-color:#088c19;
+.productos li:hover {
+    border-color: #c78c19;
 }
 
-.productos h2{
+.productos li:active {
+    border-color: #088c19;
+}
+
+.productos h2 {
     font-size: 30px;
     font-weight: bold;
 }
 
-.productos li:hover h2{
+.productos li:hover h2 {
     font-size: 33px;
 }
 
-.producto-descripcion{
+.producto-descripcion {
     font-size: 18px;
 }
 
-.producto-precio{
+.producto-precio {
     font-size: 20px;
     font-weight: bold;
-    margin-top:10px;
-
+    margin-top: 10px;
 }
 
-footer{
+footer {
     text-align: center;
     background: url(Imagenes/bg.jpg);
-    padding:40px;
-}
-.logoCss {
-    width: 5%;
-    align-content: 
-}
-.copyright{
-    color:#FFFFFF;
-    font-size: 13px;
-    margin:20px;
+    padding: 40px;
 }
 
-main{
-    width: 940px;
-    margin: 0 auto;    
+.logoCss {
+    width: 5%;
 }
+
+.copyright {
+    color: #FFFFFF;
+    font-size: 13px;
+    margin: 20px;
+}
+
+main {
+    width: 100%;
+    max-width: 940px;
+    margin: 0 auto;
+}
+
+/* Resto de tus estilos... */
 
 form{
     margin: 40px 0;

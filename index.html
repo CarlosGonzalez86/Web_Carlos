@@ -1,41 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Oficina de Seguridad HIdeLT</title>
     <link rel="stylesheet" href="reset.css">
     <link rel="stylesheet" href="style.css">
     <link rel="shortcut icon" href="Imagenes/LogoOfi.png">
 
     <style>
-       button {
-    padding: 10px;
-    font-size: 16px;
-    margin: 10px;
-    cursor: pointer;
-    background-color: #4CAF50; /* Color de fondo del botón */
-    color: #000000; /* Color del texto del botón */
-    border: none;
-    border-radius: 25px;
-    transition: background-color 0.3s;
-}
+        button {
+            padding: 8px;
+            font-size: 14px;
+            margin: 8px;
+            border-radius: 20px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: #000000;
+            border: none;
+            transition: background-color 0.3s;
+        }
 
-button:hover {
-    background-color: #B2FFFF /* Cambia el color de fondo al pasar el ratón por encima */
+        button:hover {
+            background-color: #B2FFFF;
+        }
 
-}
+        .dark-mode {
+            background-color: #333;
+            color: #f0f0f0;
+        }
 
-.dark-mode {
-    background-color: #333;
-    color: #f0f0f0;
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
 
-}
- </style>
-    
     <script>
-        // Cambia el modo oscuro y guarda la preferencia en localStorage
         function cambiarModo() {
             const body = document.body;
             body.classList.toggle("dark-mode");
@@ -44,7 +47,6 @@ button:hover {
             localStorage.setItem("modo-oscuro", body.classList.contains("dark-mode"));
         }
 
-        // Verifica la preferencia del modo oscuro en localStorage al cargar la página
         document.addEventListener("DOMContentLoaded", function () {
             const modoOscuroGuardado = localStorage.getItem("modo-oscuro") === "true";
             if (modoOscuroGuardado) {
@@ -54,12 +56,13 @@ button:hover {
         });
     </script>
 </head>
+
 <body>
     <button id="btnModo" onclick="cambiarModo()">Modo Oscuro</button>
 
     <header>
         <div class="caja">
-            <h1> <img class="logo" src="Imagenes/LogoOfi.png"></h1>
+            <h1><img class="logo" src="Imagenes/LogoOfi.png"></h1>
             <nav>
                 <ul>
                     <li><a href="index.html">Inicio</a></li>
@@ -70,15 +73,16 @@ button:hover {
     </header>
 
     <div>
-        <h1 class="titulo-principal"> <strong>OFICINA DEL DEPARTAMENTO DE SEGURIDAD</strong>.</h1>
+        <h1 class="titulo-principal"><strong>OFICINA DEL DEPARTAMENTO DE SEGURIDAD</strong>.</h1>
     </div>
 
     <div class="video">
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/T2nwLSuFCQk?si=UPJk3ETK2_XN0LZX"
+        <iframe width="100%" height="315" src="https://www.youtube.com/embed/T2nwLSuFCQk?si=UPJk3ETK2_XN0LZX"
             title="YouTube video player" frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowfullscreen></iframe>
     </div>
+
         <main>
             <section class="principal">
 

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora Horas Extras</title>
+<style>
+    body {
+        font-family: Arial , sans-serif;
+        background-color: #808d99;
+    }
+    .container {
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #5a45d4;
+        border-radius: 5px;
+        background-color: #fff;
+        box-shadow: 0px 0px 10px rgba(194, 187, 187, 0.1);
+    }
+    input[type="number"] {
+        width: 95% ;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+    button {
+        width: 70% ;
+        padding: 10px;
+        background-color: #c02511;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #0056b3;
+    }
+    #resultado {
+        margin-top: 10px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #398d9c;
+    }
+    h2 {
+        color: #007bff;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    label {
+        font-weight: bold;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <h2>Calculadora de Horas Extras Caja de Seguro Social</h2>
+    <label for="horas">Horas trabajadas:</label>
+    <input type="number" id="horas" placeholder="Ingrese las horas trabajadas">
+
+    <label for="tarifa">Tarifa por hora:</label>
+    <input type="number" id="tarifa" placeholder="Ingrese la tarifa por hora">
+
+    <button onclick="calcular()">Calcular</button>
+
+    <div id="resultado"></div>
+</div>
+
+<script>
+    function calcular() {
+        var horas = parseFloat(document.getElementById('horas').value);
+        var tarifa = parseFloat(document.getElementById('tarifa').value);
+        var total = horas * tarifa;
+        var deduccion = total * 0.1385; // Cambiado a 13.85%
+        var totalConDeduccion = total - deduccion;
+
+        var resultadoDiv = document.getElementById('resultado');
+        resultadoDiv.innerHTML = '<h3>Resultado</h3><p>Total a pagar: $' + total.toFixed(2) + '</p>' + '<p>Descuento del 13.85%: $' + deduccion.toFixed(2) + '</p>' + '<p>Total a pagar con descuento: $' + totalConDeduccion.toFixed(2) + '</p>';
+    }
+</script>
+</body>
+<footer>
+    <img class="bandera" src="Imagenes/LogoOfi.png"> <alt="logo">
+        <p class="copyright">© Copyright Creado Por Licdo. Carlos E. Gonzalez C.</p>
+   </footer>
+</html>
+

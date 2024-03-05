@@ -34,3 +34,14 @@ loadDarkMode();
 
 // Cambiar el modo oscuro cuando se hace clic en el botón
 document.getElementById('toggle-dark-mode').addEventListener('click', toggleDarkMode);
+
+    function calcular() {
+        var horas = parseFloat(document.getElementById('horas').value);
+        var tarifa = parseFloat(document.getElementById('tarifa').value);
+        var total = horas * tarifa;
+        var deduccion = total * 0.1385; // Cambiado a 13.85%
+        var totalConDeduccion = total - deduccion;
+
+        var resultadoDiv = document.getElementById('resultado');
+        resultadoDiv.innerHTML = '<h3>Resultado</h3><p>Total a pagar: $' + total.toFixed(2) + '</p>' + '<p>Descuento del 13.85%: $' + deduccion.toFixed(2) + '</p>' + '<p>Total a pagar con descuento: $' + totalConDeduccion.toFixed(2) + '</p>';
+    }

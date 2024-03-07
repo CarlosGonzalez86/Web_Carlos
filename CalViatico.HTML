@@ -84,12 +84,79 @@
   <div class="form-container">
     <h1>Calculadora de Viáticos</h1>
     <form onsubmit="calcularViaticos(); return false;">
-      <!-- Resto del formulario aquí -->
+      <label for="diasTrabajados">Días trabajados de 6am a 6pm:</label>
+      <input type="number" id="diasTrabajados" min="1" required><br><br>
+
+      <label for="diasTrabajadosDespues7pm">Días trabajados después de las 7:01 PM:</label>
+      <input type="number" id="diasTrabajadosDespues7pm" min="0" required><br><br>
+
+      <label for="lugar">Lugar donde vive:</label>
+      <select id="lugar" required>
+
+<option value="TRANSPORTE">NO ME CORRESPONDE TRANSPORTE</option>
+      <option value="Chepo">Chepo</option>
+      <option value="TANARA">TANARA</option>
+      <option value="LA JOYA">LA JOYA</option>
+      <option value="LAS GARZAS">LAS GARZAS</option>
+      <option value="MONTEMADERO">MONTEMADERO</option>
+      <option value="PACORA PUEBLO">PACORA PUEBLO</option>
+      <option value="SAN JUAN">SAN JUAN</option>
+      <option value="FELIPILLO">LA FELIPILLO</option>
+      <option value="SAN JUAN">SAN JUAN</option>
+      <option value="FELIPILLO">FELIPILLO</option>
+      <option value="CABRA">CABRA</option>
+      <option value="LOS PORTALES">LOS PORTALES</option>
+      <option value="24 DE DIC">24 DE DIC</option>
+      <option value="MAÑANITA">MAÑANITA</option>
+      <option value="TOCUMEN">TOCUMEN</option>
+      <option value="PEDREGAL">PEDREGAL</option>
+      <option value="DON BOSCO">DON BOSCO</option>
+      <option value="SAN MIGUELITO">SAN MIGUELITO</option>       
+      </select>
+
+      <button type="submit">Calcular Viáticos</button>
     </form>
   </div>
 
   <script>
-    // Tu script de JavaScript aquí
+    const VALOR_POR_DIA = 4;
+
+    function calcularViaticos() {
+      var diasTrabajados = obtenerValorNumerico('diasTrabajados');
+      var lugar = document.getElementById('lugar').value;
+      var diasTrabajadosDespues7pm = obtenerValorNumerico('diasTrabajadosDespues7pm');
+      var diasLibresTrabajados = obtenerValorNumerico('diasLibresTrabajados');
+
+      var valoresPago = {
+        "TRANSPORTE": 0,
+        "Chepo": 10,
+        "TANARA": 10,
+        "LA JOYA": 10,
+        "LAS GARZAS": 10,
+        "MONTEMADERO": 10,  
+        "PACORA PUEBLO": 10,
+        "SAN JUAN": 7,
+        "FELIPILLO": 7,
+        "CABRA": 4,
+        "LOS PORTALES": 7,
+        "24 DE DIC": 4,
+        "MAÑANITA": 4,
+        "TOCUMEN": 5,
+        "PEDREGAL": 5,
+        "DON BOSCO": 5,
+        "SAN MIGUELITO": 10,
+        "OTROS": 10,
+      };
+
+      var viatico = (diasTrabajados * VALOR_POR_DIA) + (diasTrabajadosDespues7pm * valoresPago[lugar]) + (diasLibresTrabajados * (valoresPago[lugar] + VALOR_POR_DIA));
+
+      alert("Su viático es de: $" + viatico.toFixed(2));
+    }
+
+    function obtenerValorNumerico(id) {
+      var valor = document.getElementById(id).value;
+      return valor ? parseFloat(valor) : 0;
+    }
   </script>
 </body>
 </html>

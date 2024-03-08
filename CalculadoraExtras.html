@@ -3,10 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="reset.css">
 <link rel="stylesheet" href="style.css">
 <link rel="shortcut icon" href="Imagenes/LogoOfi.png">
 <title>Calculadora Horas Extras</title>
 </head>
+<body>
     <header>
         <div class="caja">
             <nav>
@@ -18,12 +20,72 @@
             </nav>
         </div>
     </header>
-<body>
-      <style>
+
+    <div class="container">
+        <h1><img class="logo" src="Imagenes/LogoOfi.png"></h1>
+        <h2>Calcula tus Horas Extras</h2>
+        <form id="formulario">
+            <div class="input-group">
+                <label for="horas">Horas trabajadas:</label>
+                <input type="number" id="horas" placeholder="Ingrese las horas trabajadas">
+            </div>
+
+            <div class="input-group">
+                <label for="tarifa">Tarifa por hora:</label>
+                <input type="number" id="tarifa" placeholder="Ingrese la tarifa por hora">
+            </div>
+
+            <button type="button" onclick="calcular()">Calcular</button>
+
+            <div id="resultado"></div>
+        </form>
+    </div>
+
+    <footer>
+        <img class="logo" src="Imagenes/LogoOfi.png" alt="logo">
+        <p class="copyright">© Copyright Creado Por Licdo. Carlos E. Gonzalez C.</p>
+    </footer>
+
+    <button id="btnModo" onclick="cambiarModo()">Modo Oscuro</button>
+
+    <style>
+        /* Estilos específicos para la sección de extras */
+        body {
+            background-color: #fff; /* Fondo blanco */
+            color: #000; /* Texto negro */
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h2 {
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input {
+            padding: 8px;
+            width: 100%;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
         button {
             padding: 8px;
             font-size: 14px;
-            margin: 10px;
+            margin: 10px 0;
             cursor: pointer;
             background-color: #4CAF50;
             color: #fff;
@@ -36,13 +98,31 @@
             background-color: #45a049;
         }
 
+        footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        footer img {
+            width: 100px;
+            height: auto;
+        }
+
         .dark-mode {
             background-color: #333;
             color: #f0f0f0;
         }
-        </style>
+
+        .dark-mode input,
+        .dark-mode button {
+            background-color: #555; /* Fondo gris oscuro */
+            color: #fff; /* Texto blanco */
+            border-color: #999; /* Borde gris */
+        }
     </style>
+
     <script>
+        // JavaScript para cambiar el modo oscuro
         function cambiarModo() {
             const body = document.body;
             body.classList.toggle("dark-mode");
@@ -59,32 +139,8 @@
             }
         });
     </script>
-<div class="container">
-    <h1><img class="logo" src="Imagenes/LogoOfi.png"></h1>
-    <h2>Calcula tus Horas Extras</h2>
-    <form id="formulario">
-        <div class="input-group">
-            <label for="horas">Horas trabajadas:</label>
-            <input type="number" id="horas" placeholder="Ingrese las horas trabajadas">
-        </div>
-
-        <div class="input-group">
-            <label for="tarifa">Tarifa por hora:</label>
-            <input type="number" id="tarifa" placeholder="Ingrese la tarifa por hora">
-        </div>
-
-        <button type="button" onclick="calcular()">Calcular</button>
-
-        <div id="resultado"></div>
-    </form>
-</div>
-
-<script src="script.js"></script>
-<footer>
-    <img class="logo" src="Imagenes/LogoOfi.png" alt="logo">
-    <p class="copyright">© Copyright Creado Por Licdo. Carlos E. Gonzalez C.</p>
-</footer>
 </body>
 </html>
+
 
 

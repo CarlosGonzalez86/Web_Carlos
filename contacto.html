@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,40 +11,11 @@
     <link rel="shortcut icon" href="Imagenes/LogoOfi.png">
 
     <style>
-        button {
-            padding: 8px;
-            font-size: 14px;
-            margin: 10px;
-            cursor: pointer;
-            background-color: #4CAF50;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
-
-        button:hover {
-            background-color: #45a049;
-        }
-
-        .dark-mode {
-            background-color: #333;
-            color: #f0f0f0;
-        }
-
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        h6 {
-            margin: 0;
-            padding: 0;
-        }
-
-        img {
-            max-width: 100%;
-            height: auto;
+        /* Estilos específicos para la página de contacto */
+        main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
         }
 
         .productos {
@@ -54,40 +24,71 @@
             margin: 0;
             display: flex;
             flex-wrap: wrap;
+            justify-content: center; /* Para centrar los elementos */
         }
 
         .productos li {
-            width: 100%;
+            width: 300px;
             box-sizing: border-box;
             padding: 20px;
-            margin-bottom: 20px;
+            margin: 10px;
             border: 1px solid #ddd;
             border-radius: 5px;
+            background-color: #fff; /* Fondo blanco */
+            text-align: center; /* Texto centrado */
         }
 
-        main {
-            max-width: 800px;
-            margin: 0 auto;
+        /* Cambios en el modo oscuro */
+        body.dark-mode {
+            background-color: #333;
+            color: #f0f0f0;
         }
 
+        body.dark-mode .productos li {
+            background-color: #555; /* Fondo gris oscuro */
+            border-color: #999; /* Borde gris */
+            color: #fff; /* Texto blanco */
+        }
+
+        /* Cambios para pantallas pequeñas */
+        @media screen and (max-width: 768px) {
+            .productos li {
+                width: 100%; /* Cambiamos el ancho para adaptarse a la pantalla */
+            }
+        }
+
+        /* Estilos para el formulario */
         fieldset {
             margin-top: 20px;
             padding: 20px;
             border: 1px solid #ddd;
             border-radius: 5px;
+            background-color: #fff; /* Fondo blanco */
         }
 
         legend {
             font-weight: bold;
+            margin-bottom: 10px;
         }
 
         label {
             display: block;
             margin-bottom: 10px;
         }
+
+        /* Estilos para los enlaces */
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
     </style>
 
     <script>
+        // Código JavaScript para cambiar el modo oscuro
         function cambiarModo() {
             const body = document.body;
             body.classList.toggle("dark-mode");
@@ -111,7 +112,7 @@
         <div class="caja">
             <h1><img class="logo" src="Imagenes/LogoOfi.png"></h1>
             <nav>
-                 <ul style="text-align: left;">
+                <ul style="text-align: left;">
                     <li><a href="index.html">Inicio</a></li>
                     <li><a href="CalculadoraExtras.html">Extras</a></li>
                     <li><a href="CalViatico.HTML">Viatico</a></li>
@@ -122,57 +123,56 @@
 
     <div>
         <h1 class="titulo-principal"><strong>Solicitudes que puedes escribirme en el Formulario en linea</strong>.</h1>
-    <ul class="productos">
-        <li>
-            <h2>Tiempo Compensatorio</h2>
+        <ul class="productos">
+            <li>
+                <h2>Tiempo Compensatorio</h2>
                 <img class="tiempo" src="Imagenes/tiempo.jpg">
-                    <p class="producto-descripcion">Las Solicitudes de Tiempo Compensatorios, se piden con tiempo anticipado con el formato requerido para ser enviado a la Jefatura Nacional de Seguridad para su debido proceso</p>
-                    <p class="producto-precio"></p>
-        </li>
-        <li>
-                    <h2>Permiso de Salida</h2>
-                    <img class= "Permiso" src="Imagenes/Permiso.jpg">
-                    <p class="producto-descripcion">Los permisos de salidas se piden al iniciar su turno entrante exento los casos de <strong>"Urgencias Familiares"</strong> los permisos solo se dan en la bajo el formato suministrado en la Oficina de Seguridad</p>
-                    <p class="producto-precio"></p>
-        </li>
-        <li>
-                    <h2>Solicitudes del horarios</h2>
-                    <img class = "horarios" src="Imagenes/horario.jpg">
-                    <p class="producto-descripcion">Ponemos a disposicion el horario de turnos para coordinacion de ante mano el algun caso espefico del guardián (Estudios, horario especial por situacion meramente comprobada)</p>
-                    <p class="producto-precio"></p>
-        </li>
+                <p class="producto-descripcion">Las Solicitudes de Tiempo Compensatorios, se piden con tiempo anticipado con el formato requerido para ser enviado a la Jefatura Nacional de Seguridad para su debido proceso</p>
+                <p class="producto-precio"></p>
+            </li>
+            <li>
+                <h2>Permiso de Salida</h2>
+                <img class="Permiso" src="Imagenes/Permiso.jpg">
+                <p class="producto-descripcion">Los permisos de salidas se piden al iniciar su turno entrante exento los casos de <strong>"Urgencias Familiares"</strong> los permisos solo se dan en la bajo el formato suministrado en la Oficina de Seguridad</p>
+                <p class="producto-precio"></p>
+            </li>
+            <li>
+                <h2>Solicitudes del horarios</h2>
+                <img class="horarios" src="Imagenes/horario.jpg">
+                <p class="producto-descripcion">Ponemos a disposicion el horario de turnos para coordinacion de ante mano el algun caso espefico del guardián (Estudios, horario especial por situacion meramente comprobada)</p>
+                <p class="producto-precio"></p>
+            </li>
         </ul>
     </div>
 
-        <main>
-            <h2>Te dejo el formulario en linea para que me dejes saber tu inquietud y solicitud</h2>
-             <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAZ__vFFjmJUODdTQjMyQUYzOVI0SVdVNURRWjBJR0tCQi4u"target="_blank">Entra al Link de del Formulario</a>
-          
-                <fieldset>
-                    <legend>Dejo mis numeros de atencion Cisco y Link para WhatsApp</legend>
+    <main>
+        <h2>Te dejo el formulario en linea para que me dejes saber tu inquietud y solicitud</h2>
+        <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAZ__vFFjmJUODdTQjMyQUYzOVI0SVdVNURRWjBJR0tCQi4u" target="_blank">Entra al Link de del Formulario</a>
 
-                    <label for="radio-email"><input type="radio" name="contacto" value="email" id="radio-email">Utiliza el Cisco 86413 si estas de turno</label>
-                    
-                    <label for="radio-telefono"><input type="radio" name="contacto" value="telefono" id="radio-telefono">Llamada externa</label>
-                     <a href="tel:503-8713"target="_blank">503-8713</a>
+        <fieldset>
+            <legend>Dejo mis numeros de atencion Cisco y Link para WhatsApp</legend>
 
-                    
-                    <label for="radio-whatsapp"><input type="radio" name="contacto" value="whatsapp" id="radio-whatsapp" checked>WhatsApp</label>
+            <label for="radio-email"><input type="radio" name="contacto" value="email" id="radio-email">Utiliza el Cisco 86413 si estas de turno</label>
 
-                    <a href="https://wa.me/message/DQ36YDUXXWRKP1"target="_blank">Entra al Link de WhatsApp</a>
-                     
+            <label for="radio-telefono"><input type="radio" name="contacto" value="telefono" id="radio-telefono">Llamada externa</label>
+            <a href="tel:503-8713" target="_blank">503-8713</a>
 
-                </fieldset>
-               
-                <fieldset>
-                    <legend>Gracias por Contactarnos</legend>
+            <label for="radio-whatsapp"><input type="radio" name="contacto" value="whatsapp" id="radio-whatsapp" checked>WhatsApp</label>
+            <a href="https://wa.me/message/DQ36YDUXXWRKP1" target="_blank">Entra al Link de WhatsApp</a>
         </fieldset>
-       
-        </main>
+
+        <fieldset>
+            <legend>Gracias por Contactarnos</legend>
+        </fieldset>
+    </main>
+
     <footer>
         <img class="bandera" src="Imagenes/LogoOfi.png"> <alt="Logo">
         <p class="copyright">© Copyright Creado Por Licdo. Carlos E. Gonzalez C.</p>
     </footer>
-    </body>
+
+    <button id="btnModo" onclick="cambiarModo()">Modo Oscuro</button>
+</body>
+
 </html>
 

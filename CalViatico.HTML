@@ -48,6 +48,23 @@
     background-color: #004c99;
   }
 </style>
+    <script>
+        function cambiarModo() {
+            const body = document.body;
+            body.classList.toggle("dark-mode");
+            const modoActual = body.classList.contains("dark-mode") ? "Modo Claro" : "Modo Oscuro";
+            document.getElementById("btnModo").textContent = modoActual;
+            localStorage.setItem("modo-oscuro", body.classList.contains("dark-mode"));
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const modoOscuroGuardado = localStorage.getItem("modo-oscuro") === "true";
+            if (modoOscuroGuardado) {
+                document.body.classList.add("dark-mode");
+                document.getElementById("btnModo").textContent = "Modo Claro";
+            }
+        });
+    </script>
 <script>
   const VALOR_POR_DIA = 4;
 
@@ -95,13 +112,14 @@
     return valor ? parseFloat(valor) : 0;
   }
 </script>
+
 <header>
     <div class="caja">
         <h1><img class="logo" src="Imagenes/LogoOfi.png"></h1>
         <nav>
             <ul style="text-align: left;">
                 <li><a href="index.html">Inicio</a></li>
-                <li><a href="CalculadoraExtras.html">Calculadora Extras</a></li>
+                <li><a href="CalculadoraExtras.html">Extras</a></li>
             </ul>
         </nav>
     </div>

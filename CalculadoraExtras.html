@@ -120,6 +120,18 @@
             border-color: #999; /* Borde gris */
         }
     </style>
+    <script>
+    function calcular() {
+        var horas = parseFloat(document.getElementById('horas').value);
+        var tarifa = parseFloat(document.getElementById('tarifa').value);
+        var total = horas * tarifa;
+        var deduccion = total * 0.1385; // Cambiado a 13.85%
+        var totalConDeduccion = total - deduccion;
+
+        var resultadoDiv = document.getElementById('resultado');
+        resultadoDiv.innerHTML = '<h3>Resultado</h3><p>Total a pagar: $' + total.toFixed(2) + '</p>' + '<p>Descuento del 13.85%: $' + deduccion.toFixed(2) + '</p>' + '<p>Total a pagar con descuento: $' + totalConDeduccion.toFixed(2) + '</p>';
+     }
+  </script>
 
     <script>
         // JavaScript para cambiar el modo oscuro

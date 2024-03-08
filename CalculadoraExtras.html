@@ -41,6 +41,24 @@
             color: #f0f0f0;
         }
         </style>
+    </style>
+    <script>
+        function cambiarModo() {
+            const body = document.body;
+            body.classList.toggle("dark-mode");
+            const modoActual = body.classList.contains("dark-mode") ? "Modo Claro" : "Modo Oscuro";
+            document.getElementById("btnModo").textContent = modoActual;
+            localStorage.setItem("modo-oscuro", body.classList.contains("dark-mode"));
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const modoOscuroGuardado = localStorage.getItem("modo-oscuro") === "true";
+            if (modoOscuroGuardado) {
+                document.body.classList.add("dark-mode");
+                document.getElementById("btnModo").textContent = "Modo Claro";
+            }
+        });
+    </script>
 <div class="container">
     <h1><img class="logo" src="Imagenes/LogoOfi.png"></h1>
     <h2>Calcula tus Horas Extras</h2>

@@ -9,22 +9,52 @@
     <link rel="stylesheet" href="reset.css">
     <link rel="stylesheet" href="style.css">
     <link rel="shortcut icon" href="Imagenes/LogoOfi.png">
-
     <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #1a1a1a;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+
         button {
-            padding: 8px;
+            padding: 8px 16px;
             font-size: 14px;
             margin: 8px;
             border-radius: 20px;
             cursor: pointer;
             background-color: #4CAF50;
-            color: #000000;
+            color: #fff;
             border: none;
             transition: background-color 0.3s;
         }
 
         button:hover {
-            background-color: #B2FFFF;
+            background-color: #1a1a1a;
         }
 
         .dark-mode {
@@ -35,9 +65,36 @@
         img {
             max-width: 100%;
             height: auto;
+            display: block;
+            margin: auto;
+        }
+
+        .titulo-principal {
+            text-align: center;
+        }
+
+        .principal,
+        .mapa,
+        .diferenciales {
+            padding: 20px;
+        }
+
+        .diferenciales ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .diferenciales .items {
+            margin-bottom: 10px;
+        }
+
+        footer {
+            background-color: #1a1a1a;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
         }
     </style>
-
     <script>
         function cambiarModo() {
             const body = document.body;
@@ -62,9 +119,9 @@
 
     <header>
         <div class="caja">
-            <h1><img class="logo" src="Imagenes/LogoOfi.png"></h1>
+            <h1><img class="logo" src="Imagenes/LogoOfi.png" alt="Logo"></h1>
             <nav>
-                 <ul style="text-align: left;">
+                <ul>
                     <li><a href="contacto.html">Contacto</a></li>
                     <li><a href="CalculadoraExtras.html">Extras</a></li>
                     <li><a href="CalViatico.HTML">Viatico</a></li>
@@ -84,52 +141,38 @@
             allowfullscreen></iframe>
     </div>
 
-        <main>
-            <section class="principal">
+    <main>
+        <section class="principal">
+            <h3 class="titulo-principal"><strong><em>HOSPITAL IRMA DE LOURDES TZANETATOS</em></strong></h3>
+            <img class="LogoOficina" src="Imagenes/css.logo1.png" alt="Logo de la Oficina">
+            <p>Con el fin de trabajar en conjunto <strong>La oficina del Departamento de Seguridad trae a ustedes nuestra primera pagina web</strong> creada para dar respuesta a sus interrogantes e inquietudes.</p>
+            <p id="mision"><em>Contando un poco de nuestra historia presentamos una: <strong>"Reseña Histórica"</strong>.</em></p>
+            <p>Después de su apertura, fue un hospital dependiente del Ministerio de Salud llamado Hospital Regional Docente de 24 de diciembre, que comenzó con una ambulancia. El 27 de mayo de 2012, el Consejo de Gabinete aprobó una ley que nombra al Hospital Regional Irma De Lourdes Tzanetatos Docente de 24 de diciembre en memoria de Irma De Lourdes Tzanetatos, quien falleció en 2003 y era la hija menor. Comerciante Haralambos Tzanetatos. La seguridad inicial en este Hospital fue la empresa privada Block Secuirity, después estuvo la empresa de seguridad Millenium, luego pasa a manos del Departamento Seguridad de la Caja de Seguro Social y actualmente nos mantenemos en custodia de esta instalación brindando nuestros servicios de custodia a los activos e insumos.</p>
+        </section>
 
-                <h3 class="titulo-principal"> <strong> <em>HOSPITAL IRMA DE LOURDES TZANETATOS</strong>.</em></h3>
+        <section class="mapa">
+            <h3 class="titulo-principal">Nuestra Ubicación</h3>
+            <p>Nos ubicamos en un punto estratégico para atenciones.</p>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3939.6641228154162!2d-79.39449392519793!3d9.094329987963322!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8fab54c5ebfb8961%3A0xd326a0911a96d510!2sHospital%20Irma%20De%20Lourdes%20Tzanetatos!5e0!3m2!1ses-419!2spa!4v1703012238930!5m2!1ses-419!2spa" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </section>
 
-                <img class="LogoOficina"  src="Imagenes/css.logo1.png" alt="Logo de la Oficina.">
-    
-                <p>Con el fin de trabajar en conjunto <strong>La oficina del Departamento de Seguridad  trae a ustedes nuestra primera pagina web </strong> creada para dar respuesta a sus interrogantes inquietudes.</p>
-    
-                <p id="mision"><em>Contando un poco de nuestra historia presentamos una: <strong>"Reseña Histórica"</strong>.</em></p>
-    
-                <p>
-Después de su apertura, fue un hospital dependiente del Ministerio de Salud llamado Hospital Regional Docente de 24 de diciembre, que comenzó con una ambulancia.
-El 27 de mayo de 2012, el Consejo de Gabinete aprobó una ley que nombra al Hospital Regional Irma De Lourdes Tzanetatos Docente de 24 de diciembre en memoria de Irma De Lourdes Tzanetatos, quien falleció en 2003 y era la hija menor. Comerciante Haralambos Tzanetatos. La seguridad inicial en este Hospital fue la empresa privada Block Secuirity, despues estuvo la empresa de seguridad Millenium, luego pasa a manos del Departamento Seguridad de la Caja de Seguro Social y actualmente nos mantenemos en custodia de esta instalacion brindando nuestro servicios de custodia a los activos e insumos.</p> 
-
-</section>
-<section class="mapa">
-                <h3 class="titulo-principal">Nuestra Ubicación</h3>
-                <p> Nos hubicamos en un punto estrategico para atenciones </p>
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3939.6641228154162!2d-79.39449392519793!3d9.094329987963322!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8fab54c5ebfb8961%3A0xd326a0911a96d510!2sHospital%20Irma%20De%20Lourdes%20Tzanetatos!5e0!3m2!1ses-419!2spa!4v1703012238930!5m2!1ses-419!2spa" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
- </section> 
- <section class="diferenciales">
-    
-             <h3 class="titulo-principal">Caracteristicas</h3>
-             <ul>
-                    <li class="items">Atenciones que  brinda</li>
-                    <li class="items">Servicio de Urgencias las 24 horas</li>
-                    <li class="items">Hospitalizaciones</li>
-                    <li class="items">Obtetricia</li>
-             </ul>
-
-            <h1 class="titulo-principal"> <strong>Hospital del Este</strong>.</h1>
-            </div>
-                    <img src=" "class="imagenArea">
-
-             <img src="Imagenes/Hospital.png">
-
-      
-          </section>
-         </main>
+        <section class="diferenciales">
+            <h3 class="titulo-principal">Características</h3>
+            <ul>
+                <li class="items">Atenciones que brinda</li>
+                <li class="items">Servicio de Urgencias las 24 horas</li>
+                <li class="items">Hospitalizaciones</li>
+                <li class="items">Obstetricia</li>
+            </ul>
+        </section>
+    </main>
 
     <footer>
-        <img class="bandera" src="Imagenes/LogoOfi.png"> <alt="Logo">
+        <img class="bandera" src="Imagenes/LogoOfi.png" alt="Logo">
         <p class="copyright">© Copyright Creado Por Licdo. Carlos E. Gonzalez C.</p>
     </footer>
-          
+
     <script src="./script.js"></script>
- </body>
-</html>>
+</body>
+
+</html>

@@ -126,26 +126,30 @@
         Total A Pagar:                 <span id="resultado_total"></span>
     </p>
     <script>
-        document.querySelector('form').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const transporte = parseFloat(document.getElementById('transporte').value);
-            const alimentacion = parseFloat(document.getElementById('alimentacion').value);
-            const porcentaje_transporte1 = parseFloat(document.getElementById('porcentaje_transporte1').value);
-            const porcentaje_transporte2 = parseFloat(document.getElementById('porcentaje_transporte2').value);
-            const porcentaje_alimentacion1 = parseFloat(document.getElementById('porcentaje_alimentacion1').value);
-            const porcentaje_alimentacion2 = parseFloat(document.getElementById('porcentaje_alimentacion2').value);
-            const resultado_transporte1 = transporte * (porcentaje_transporte1 / 100);
-            const resultado_transporte2 = transporte * (porcentaje_transporte2 / 100);
-            const resultado_alimentacion1 = alimentacion * (porcentaje_alimentacion1 / 100);
-            const resultado_alimentacion2 = alimentacion * (porcentaje_alimentacion2 / 100);
-            const total = resultado_transporte1 + resultado_transporte2 + resultado_alimentacion1 + resultado_alimentacion2;
-            document.getElementById('resultado_transporte1').textContent = resultado_transporte1.toFixed(2);
-            document.getElementById('resultado_transporte2').textContent = resultado_transporte2.toFixed(2);
-            document.getElementById('resultado_alimentacion1').textContent = resultado_alimentacion1.toFixed(2);
-            document.getElementById('resultado_alimentacion2').textContent = resultado_alimentacion2.toFixed(2);
-            document.getElementById('resultado_total').textContent = total.toFixed(2);
-        });
-    </script>
+    document.querySelector('form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        let transporte = parseFloat(document.getElementById('transporte').value);
+        if (isNaN(transporte)) {
+            transporte = 0; // Si el valor de transporte no es un número, establecerlo en 0
+        }
+        const alimentacion = parseFloat(document.getElementById('alimentacion').value);
+        const porcentaje_transporte1 = parseFloat(document.getElementById('porcentaje_transporte1').value);
+        const porcentaje_transporte2 = parseFloat(document.getElementById('porcentaje_transporte2').value);
+        const porcentaje_alimentacion1 = parseFloat(document.getElementById('porcentaje_alimentacion1').value);
+        const porcentaje_alimentacion2 = parseFloat(document.getElementById('porcentaje_alimentacion2').value);
+        const resultado_transporte1 = transporte * (porcentaje_transporte1 / 100);
+        const resultado_transporte2 = transporte * (porcentaje_transporte2 / 100);
+        const resultado_alimentacion1 = alimentacion * (porcentaje_alimentacion1 / 100);
+        const resultado_alimentacion2 = alimentacion * (porcentaje_alimentacion2 / 100);
+        const total = resultado_transporte1 + resultado_transporte2 + resultado_alimentacion1 + resultado_alimentacion2;
+        document.getElementById('resultado_transporte1').textContent = resultado_transporte1.toFixed(2);
+        document.getElementById('resultado_transporte2').textContent = resultado_transporte2.toFixed(2);
+        document.getElementById('resultado_alimentacion1').textContent = resultado_alimentacion1.toFixed(2);
+        document.getElementById('resultado_alimentacion2').textContent = resultado_alimentacion2.toFixed(2);
+        document.getElementById('resultado_total').textContent = total.toFixed(2);
+    });
+</script>
+
 <footer>
     <img class="bandera" src="Imagenes/LogoOfi.png"> <alt="Logo">
     <p class="copyright">© Copyright Creado Por Licdo. Carlos E. Gonzalez C.</p>

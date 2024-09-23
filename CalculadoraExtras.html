@@ -7,22 +7,133 @@
 <link rel="stylesheet" href="style.css">
 <link rel="shortcut icon" href="Imagenes/NuevoLogo.png">
 <title>Calculadora Horas Extras</title>
+<style>
+    /* Estilos globales */
+    body {
+        background-color: #f4f4f4; /* Fondo claro */
+        color: #333; /* Texto oscuro */
+        font-family: 'Arial', sans-serif;
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+    .container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        transition: transform 0.3s;
+    }
+
+    .container:hover {
+        transform: scale(1.02); /* Efecto hover para darle dinamismo */
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .input-group {
+        margin-bottom: 20px;
+        transition: all 0.3s;
+    }
+
+    label {
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    input {
+        width: 100%;
+        padding: 12px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+        transition: border-color 0.3s;
+    }
+
+    input:focus {
+        border-color: #4CAF50;
+        box-shadow: 0px 0px 5px rgba(76, 175, 80, 0.5);
+    }
+
+    button {
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    button:hover {
+        background-color: #45a049;
+    }
+
+    #resultado {
+        margin-top: 20px;
+        background-color: #e0f7fa;
+        padding: 10px;
+        border-radius: 8px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    footer {
+        text-align: center;
+        margin-top: 30px;
+        font-size: 12px;
+        color: #888;
+    }
+
+    /* Modo oscuro */
+    .dark-mode {
+        background-color: #333;
+        color: #f4f4f4;
+    }
+
+    .dark-mode input,
+    .dark-mode button {
+        background-color: #555;
+        color: #fff;
+        border-color: #999;
+    }
+
+    #btnModo {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        padding: 10px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    #btnModo:hover {
+        background-color: #45a049;
+    }
+</style>
 </head>
 <body>
     <header>
-        <div class="caja">
-            <nav>
-                <ul style="text-align: left;">
-                    <li><a href="index.html">Inicio</a></li>
-                    <li><a href="contacto.html">Contacto</a></li>
-                    <li><a href="CalViatico.HTML">Viatico</a></li>
-                </ul>
-            </nav>
-        </div>
+        <nav>
+            <ul style="text-align: left;">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+                <li><a href="CalViatico.HTML">Viatico</a></li>
+            </ul>
+        </nav>
     </header>
 
     <div class="container">
-        <h1><img class="logo" src="Imagenes/NuevoLogo.png"></h1>
+        <h1><img class="logo" src="Imagenes/NuevoLogo.png" alt="Logo"></h1>
         <h2>Calcula tus Horas Extras</h2>
         <form id="formulario">
             <div class="input-group">
@@ -48,93 +159,26 @@
 
     <button id="btnModo" onclick="cambiarModo()">Modo Oscuro</button>
 
-    <style>
-        /* Estilos específicos para la sección de extras */
-        body {
-            background-color: #fff; /* Fondo blanco */
-            color: #000; /* Texto negro */
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        h2 {
-            margin-top: 20px;
-            margin-bottom: 10px;
-        }
-
-        .input-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        input {
-            padding: 8px;
-            width: 100%;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-        }
-
-        button {
-            padding: 8px;
-            font-size: 14px;
-            margin: 10px 0;
-            cursor: pointer;
-            background-color: #4CAF50;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
-
-        button:hover {
-            background-color: #45a049;
-        }
-
-        footer {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        footer img {
-            width: 100px;
-            height: auto;
-        }
-
-        .dark-mode {
-            background-color: #333;
-            color: #f0f0f0;
-        }
-
-        .dark-mode input,
-        .dark-mode button {
-            background-color: #555; /* Fondo gris oscuro */
-            color: #fff; /* Texto blanco */
-            border-color: #999; /* Borde gris */
-        }
-    </style>
     <script>
-    function calcular() {
-        var horas = parseFloat(document.getElementById('horas').value);
-        var tarifa = parseFloat(document.getElementById('tarifa').value);
-        var total = horas * tarifa;
-        var deduccion = total * 0.1385; // Cambiado a 13.85%
-        var totalConDeduccion = total - deduccion;
+        // Calcular en tiempo real
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('input', calcular);
+        });
 
-        var resultadoDiv = document.getElementById('resultado');
-        resultadoDiv.innerHTML = '<h3>Resultado</h3><p>Total a pagar: $' + total.toFixed(2) + '</p>' + '<p>Descuento del 13.85%: $' + deduccion.toFixed(2) + '</p>' + '<p>Total a pagar con descuento: $' + totalConDeduccion.toFixed(2) + '</p>';
-     }
-  </script>
+        function calcular() {
+            var horas = parseFloat(document.getElementById('horas').value) || 0;
+            var tarifa = parseFloat(document.getElementById('tarifa').value) || 0;
+            var total = horas * tarifa;
+            var deduccion = total * 0.1385;
+            var totalConDeduccion = total - deduccion;
 
-    <script>
-        // JavaScript para cambiar el modo oscuro
+            var resultadoDiv = document.getElementById('resultado');
+            resultadoDiv.innerHTML = '<h3>Resultado</h3><p>Total a pagar: $' + total.toFixed(2) + '</p>' +
+                                      '<p>Descuento del 13.85%: $' + deduccion.toFixed(2) + '</p>' +
+                                      '<p>Total a pagar con descuento: $' + totalConDeduccion.toFixed(2) + '</p>';
+        }
+
+        // Cambiar modo oscuro
         function cambiarModo() {
             const body = document.body;
             body.classList.toggle("dark-mode");
@@ -143,6 +187,7 @@
             localStorage.setItem("modo-oscuro", body.classList.contains("dark-mode"));
         }
 
+        // Guardar la preferencia del modo
         document.addEventListener("DOMContentLoaded", function () {
             const modoOscuroGuardado = localStorage.getItem("modo-oscuro") === "true";
             if (modoOscuroGuardado) {
@@ -153,6 +198,7 @@
     </script>
 </body>
 </html>
+
 
 
 

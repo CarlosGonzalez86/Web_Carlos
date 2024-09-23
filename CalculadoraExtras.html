@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,9 +10,9 @@
 <style>
     /* Estilos generales */
     body {
-        background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
-        font-family: 'Roboto', sans-serif;
-        color: #333;
+        background-color: #1c1c1c;
+        font-family: 'Poppins', sans-serif;
+        color: #f4f4f4;
         transition: background-color 0.3s, color 0.3s;
     }
 
@@ -20,9 +20,9 @@
         max-width: 700px;
         margin: 50px auto;
         padding: 20px;
-        background-color: #fff;
-        border-radius: 15px;
-        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+        background-color: #2c2c2c;
+        border-radius: 20px;
+        box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.3);
         animation: fadeIn 0.5s ease-in-out;
     }
 
@@ -39,7 +39,7 @@
 
     h2 {
         text-align: center;
-        color: #4CAF50;
+        color: #ffd700;
     }
 
     .input-group {
@@ -48,21 +48,22 @@
 
     label {
         font-weight: bold;
-        color: #4CAF50;
+        color: #ffd700;
     }
 
     input {
         width: 100%;
         padding: 12px;
-        border-radius: 8px;
-        border: 1px solid #ddd;
-        background: #f7f9fc;
+        border-radius: 10px;
+        border: 1px solid #555;
+        background-color: #3c3c3c;
+        color: #fff;
         transition: border-color 0.3s, box-shadow 0.3s;
     }
 
     input:focus {
-        border-color: #4CAF50;
-        box-shadow: 0px 0px 10px rgba(76, 175, 80, 0.5);
+        border-color: #ffd700;
+        box-shadow: 0px 0px 10px rgba(255, 215, 0, 0.6);
     }
 
     button {
@@ -70,24 +71,24 @@
         padding: 15px;
         font-size: 16px;
         border: none;
-        border-radius: 8px;
-        background: linear-gradient(45deg, #4CAF50, #81C784);
-        color: white;
+        border-radius: 10px;
+        background: #ffd700;
+        color: #333;
         cursor: pointer;
         transition: background 0.3s, transform 0.3s;
     }
 
     button:hover {
-        background: linear-gradient(45deg, #388E3C, #66BB6A);
+        background: #e6c200;
         transform: translateY(-3px);
     }
 
     #resultado {
         margin-top: 20px;
         padding: 15px;
-        background-color: #e0f7fa;
-        border-radius: 10px;
-        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        background-color: #333;
+        border-radius: 15px;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
         opacity: 0;
         transform: translateY(10px);
         transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
@@ -98,30 +99,30 @@
         transform: translateY(0);
     }
 
-    .error {
-        color: red;
-        font-size: 14px;
-        margin-bottom: 10px;
-    }
-
     footer {
         text-align: center;
         margin-top: 40px;
         font-size: 12px;
-        color: #888;
+        color: #aaa;
+    }
+
+    footer img {
+        width: 80px;
+        height: auto;
+        margin-top: 15px;
     }
 
     /* Modo oscuro */
     .dark-mode {
-        background-color: #222;
-        color: #f4f4f4;
+        background-color: #111;
+        color: #ddd;
     }
 
     .dark-mode input,
     .dark-mode button {
-        background-color: #444;
+        background-color: #333;
         color: #fff;
-        border-color: #999;
+        border-color: #888;
     }
 
     #btnModo {
@@ -129,11 +130,11 @@
         bottom: 20px;
         right: 20px;
         padding: 15px;
-        background: #4CAF50;
+        background: #ffd700;
         border-radius: 50px;
         border: none;
         cursor: pointer;
-        color: white;
+        color: #333;
         font-size: 24px;
         display: flex;
         align-items: center;
@@ -142,12 +143,18 @@
     }
 
     #btnModo:hover {
-        background: #388E3C;
+        background: #e6c200;
         transform: scale(1.1);
     }
 
     #btnModo i {
         margin-left: 8px;
+    }
+
+    .logo {
+        display: block;
+        margin: 0 auto;
+        width: 100px;
     }
 </style>
 </head>
@@ -155,18 +162,17 @@
     <header>
         <nav>
             <ul style="text-align: left;">
-                <li><a href="index.html">Inicio</a></li>
-                <li><a href="contacto.html">Contacto</a></li>
-                <li><a href="CalViatico.HTML">Viatico</a></li>
+                <li><a href="index.html" style="color: #ffd700;">Inicio</a></li>
+                <li><a href="contacto.html" style="color: #ffd700;">Contacto</a></li>
+                <li><a href="CalViatico.HTML" style="color: #ffd700;">Viatico</a></li>
             </ul>
         </nav>
     </header>
 
     <div class="container">
+        <h1><img class="logo" src="Imagenes/NuevoLogo.png" alt="Logo"></h1>
         <h2>Calcula tus Horas Extras</h2>
         <form id="formulario">
-            <div id="error" class="error"></div>
-            
             <div class="input-group">
                 <label for="horas">Horas trabajadas:</label>
                 <input type="number" id="horas" placeholder="Ingrese las horas trabajadas">
@@ -185,23 +191,20 @@
 
     <footer>
         <p>© 2024 Creado Por Licdo. Carlos E. Gonzalez C.</p>
+        <img class="logo" src="Imagenes/NuevoLogo.png" alt="logo">
     </footer>
 
     <button id="btnModo" onclick="cambiarModo()">🌙<i id="iconoModo"></i></button>
 
     <script>
-        // Validar y calcular
+        // Calcular el total de horas extras
         function calcular() {
             var horas = parseFloat(document.getElementById('horas').value);
             var tarifa = parseFloat(document.getElementById('tarifa').value);
-            var errorDiv = document.getElementById('error');
             var resultadoDiv = document.getElementById('resultado');
 
-            errorDiv.innerHTML = ''; // Limpiar errores
-            resultadoDiv.classList.remove('mostrar'); // Ocultar resultado
-
             if (isNaN(horas) || horas <= 0 || isNaN(tarifa) || tarifa <= 0) {
-                errorDiv.innerHTML = 'Por favor ingrese valores válidos en ambos campos.';
+                resultadoDiv.innerHTML = '<p style="color: red;">Por favor ingrese valores válidos.</p>';
                 return;
             }
 
@@ -214,10 +217,10 @@
                                      '<p>Descuento del 13.85%: $' + deduccion.toFixed(2) + '</p>' +
                                      '<p>Total a pagar con descuento: $' + totalConDeduccion.toFixed(2) + '</p>';
 
-            resultadoDiv.classList.add('mostrar'); // Mostrar resultado con animación
+            resultadoDiv.classList.add('mostrar');
         }
 
-        // Cambiar modo oscuro
+        // Cambiar el modo oscuro
         function cambiarModo() {
             const body = document.body;
             body.classList.toggle("dark-mode");
@@ -237,6 +240,7 @@
     </script>
 </body>
 </html>
+
 
 
 

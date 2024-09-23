@@ -205,6 +205,7 @@
 
             if (isNaN(horas) || horas <= 0 || isNaN(tarifa) || tarifa <= 0) {
                 resultadoDiv.innerHTML = '<p style="color: red;">Por favor ingrese valores válidos.</p>';
+                resultadoDiv.classList.add('mostrar');
                 return;
             }
 

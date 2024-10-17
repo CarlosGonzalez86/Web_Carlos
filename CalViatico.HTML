@@ -72,16 +72,18 @@
 </div>
 
 <script>
-    let userFiles = [];
-
     function loginAdmin() {
         const user = document.getElementById('adminUser').value;
         const pass = document.getElementById('adminPass').value;
 
+        // Mostramos lo que está capturando el usuario y la contraseña para depurar
+        console.log('Usuario ingresado:', user);
+        console.log('Contraseña ingresada:', pass);
+
         // Usuario: Carlos, Contraseña: johan16
         if (user === 'Carlos' && pass === 'johan16') {
+            alert('Inicio de sesión exitoso');
             document.getElementById('adminActions').classList.remove('hidden');
-            fetchUserFiles();  // Cargar archivos de usuarios cuando el administrador inicia sesión
         } else {
             alert('Usuario o contraseña incorrectos');
         }
@@ -96,11 +98,6 @@
         } else {
             alert("Por favor, seleccione un archivo para subir.");
         }
-    }
-
-    function fetchUserFiles() {
-        // Aquí iría la lógica para cargar los archivos subidos por usuarios
-        document.getElementById('userFilesList').innerHTML = '<p>Archivo1.txt</p>'; // Ejemplo
     }
 </script>
 

@@ -21,41 +21,41 @@
         }
         .container {
             width: 90%;
-            max-width: 600px;
+            max-width: 800px;
             margin: 40px auto;
             background-color: white;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-        .container h2 {
+        .admin-section, .user-section {
+            margin-bottom: 40px;
+            padding: 20px;
+            border: 2px solid #003366;
+            border-radius: 10px;
+        }
+        h2 {
             text-align: center;
             color: #003366;
         }
-        .file-upload {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        .file-upload input[type="file"] {
+        input[type="file"], input[type="password"], input[type="text"], button {
             padding: 10px;
+            margin: 10px 0;
+            width: 100%;
             border: 2px solid #003366;
             border-radius: 5px;
-            cursor: pointer;
-        }
-        .file-upload button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #003366;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
             font-size: 16px;
         }
-        .file-upload button:hover {
+        button {
+            background-color: #003366;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
             background-color: #005299;
+        }
+        .hidden {
+            display: none;
         }
         footer {
             text-align: center;
@@ -75,33 +75,106 @@
 </header>
 
 <div class="container">
-    <h2>Subir y Descargar Archivos</h2>
 
-    <div class="file-upload">
-        <input type="file" id="fileInput">
-        <button onclick="downloadFile()">Descargar Archivo</button>
+    <!-- Sección para Administrador -->
+    <div class="admin-section">
+        <h2>Acceso de Administrador</h2>
+        <input type="text" id="administrador" placeholder="Usuario">
+        <input type="password" id="Carlos86" placeholder="Contraseña">
+        <button onclick="loginAdmin()">Iniciar Sesión</button>
+
+        <div id="adminActions" class="hidden">
+            <h3>Subir Archivo</h3>
+            <input type="file" id="adminFileInput">
+            <button onclick="adminUpload()">Subir Archivo</button>
+
+            <h3>Archivos Subidos por Usuarios</h3>
+            <div id="userFilesList"></div>
+        </div>
+    </div>
+
+    <!-- Sección para Usuario -->
+    <div class="user-section">
+        <h2>Acceso de Usuario</h2>
+        <h3>Archivos del Administrador</h3>
+        <div id="adminFilesList">No hay archivos disponibles.</div>
+
+        <h3>Subir Archivo para Administrador</h3>
+        <input type="file" id="userFileInput">
+        <button onclick="userUpload()">Subir Archivo</button>
     </div>
 </div>
 
 <footer>
-    © Creado por Licdo. Carlos E. González c. 2024
+    © 2024 Departamento de Seguridad
 </footer>
 
 <script>
-    function downloadFile() {
-        const input = document.getElementById('fileInput');
-        if (input.files.length > 0) {
-            const file = input.files[0];
-            const url = URL.createObjectURL(file);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = file.name;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
+    let adminFiles = [];
+    let userFiles = [];
+
+    function loginAdmin() {
+        const user = document.getElementById('adminUser').value;
+        const pass = document.getElementById('adminPass').value;
+
+        if (user === 'admin' && pass === 'password123') {
+            document.getElementById('adminActions').classList.remove('hidden');
         } else {
-            alert("Por favor, seleccione un archivo para descargar.");
+            alert('Usuario o contraseña incorrectos');
+        }
+    }
+
+    function adminUpload() {
+        const adminFileInput = document.getElementById('adminFileInput');
+        if (adminFileInput.files.length > 0) {
+            const file = adminFileInput.files[0];
+            adminFiles.push(file);
+            displayAdminFiles();
+            alert("Archivo subido correctamente.");
+        } else {
+            alert("Por favor, seleccione un archivo para subir.");
+        }
+    }
+
+    function userUpload() {
+        const userFileInput = document.getElementById('userFileInput');
+        if (userFileInput.files.length > 0) {
+            const file = userFileInput.files[0];
+            userFiles.push(file);
+            displayUserFiles();
+            alert("Archivo subido correctamente para el administrador.");
+        } else {
+            alert("Por favor, seleccione un archivo para subir.");
+        }
+    }
+
+    function displayAdminFiles() {
+        const adminFilesList = document.getElementById('adminFilesList');
+        adminFilesList.innerHTML = '';
+
+        if (adminFiles.length > 0) {
+            adminFiles.forEach((file, index) => {
+                const fileElement = document.createElement('div');
+                fileElement.innerHTML = `<a href="${URL.createObjectURL(file)}" download="${file.name}">${file.name}</a>`;
+                adminFilesList.appendChild(fileElement);
+            });
+        } else {
+            adminFilesList.innerHTML = 'No hay archivos disponibles.';
+        }
+    }
+
+    function displayUserFiles() {
+        const userFilesList = document.getElementById('userFilesList');
+        userFilesList.innerHTML = '';
+
+        if (userFiles.length > 0) {
+            userFiles.forEach((file, index) => {
+                const fileElement = document.createElement('div');
+                fileElement.innerHTML = `<a href="${URL.createObjectURL(file)}" download="${file.name}">${file.name}</a>`;
+                userFilesList.appendChild(fileElement);
+            });
+        } else {
+            userFilesList.innerHTML = 'No hay archivos subidos por usuarios.';
         }
     }
 </script>

@@ -1,159 +1,110 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>Calculadora de Porcentaje</title>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <link rel="shortcut icon" href="Imagenes/NuevoLogo.png">
-    <header>
-        <div class="caja">
-          
-            <nav>
-                <ul style="text-align: left;">
-                     <li><a href="CalViatico.HTML">Viatico</a></li>
-                    <li><a href="CalculadoraExtras.html">Extras</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+    <title>Departamento de Seguridad</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
+            background-color: #f4f4f4;
             margin: 0;
             padding: 0;
         }
-        h1 {
-            color: #333;
+        header {
+            background-color: #003366;
+            color: white;
             text-align: center;
-            padding: 20px;
-        }
-        form {
-            max-width: 400px;
-            margin: 0 auto;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        label {
-            display: block;
-            margin-bottom: 10px;
+            padding: 20px 0;
+            font-size: 24px;
             font-weight: bold;
         }
-        input[type="number"] {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 3px;
-            margin-bottom: 15px;
+        .container {
+            width: 90%;
+            max-width: 600px;
+            margin: 40px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-        input[type="submit"] {
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 3px;
+        .container h2 {
+            text-align: center;
+            color: #003366;
+        }
+        .file-upload {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .file-upload input[type="file"] {
+            padding: 10px;
+            border: 2px solid #003366;
+            border-radius: 5px;
             cursor: pointer;
         }
-        input[type="submit"]:hover {
-            background-color: #0056b3;
-        }
-        h2 {
-            color: #333;
-            font-size: 18px;
+        .file-upload button {
             margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #003366;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
         }
-        span {
-            font-weight: bold;
-        
+        .file-upload button:hover {
+            background-color: #005299;
         }
-        .dark-mode {
-        background-color: #333;
-        color: #f0f0f0;
-       }
-
-      .dark-mode input,
-      .dark-mode select,
-      .dark-mode button {
-      background-color: #555; /* Fondo gris oscuro */
-      color: #fff; /* Texto blanco */
-      border-color: #999; /* Borde gris */
-    </style></head>
-    <script>
-  function cambiarModo() {
-    const body = document.body;
-    body.classList.toggle("dark-mode");
-    const modoActual = body.classList.contains("dark-mode") ? "Modo Claro" : "Modo Oscuro";
-    document.getElementById("btnModo").textContent = modoActual;
-    localStorage.setItem("modo-oscuro", body.classList.contains("dark-mode"));
-  }
-
-  document.addEventListener("DOMContentLoaded", function () {
-    const modoOscuroGuardado = localStorage.getItem("modo-oscuro") === "true";
-    if (modoOscuroGuardado) {
-      document.body.classList.add("dark-mode");
-      document.getElementById("btnModo").textContent = "Modo Claro";
-    }
-  });
-</script>
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #003366;
+            color: white;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
 <body>
-    <h1>Calculadora el Porcentaje de tu Viatico</h1>
-    <form method="post">
-        <h1><img class="logo" src="Imagenes/LogoOfi.png"></h1>
-        <p> Se no genero Dinero en la 151 rellenar con "0" en los campos de trasporte</p>
-        <label for="transporte">Dinero Gerado en Transporte (Código 151):</label>
-        <input type="number" id="transporte" name="transporte" required><br>
-        <label for="alimentacion">Dinero Gerado en  Alimentación (Código 201):</label>
-        <input type="number" id="alimentacion" name="alimentacion" required><br>
-        <label for="porcentaje_transporte1">Porcentaje de  Transporte 1:</label>
-        <input type="number" id="porcentaje_transporte1" name="porcentaje_transporte1" required><br>
-        <label for="porcentaje_transporte2">Porcentaje de Transporte 2:</label>
-        <input type="number" id="porcentaje_transporte2" name="porcentaje_transporte2" required><br>
-        <label for="porcentaje_alimentacion1">Porcentaje de Alimentación 1:</label>
-        <input type="number" id="porcentaje_alimentacion1" name="porcentaje_alimentacion1" required><br>
-        <label for="porcentaje_alimentacion2">Porcentaje de Alimentación 2:</label>
-        <input type="number" id="porcentaje_alimentacion2" name="porcentaje_alimentacion2" required><br>
-        <input type="submit" value="Calcular">
-    </form>
-    <br>
-    <h2>Copia el Resultado y pegalos en el formulario:</h2>
-    <p>
-        Transporte (Código 151) 1:     <span id="resultado_transporte1"></span><br>
-        Transporte (Código 151) 2:     <span id="resultado_transporte2"></span><br>
-        Alimentación (Código 201) 1:   <span id="resultado_alimentacion1"></span><br>
-        Alimentación (Código 201) 2:   <span id="resultado_alimentacion2"></span><br>
 
-        Total A Pagar:                 <span id="resultado_total"></span>
-    </p>
-    <script>
-    document.querySelector('form').addEventListener('submit', function(event) {
-        event.preventDefault();
-        let transporte = parseFloat(document.getElementById('transporte').value);
-        if (isNaN(transporte)) {
-            transporte = 0; // Si el valor de transporte no es un número, establecerlo en 0
-        }
-        const alimentacion = parseFloat(document.getElementById('alimentacion').value);
-        const porcentaje_transporte1 = parseFloat(document.getElementById('porcentaje_transporte1').value);
-        const porcentaje_transporte2 = parseFloat(document.getElementById('porcentaje_transporte2').value);
-        const porcentaje_alimentacion1 = parseFloat(document.getElementById('porcentaje_alimentacion1').value);
-        const porcentaje_alimentacion2 = parseFloat(document.getElementById('porcentaje_alimentacion2').value);
-        const resultado_transporte1 = transporte * (porcentaje_transporte1 / 100);
-        const resultado_transporte2 = transporte * (porcentaje_transporte2 / 100);
-        const resultado_alimentacion1 = alimentacion * (porcentaje_alimentacion1 / 100);
-        const resultado_alimentacion2 = alimentacion * (porcentaje_alimentacion2 / 100);
-        const total = resultado_transporte1 + resultado_transporte2 + resultado_alimentacion1 + resultado_alimentacion2;
-        document.getElementById('resultado_transporte1').textContent = resultado_transporte1.toFixed(2);
-        document.getElementById('resultado_transporte2').textContent = resultado_transporte2.toFixed(2);
-        document.getElementById('resultado_alimentacion1').textContent = resultado_alimentacion1.toFixed(2);
-        document.getElementById('resultado_alimentacion2').textContent = resultado_alimentacion2.toFixed(2);
-        document.getElementById('resultado_total').textContent = total.toFixed(2);
-    });
-</script>
+<header>
+    Departamento de Seguridad
+</header>
+
+<div class="container">
+    <h2>Subir y Descargar Archivos</h2>
+
+    <div class="file-upload">
+        <input type="file" id="fileInput">
+        <button onclick="downloadFile()">Descargar Archivo</button>
+    </div>
+</div>
 
 <footer>
-    <img class="bandera" src="Imagenes/NuevoLogo.png"> <alt="Logo">
-    <p class="copyright">© Copyright Creado Por Licdo. Carlos E. Gonzalez C.</p>
+    © Creado por Licdo. Carlos E. González c. 2024
 </footer>
+
+<script>
+    function downloadFile() {
+        const input = document.getElementById('fileInput');
+        if (input.files.length > 0) {
+            const file = input.files[0];
+            const url = URL.createObjectURL(file);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = file.name;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        } else {
+            alert("Por favor, seleccione un archivo para descargar.");
+        }
+    }
+</script>
+
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administrador - Departamento de Seguridad</title>
+    <title>Usuario - Departamento de Seguridad</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -28,7 +28,7 @@
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-        input[type="file"], input[type="password"], input[type="text"], button {
+        input[type="file"], button {
             padding: 10px;
             margin: 10px 0;
             width: 100%;
@@ -44,61 +44,42 @@
         button:hover {
             background-color: #005299;
         }
-        .hidden {
-            display: none;
-        }
     </style>
 </head>
 <body>
 
 <header>
-    Departamento de Seguridad - Administrador
+    Departamento de Seguridad - Usuario
 </header>
 
 <div class="container">
-    <h2>Acceso de Administrador</h2>
-    <input type="text" id="adminUser" placeholder="Usuario">
-    <input type="password" id="adminPass" placeholder="Contraseña">
-    <button onclick="loginAdmin()">Iniciar Sesión</button>
+    <h2>Archivos del Administrador</h2>
+    <div id="adminFilesList">No hay archivos disponibles.</div>
 
-    <div id="adminActions" class="hidden">
-        <h3>Subir Archivo para Usuarios</h3>
-        <input type="file" id="adminFileInput">
-        <button onclick="adminUpload()">Subir Archivo</button>
-
-        <h3>Archivos Subidos por Usuarios</h3>
-        <div id="userFilesList">No hay archivos subidos por usuarios.</div>
-    </div>
+    <h3>Subir Archivo para Administrador</h3>
+    <input type="file" id="userFileInput">
+    <button onclick="userUpload()">Subir Archivo</button>
 </div>
 
 <script>
-    function loginAdmin() {
-        const user = document.getElementById('adminUser').value;
-        const pass = document.getElementById('adminPass').value;
-
-        // Mostramos lo que está capturando el usuario y la contraseña para depurar
-        console.log('Usuario ingresado:', user);
-        console.log('Contraseña ingresada:', pass);
-
-        // Usuario: Carlos, Contraseña: johan16
-        if (user === 'Carlos' && pass === 'johan16') {
-            alert('Inicio de sesión exitoso');
-            document.getElementById('adminActions').classList.remove('hidden');
-        } else {
-            alert('Usuario o contraseña incorrectos');
-        }
-    }
-
-    function adminUpload() {
-        const adminFileInput = document.getElementById('adminFileInput');
-        if (adminFileInput.files.length > 0) {
-            const file = adminFileInput.files[0];
-            // Aquí subirías el archivo a un servidor
-            alert("Archivo subido correctamente.");
+    function userUpload() {
+        const userFileInput = document.getElementById('userFileInput');
+        if (userFileInput.files.length > 0) {
+            const file = userFileInput.files[0];
+            // Aquí subirías el archivo al servidor
+            alert("Archivo subido correctamente para el administrador.");
         } else {
             alert("Por favor, seleccione un archivo para subir.");
         }
     }
+
+    function fetchAdminFiles() {
+        // Aquí iría la lógica para cargar los archivos subidos por el administrador
+        document.getElementById('adminFilesList').innerHTML = '<p>Archivo1.txt</p>'; // Ejemplo
+    }
+
+    // Simula la carga de archivos al abrir la página
+    fetchAdminFiles();
 </script>
 
 </body>

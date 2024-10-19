@@ -47,40 +47,35 @@
     </style>
 </head>
 <body>
-
-<header>
-    Departamento de Seguridad - Usuario
-</header>
-
-<div class="container">
-    <h2>Archivos del Administrador</h2>
-    <div id="adminFilesList">No hay archivos disponibles.</div>
-
-    <h3>Subir Archivo para Administrador</h3>
-    <input type="file" id="userFileInput">
-    <button onclick="userUpload()">Subir Archivo</button>
-</div>
-
-<script>
-    function userUpload() {
-        const userFileInput = document.getElementById('userFileInput');
-        if (userFileInput.files.length > 0) {
-            const file = userFileInput.files[0];
-            // Aquí subirías el archivo al servidor
-            alert("Archivo subido correctamente para el administrador.");
-        } else {
-            alert("Por favor, seleccione un archivo para subir.");
+    <header>
+        Departamento de Seguridad - Usuario
+    </header>
+    <div class="container">
+        <h2>Archivos del Administrador</h2>
+        <div id="adminFilesList">No hay archivos disponibles.</div>
+        <h3>Subir Archivo para Administrador</h3>
+        <input type="file" id="userFileInput">
+        <button onclick="userUpload()">Subir Archivo</button>
+    </div>
+    <script>
+        function userUpload() {
+            const userFileInput = document.getElementById('userFileInput');
+            if (userFileInput.files.length > 0) {
+                const file = userFileInput.files[0];
+                // Aquí subirías el archivo al servidor
+                alert("Archivo subido correctamente para el administrador.");
+            } else {
+                alert("Por favor, seleccione un archivo para subir.");
+            }
         }
-    }
 
-    function fetchAdminFiles() {
-        // Aquí iría la lógica para cargar los archivos subidos por el administrador
-        document.getElementById('adminFilesList').innerHTML = '<p>Archivo1.txt</p>'; // Ejemplo
-    }
+        function fetchAdminFiles() {
+            // Aquí iría la lógica para cargar los archivos subidos por el administrador
+            document.getElementById('adminFilesList').innerHTML = '<p>Archivo1.txt</p>'; // Ejemplo
+        }
 
-    // Simula la carga de archivos al abrir la página
-    fetchAdminFiles();
-</script>
-
+        // Simula la carga de archivos al abrir la página
+        fetchAdminFiles();
+    </script>
 </body>
 </html>

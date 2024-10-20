@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Usuario - Departamento de Seguridad</title>
+    <title>Administrador - Departamento de Seguridad</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -28,17 +28,18 @@
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-        input[type="file"], button {
-            padding: 10px;
+        .file-item {
             margin: 10px 0;
-            width: 100%;
-            border: 2px solid #003366;
-            border-radius: 5px;
-            font-size: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         button {
             background-color: #003366;
             color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
             cursor: pointer;
         }
         button:hover {
@@ -48,34 +49,43 @@
 </head>
 <body>
     <header>
-        Departamento de Seguridad - Usuario
+        Departamento de Seguridad - Administrador
     </header>
     <div class="container">
-        <h2>Archivos del Administrador</h2>
-        <div id="adminFilesList">No hay archivos disponibles.</div>
-        <h3>Subir Archivo para Administrador</h3>
-        <input type="file" id="userFileInput">
-        <button onclick="userUpload()">Subir Archivo</button>
+        <h2>Archivos Subidos por Usuarios</h2>
+        <div id="userFilesList">No hay archivos disponibles.</div>
     </div>
     <script>
-        function userUpload() {
-            const userFileInput = document.getElementById('userFileInput');
-            if (userFileInput.files.length > 0) {
-                const file = userFileInput.files[0];
-                // Aquí subirías el archivo al servidor
-                alert("Archivo subido correctamente para el administrador.");
-            } else {
-                alert("Por favor, seleccione un archivo para subir.");
-            }
-        }
+        const userFiles = [
+            { name: 'archivo1.txt', url: 'ruta/archivo1.txt' },
+            { name: 'archivo2.pdf', url: 'ruta/archivo2.pdf' }
+        ];
 
-        function fetchAdminFiles() {
-            // Aquí iría la lógica para cargar los archivos subidos por el administrador
-            document.getElementById('adminFilesList').innerHTML = '<p>Archivo1.txt</p>'; // Ejemplo
+        function displayUserFiles() {
+            const userFilesList = document.getElementById('userFilesList');
+            userFilesList.innerHTML = '';
+
+            if (userFiles.length === 0) {
+                userFilesList.innerHTML = '<p>No hay archivos disponibles.</p>';
+                return;
+            }
+
+            userFiles.forEach(file => {
+                const fileItem = document.createElement('div');
+                fileItem.className = 'file-item';
+                fileItem.innerHTML = `
+                    <span>${file.name}</span>
+                    <a href="${file.url}" download>
+                        <button>Descargar</button>
+                    </a>
+                `;
+                userFilesList.appendChild(fileItem);
+            });
         }
 
         // Simula la carga de archivos al abrir la página
-        fetchAdminFiles();
+        displayUserFiles();
     </script>
 </body>
 </html>
+

@@ -3,89 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Usuario - Departamento de Seguridad</title>
+    <title>Un Mensaje Especial</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
-        header {
-            background-color: #003366;
-            color: white;
+            background-color: #f4e4ea;
+            font-family: 'Arial', sans-serif;
             text-align: center;
-            padding: 20px 0;
-            font-size: 24px;
+            color: #2c003e;
+            padding-top: 10%;
+        }
+        h1 {
+            font-size: 3em;
+        }
+        p {
+            font-size: 1.5em;
+            margin-top: 20px;
+        }
+        .highlight {
+            color: #d63384;
             font-weight: bold;
-        }
-        .container {
-            width: 90%;
-            max-width: 600px;
-            margin: 40px auto;
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        input[type="file"], button {
-            padding: 10px;
-            margin: 10px 0;
-            width: 100%;
-            border: 2px solid #003366;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-        button {
-            background-color: #003366;
-            color: white;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #005299;
         }
     </style>
 </head>
 <body>
-
-<header>
-    Departamento de Seguridad - Usuario
-</header>
-  <nav>
-                <ul>
-                    <li><a href="Cal_Porcentaje.HTML">Administrador</a></li>
-                </ul>
-            </nav>
-
-<div class="container">
-    <h2>Archivos del Administrador</h2>
-    <div id="adminFilesList">No hay archivos disponibles.</div>
-
-    <h3>Subir Archivo para Administrador</h3>
-    <input type="file" id="userFileInput">
-    <button onclick="userUpload()">Subir Archivo</button>
-</div>
-
-<script>
-    function userUpload() {
-        const userFileInput = document.getElementById('userFileInput');
-        if (userFileInput.files.length > 0) {
-            const file = userFileInput.files[0];
-            // Aquí subirías el archivo al servidor
-            alert("Archivo subido correctamente para el administrador.");
-        } else {
-            alert("Por favor, seleccione un archivo para subir.");
-        }
-    }
-
-    function fetchAdminFiles() {
-        // Aquí iría la lógica para cargar los archivos subidos por el administrador
-        document.getElementById('adminFilesList').innerHTML = '<p>Archivo1.txt</p>'; // Ejemplo
-    }
-
-    // Simula la carga de archivos al abrir la página
-    fetchAdminFiles();
-</script>
-
+    <h1>Hola, mi <span class="highlight">amor</span></h1>
+    <p>Te escribo en este lenguaje para decirte que, entre código y palabras, siempre serás mi línea favorita.</p>
+    <p>Porque en cada <span class="highlight">&lt;tag&gt;</span> de mi vida, tú eres el contenido que quiero ver siempre.</p>
 </body>
 </html>

@@ -104,16 +104,15 @@
     }
 
     #btnModo {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        padding: 10px;
+        padding: 5px 10px;
         background-color: #4CAF50;
         color: white;
         border: none;
         border-radius: 50px;
         cursor: pointer;
+        font-size: 12px;
         transition: background-color 0.3s;
+        margin-top: 20px;
     }
 
     #btnModo:hover {
@@ -148,12 +147,12 @@
         </form>
     </div>
 
+    <button id="btnModo" onclick="cambiarModo()">Modo Oscuro</button>
+
     <footer>
         <img class="logo" src="Imagenes/NuevoLogo.png" alt="logo">
         <p class="copyright">© Copyright Creado Por Licdo. Carlos E. Gonzalez C.</p>
     </footer>
-
-    <button id="btnModo" onclick="cambiarModo()">Modo Oscuro</button>
 
     <script>
         // Calcular en tiempo real

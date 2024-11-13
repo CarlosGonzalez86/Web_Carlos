@@ -1,33 +1,203 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Un Mensaje Especial</title>
-    <style>
-        body {
-            background-color: #f4e4ea;
-            font-family: 'Arial', sans-serif;
-            text-align: center;
-            color: #2c003e;
-            padding-top: 10%;
-        }
-        h1 {
-            font-size: 3em;
-        }
-        p {
-            font-size: 1.5em;
-            margin-top: 20px;
-        }
-        .highlight {
-            color: #d63384;
-            font-weight: bold;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="reset.css">
+<link rel="stylesheet" href="style.css">
+<link rel="shortcut icon" href="Imagenes/NuevoLogo.png">
+<title>Calculadora Decimo</title>
+<style>
+    /* Estilos globales */
+    body {
+        background-color: #f4f4f4; /* Fondo claro */
+        color: #333; /* Texto oscuro */
+        font-family: 'Arial', sans-serif;
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+    .container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        transition: transform 0.3s;
+    }
+
+    .container:hover {
+        transform: scale(1.02); /* Efecto hover para darle dinamismo */
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #4CAF50;
+    }
+
+    .input-group {
+        margin-bottom: 20px;
+        transition: all 0.3s;
+    }
+
+    label {
+        font-weight: bold;
+        margin-bottom: 10px;
+        display: block;
+        color: #4CAF50;
+    }
+
+    input {
+        width: 100%;
+        padding: 12px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+        transition: border-color 0.3s;
+        margin-bottom: 10px;
+    }
+
+    input:focus {
+        border-color: #4CAF50;
+        box-shadow: 0px 0px 5px rgba(76, 175, 80, 0.5);
+    }
+
+    button {
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    button:hover {
+        background-color: #45a049;
+    }
+
+    #resultado {
+        margin-top: 20px;
+        background-color: #ffeb3b;
+        padding: 10px;
+        border-radius: 8px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        color: #333;
+    }
+
+    footer {
+        text-align: center;
+        margin-top: 30px;
+        font-size: 12px;
+        color: #888;
+    }
+
+    /* Modo oscuro */
+    .dark-mode {
+        background-color: #333;
+        color: #f4f4f4;
+    }
+
+    .dark-mode input,
+    .dark-mode button {
+        background-color: #555;
+        color: #fff;
+        border-color: #999;
+    }
+
+    #btnModo {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        padding: 10px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    #btnModo:hover {
+        background-color: #45a049;
+    }
+</style>
 </head>
 <body>
-    <h1>Hola, mi <span class="highlight">amor</span></h1>
-    <p>Te escribo en este lenguaje para decirte que, entre código y palabras, siempre serás mi línea favorita.</p>
-    <p>Porque en cada <span class="highlight">&lt;tag&gt;</span> de mi vida, tú eres el contenido que quiero ver siempre.</p>
+    <header>
+        <nav>
+            <ul style="text-align: left; list-style: none; padding: 0;">
+                <li style="display: inline; margin-right: 15px;"><a href="index.html" style="text-decoration: none; color: #4CAF50;">Inicio</a></li>
+                <li style="display: inline; margin-right: 15px;"><a href="contacto.html" style="text-decoration: none; color: #4CAF50;">Contacto</a></li>
+                <li style="display: inline; margin-right: 15px;"><a href="CalViatico.HTML" style="text-decoration: none; color: #4CAF50;">CALCULO DECIMO</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h1><img class="logo" src="Imagenes/NuevoLogo.png" alt="Logo"></h1>
+        <h2>Calcula tus Horas Extras</h2>
+        <form id="formulario">
+            <div class="input-group">
+                <label for="horas">Horas trabajadas:</label>
+                <input type="number" id="horas" placeholder="Ingrese las horas trabajadas">
+            </div>
+
+            <div class="input-group">
+                <label for="tarifa">Tarifa por hora:</label>
+                <input type="number" id="tarifa" placeholder="Ingrese la tarifa por hora">
+            </div>
+
+            <div id="resultado"></div>
+        </form>
+    </div>
+
+    <footer>
+        <img class="logo" src="Imagenes/NuevoLogo.png" alt="logo">
+        <p class="copyright">© Copyright Creado Por Licdo. Carlos E. Gonzalez C.</p>
+    </footer>
+
+    <button id="btnModo" onclick="cambiarModo()">Modo Oscuro</button>
+
+    <script>
+        // Calcular en tiempo real
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('input', calcular);
+        });
+
+        function calcular() {
+            var horas = parseFloat(document.getElementById('horas').value) || 0;
+            var tarifa = parseFloat(document.getElementById('tarifa').value) || 0;
+            var total = horas * tarifa;
+            var deduccion = total * 0.1385;
+            var totalConDeduccion = total - deduccion;
+
+            var resultadoDiv = document.getElementById('resultado');
+            resultadoDiv.innerHTML = '<h3>Resultado</h3><p>Total a pagar: $' + total.toFixed(2) + '</p>' +
+                                      '<p>Descuento del 13.85%: $' + deduccion.toFixed(2) + '</p>' +
+                                      '<p>Total a pagar con descuento: $' + totalConDeduccion.toFixed(2) + '</p>';
+        }
+
+        // Cambiar modo oscuro
+        function cambiarModo() {
+            const body = document.body;
+            body.classList.toggle("dark-mode");
+            const modoActual = body.classList.contains("dark-mode") ? "Modo Claro" : "Modo Oscuro";
+            document.getElementById("btnModo").textContent = modoActual;
+            localStorage.setItem("modo-oscuro", body.classList.contains("dark-mode"));
+        }
+
+        // Guardar la preferencia del modo
+        document.addEventListener("DOMContentLoaded", function () {
+            const modoOscuroGuardado = localStorage.getItem("modo-oscuro") === "true";
+            if (modoOscuroGuardado) {
+                document.body.classList.add("dark-mode");
+                document.getElementById("btnModo").textContent = "Modo Claro";
+            }
+        });
+    </script>
 </body>
 </html>

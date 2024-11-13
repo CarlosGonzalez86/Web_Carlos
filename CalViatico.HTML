@@ -110,14 +110,15 @@
 
     #btnModo {
         position: fixed;
-        bottom: 20px;
+        top: 20px;
         right: 20px;
-        padding: 10px;
+        padding: 5px 10px;
         background-color: #4CAF50;
         color: white;
         border: none;
         border-radius: 50px;
         cursor: pointer;
+        font-size: 12px;
         transition: background-color 0.3s;
     }
 
@@ -130,10 +131,13 @@
     <header>
         <nav>
             <ul style="text-align: left; list-style: none; padding: 0;">
-                <li><a href="CalculadoraExtras.html">Extras</a></li>
+
+
             </ul>
         </nav>
     </header>
+
+    <button id="btnModo" onclick="cambiarModo()">Modo Oscuro</button>
 
     <div class="container">
         <h1><img class="logo" src="Imagenes/NuevoLogo.png" alt="Logo"></h1>
@@ -152,8 +156,6 @@
         <img class="logo" src="Imagenes/NuevoLogo.png" alt="logo">
         <p class="copyright">© Copyright Creado Por Licdo. Carlos E. Gonzalez C.</p>
     </footer>
-
-    <button id="btnModo" onclick="cambiarModo()">Modo Oscuro</button>
 
     <script>
         // Calcular en tiempo real

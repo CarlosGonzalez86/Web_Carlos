@@ -6,178 +6,249 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Web Carlos E. Gonzalez</title>
-    <link rel="stylesheet" href="reset.css">
-    <link rel="stylesheet" href="style.css">
-    <link rel="shortcut icon" href="Imagenes/NuevoLogo.png">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="shortcut icon" href="Imagenes/NuevoLogo.png" />
     <style>
+        /* General Styling */
         body {
-            font-family: Arial, Helvetica, sans-serif;
-            background-color: #f0f0f0;
-            color: #333;
+            font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+            transition: background-color 0.3s, color 0.3s;
         }
 
         header {
-            background-color: #1a1a1a;
+            background: linear-gradient(90deg, #007bff, #0056b3);
             color: #fff;
-            padding: 20px;
             text-align: center;
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        header .logo {
+            width: 60px;
+            height: auto;
+            margin-bottom: 10px;
         }
 
         nav ul {
-            list-style-type: none;
+            list-style: none;
             padding: 0;
             margin: 0;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
         }
 
-        nav ul li {
-            display: inline;
-            margin-right: 20px;
-        }
-
-        nav ul li a {
+        nav a {
             color: #fff;
             text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 600;
         }
 
-        button {
-            padding: 8px 16px;
-            font-size: 14px;
-            margin: 8px;
-            border-radius: 20px;
-            cursor: pointer;
-            background-color: #4CAF50;
-            color: #fff;
-            border: none;
-            transition: background-color 0.3s;
-        }
-
-        button:hover {
-            background-color: #1a1a1a;
-        }
-
-        .dark-mode {
-            background-color: #333;
-            color: #f0f0f0;
-        }
-
-        img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-            margin: auto;
+        nav a:hover {
+            text-decoration: underline;
         }
 
         .titulo-principal {
             text-align: center;
+            font-size: 2rem;
+            margin-top: 20px;
+        }
+
+        .video {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        iframe {
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
 
         .principal,
-        .mapa,
         .diferenciales {
             padding: 20px;
+            margin: 20px auto;
+            max-width: 900px;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .principal:hover,
+        .diferenciales:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .principal img {
+            width: 100%;
+            border-radius: 15px;
+            margin: 20px 0;
         }
 
         .diferenciales ul {
-            list-style-type: none;
+            list-style: none;
             padding: 0;
+            margin: 0;
         }
 
         .diferenciales .items {
-            margin-bottom: 10px;
+            margin: 10px 0;
+            padding: 10px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .diferenciales .items:hover {
+            background: #007bff;
+            color: #fff;
         }
 
         footer {
-            background-color: #1a1a1a;
+            background: #333;
             color: #fff;
-            padding: 20px;
             text-align: center;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        footer img {
+            width: 30px;
+            margin-bottom: 10px;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        .modo-oscuro-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .modo-oscuro-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Dark Mode */
+        body.dark-mode {
+            background-color: #1c1c1c;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode header {
+            background: linear-gradient(90deg, #333, #444);
+        }
+
+        body.dark-mode .principal,
+        body.dark-mode .diferenciales {
+            background: #2c2c2c;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .diferenciales .items {
+            background: #444;
+        }
+
+        body.dark-mode footer {
+            background: #333;
+        }
+
+        body.dark-mode .modo-oscuro-btn {
+            background: linear-gradient(135deg, #444, #555);
         }
     </style>
     <script>
         function cambiarModo() {
             const body = document.body;
             body.classList.toggle("dark-mode");
-            const modoActual = body.classList.contains("dark-mode") ? "Modo Claro" : "Modo Oscuro";
-            document.getElementById("btnModo").textContent = modoActual;
             localStorage.setItem("modo-oscuro", body.classList.contains("dark-mode"));
         }
 
         document.addEventListener("DOMContentLoaded", function () {
-            const modoOscuroGuardado = localStorage.getItem("modo-oscuro") === "true";
-            if (modoOscuroGuardado) {
+            if (localStorage.getItem("modo-oscuro") === "true") {
                 document.body.classList.add("dark-mode");
-                document.getElementById("btnModo").textContent = "Modo Claro";
             }
         });
     </script>
 </head>
 
 <body>
-    <button id="btnModo" onclick="cambiarModo()">Modo Oscuro</button>
-
     <header>
-        <div class="caja">
-            <h1><img class="logo" src="Imagenes/NuevoLogo.png" alt="Logo"></h1>
-            <nav>
-                <ul>
-                    <li><a href="contacto.html">Contacto</a></li>
-                    <li><a href="CalculadoraExtras.html">Extras</a></li>
-                    <li><a href="CalViatico.HTML">Decimo</a></li>
-                    <li><a href="Cal_Porcentaje.HTML">Beta</a></li>
-                </ul>
-            </nav>
-        </div>
+        <h1><img class="logo" src="Imagenes/NuevoLogo.png" alt="Logo"> Contáctame</h1>
+        <nav>
+            <ul>
+                <li><a href="contacto.html">Contacto</a></li>
+                <li><a href="CalculadoraExtras.html">Extras</a></li>
+                <li><a href="CalViatico.HTML">Decimo</a></li>
+                <li><a href="Cal_Porcentaje.HTML">Beta</a></li>
+            </ul>
+        </nav>
     </header>
 
-    <div>
-        <h1 class="titulo-principal"><strong>Aprendizaje, Logica del Pensamiento y la Actitud </strong>.</h1>
-    </div>
+    <h1 class="titulo-principal"><strong>Aprendizaje, Lógica del Pensamiento y la Actitud</strong></h1>
 
     <div class="video">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/4sRDSHhcqik?si=Ygwgd4wy6-Grl9D3" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write;
-    encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
-    
-</iframe>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/4sRDSHhcqik" allowfullscreen></iframe>
     </div>
 
     <main>
         <section class="principal">
-            <h3 class="titulo-principal"><strong><em>Educaciòn y Programaciòn</em></strong></h3>
-            <img class="LogoOficina" src="Imagenes/Pc.jfif" alt="ilustracion">
-            <p>Con el fin de trabajar en conjunto <strong>He creado para ustedes mi pagina web</strong>  en esta web podras entrar a la sección de contacto para contestar tus interrogantes e inquietudes.</p>
-            <p id="mision"><em>Les contare un poco de mi historia: <strong>"Reseña Histórica"</strong>.</em></p>
-            <p>"Nací en la República de Panamá en 1986 y fui criado por una familia humilde, compartiendo hogar con mis padres y hermanos, sumando un total 
-                de ocho personas. Desde temprana edad, cultivé una visión clara y ambiciosa respecto a mis objetivos, siempre manteniendo la humildad como un valor fundamental. Pude realizar mis estudios académicos con éxito. 
-                Actualmente, me enorgullece decir que he alcanzado mi meta de ser Licenciado en Sistemas Y Programación y Certificado internacional de la Plataforma Alura Latam Rio de Janeiro Brasil, y sigo avanzando en mi trayectoria profesional."</p>
+            <h3 class="titulo-principal"><strong>Educación y Programación</strong></h3>
+            <img src="Imagenes/Pc.jfif" alt="Ilustración">
+            <p><strong>He creado esta página web para ti</strong>. Entra a la sección de contacto para resolver tus dudas e inquietudes.</p>
+            <p><em>"Nací en la República de Panamá... (historia personal)"</em></p>
         </section>
 
         <div class="video">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/7vbi-OCFZEY?si=op4aQGfI6ud6escK" title="YouTube video player" frameborder="0" 
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" 
-    allowfullscreen>
-
-</iframe>
-    </div>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/7vbi-OCFZEY" allowfullscreen></iframe>
+        </div>
 
         <section class="diferenciales">
-            <h3 class="titulo-principal">Características que veras en esta web</h3>
+            <h3 class="titulo-principal">Características que Verás en esta Web</h3>
             <ul>
-                <li class="items">Programaciòn</li>
-                <li class="items">Realizaras calculos</li>
-                <li class="items">Mantengo un Secciòn de Contacto donde podras comunicarte conmigo</li>
-                <li class="items">Realiza calculos de tu Décimo</li>
+                <li class="items">Programación</li>
+                <li class="items">Realizarás cálculos</li>
+                <li class="items">Sección de Contacto</li>
+                <li class="items">Calculadora de Décimo</li>
             </ul>
         </section>
     </main>
 
     <footer>
         <img class="bandera" src="Imagenes/NuevoLogo.png" alt="Logo">
-        <p class="copyright">© Copyright Creado Por Licdo. Carlos E. Gonzalez C.</p>
+        <p>© Creado por Licdo. Carlos E. Gonzalez C.</p>
     </footer>
 
-    <script src="./script.js"></script>
+    <button class="modo-oscuro-btn" onclick="cambiarModo()">
+        <i class="fas fa-moon"></i>
+    </button>
 </body>
 
 </html>

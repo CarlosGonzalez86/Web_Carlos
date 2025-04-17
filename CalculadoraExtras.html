@@ -141,38 +141,8 @@
         .logo {
             display: block;
             margin: 0 auto;
-            max-width: 100%; /* Se adapta al ancho del contenedor */
-            height: auto; /* Mantiene la proporción de la imagen */
-        }
-
-        /* Media Queries para pantallas pequeñas */
-        @media (max-width: 768px) {
-            .container {
-                padding: 15px;
-            }
-
-            h2 {
-                font-size: 1.5rem; /* Reduce el tamaño del título en móviles */
-            }
-
-            button {
-                font-size: 14px; /* Ajusta el tamaño del botón */
-            }
-        }
-
-        /* Media Queries para pantallas muy pequeñas */
-        @media (max-width: 480px) {
-            h2 {
-                font-size: 1.2rem; /* Reduce aún más el título */
-            }
-
-            input {
-                padding: 10px; /* Reduce el padding de los campos de entrada */
-            }
-
-            button {
-                padding: 10px; /* Reduce el tamaño del botón */
-            }
+            max-width: 100%;
+            height: auto;
         }
 
         .modo-oscuro-btn {
@@ -215,14 +185,14 @@
         <form id="formulario">
             <div class="input-group">
                 <label for="salario">Salario mensual:</label>
-                <input type="number" id="salario" placeholder="Ingrese su salario mensual">
+                <input type="number" id="salario" placeholder="Ingrese su salario mensual" min="0">
             </div>
 
             <div id="resultado"></div>
         </form>
     </div>
 
-    <button class="modo-oscuro-btn" onclick="cambiarModo()">
+    <button class="modo-oscuro-btn" onclick="cambiarModo()" aria-label="Botón para cambiar el modo oscuro">
         <i class="fas fa-moon"></i>
     </button>
 
@@ -232,16 +202,24 @@
     </footer>
 
     <script>
-        // Calcular en tiempo real
+        // Validar y calcular
         document.getElementById('salario').addEventListener('input', calcular);
 
         function calcular() {
-            var salario = parseFloat(document.getElementById('salario').value) || 0;
-            var salarioDividido = salario / 3;
-            var deduccion = salarioDividido * 0.1385;
-            var totalConDeduccion = salarioDividido - deduccion;
+            const salarioInput = document.getElementById('salario');
+            const salario = parseFloat(salarioInput.value) || 0;
 
-            var resultadoDiv = document.getElementById('resultado');
+            if (salario < 0) {
+                alert("El salario no puede ser negativo.");
+                salarioInput.value = '';
+                return;
+            }
+
+            const salarioDividido = salario / 3;
+            const deduccion = salarioDividido * 0.1385;
+            const totalConDeduccion = salarioDividido - deduccion;
+
+            const resultadoDiv = document.getElementById('resultado');
             resultadoDiv.innerHTML = `
                 <h3>Resultado</h3>
                 <p><strong>Total dividido por 3:</strong> $${salarioDividido.toFixed(2)}</p>
@@ -252,11 +230,15 @@
         // Cambiar modo oscuro
         function cambiarModo() {
             const body = document.body;
-            body.classList.toggle("dark-mode");
-            localStorage.setItem("modo-oscuro", body.classList.contains("dark-mode"));
+            const modoOscuro = body.classList.toggle("dark-mode");
+            try {
+                localStorage.setItem("modo-oscuro", modoOscuro);
+            } catch (e) {
+                console.warn("LocalStorage no está disponible.");
+            }
         }
 
-        // Guardar la preferencia del modo
+        // Cargar preferencia del modo oscuro
         document.addEventListener("DOMContentLoaded", function () {
             if (localStorage.getItem("modo-oscuro") === "true") {
                 document.body.classList.add("dark-mode");

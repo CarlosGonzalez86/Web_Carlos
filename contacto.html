@@ -5,69 +5,90 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Contactame</title>
-    <link rel="stylesheet" href="reset.css">
-    <link rel="stylesheet" href="style.css">
-    <link rel="shortcut icon" href="Imagenes/NuevoLogo.png">
-
+    <title>Contáctame</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="shortcut icon" href="Imagenes/NuevoLogo.png" />
     <style>
-        /* Estilos específicos para la página de contacto */
-        main {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
         }
 
-        .productos {
+        header {
+            background-color: #007bff;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        header .logo {
+            width: 50px;
+            height: auto;
+        }
+
+        nav ul {
             list-style: none;
             padding: 0;
             margin: 0;
             display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .productos {
+            display: flex;
             flex-wrap: wrap;
-            justify-content: center; /* Para centrar los elementos */
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
         }
 
         .productos li {
             width: 300px;
-            box-sizing: border-box;
-            padding: 20px;
-            margin: 10px;
             border: 1px solid #ddd;
-            border-radius: 5px;
-            background-color: #fff; /* Fondo blanco */
-            text-align: center; /* Texto centrado */
+            border-radius: 10px;
+            padding: 15px;
+            background-color: #fff;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
         }
 
-        /* Cambios en el modo oscuro */
-        body.dark-mode {
-            background-color: #333;
-            color: #f0f0f0;
+        .productos li:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
 
-        body.dark-mode .productos li {
-            background-color: #555; /* Fondo gris oscuro */
-            border-color: #999; /* Borde gris */
-            color: #fff; /* Texto blanco */
+        .productos img {
+            width: 100%;
+            border-radius: 10px;
         }
 
-        /* Cambios para pantallas pequeñas */
-        @media screen and (max-width: 768px) {
-            .productos li {
-                width: 100%; /* Cambiamos el ancho para adaptarse a la pantalla */
-            }
-        }
-
-        /* Estilos para el formulario */
         fieldset {
-            margin-top: 20px;
+            margin: 20px auto;
+            max-width: 800px;
             padding: 20px;
             border: 1px solid #ddd;
-            border-radius: 5px;
-            background-color: #fff; /* Fondo blanco */
+            border-radius: 10px;
+            background-color: #fff;
         }
 
         legend {
             font-weight: bold;
+            font-size: 1.2em;
             margin-bottom: 10px;
         }
 
@@ -76,32 +97,82 @@
             margin-bottom: 10px;
         }
 
-        /* Estilos para los enlaces */
         a {
             color: #007bff;
             text-decoration: none;
+            font-weight: bold;
         }
 
         a:hover {
             text-decoration: underline;
         }
-    </style>
 
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .bandera {
+            width: 30px;
+            vertical-align: middle;
+        }
+
+        .modo-oscuro-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .modo-oscuro-btn:hover {
+            background-color: #0056b3;
+        }
+
+        /* Modo oscuro */
+        body.dark-mode {
+            background-color: #121212;
+            color: #f0f0f0;
+        }
+
+        body.dark-mode header,
+        body.dark-mode footer {
+            background-color: #1f1f1f;
+        }
+
+        body.dark-mode .productos li {
+            background-color: #1f1f1f;
+            border-color: #444;
+            color: #fff;
+        }
+
+        body.dark-mode fieldset {
+            background-color: #1f1f1f;
+            border-color: #444;
+        }
+    </style>
     <script>
-        // Código JavaScript para cambiar el modo oscuro
         function cambiarModo() {
             const body = document.body;
             body.classList.toggle("dark-mode");
-            const modoActual = body.classList.contains("dark-mode") ? "Modo Claro" : "Modo Oscuro";
-            document.getElementById("btnModo").textContent = modoActual;
             localStorage.setItem("modo-oscuro", body.classList.contains("dark-mode"));
         }
 
         document.addEventListener("DOMContentLoaded", function () {
-            const modoOscuroGuardado = localStorage.getItem("modo-oscuro") === "true";
-            if (modoOscuroGuardado) {
+            if (localStorage.getItem("modo-oscuro") === "true") {
                 document.body.classList.add("dark-mode");
-                document.getElementById("btnModo").textContent = "Modo Claro";
             }
         });
     </script>
@@ -109,69 +180,54 @@
 
 <body>
     <header>
-        <div class="caja">
-            <h1><img class="logo" src="Imagenes/NuevoLogo.png"></h1>
-            <nav>
-                <ul style="text-align: left;">
-                    <li><a href="index.html">Inicio</a></li>
-                    <li><a href="CalculadoraExtras.html">Extras</a></li>
-                    </ul>
-            </nav>
-        </div>
+        <h1><img class="logo" src="Imagenes/NuevoLogo.png" alt="Logo"> Contáctame</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="CalculadoraExtras.html">Extras</a></li>
+            </ul>
+        </nav>
     </header>
 
     <div>
-        <h2 class="titulo-principal"><strong>Mis Redes Sociales</strong>.</h2>
+        <h2 style="text-align: center;">Mis Redes Sociales</h2>
         <ul class="productos">
             <li>
-                <h2>Instagram </h2>
-                <img class="tiempo" src="Imagenes/tiempo.jpg">
-                <p class="producto-descripcion">Sígueme subiré historias y reel, mi contenido es netamente de entretenimiento y estaré implementado videos educativos</p>
-                <p class="producto-precio"></p>
+                <h3>Instagram</h3>
+                <img src="Imagenes/tiempo.jpg" alt="Instagram">
+                <p>Sígueme para contenido educativo y de entretenimiento.</p>
+                <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
             </li>
             <li>
-                <h2>YouTube </h2>
-                <img class="Permiso" src="Imagenes/Permiso.jpg">
-                <p class="producto-descripcion">Mi canal de YouTube cuenta con videos realizados en la temporada universitaria, contenido <strong>"entretenimiento"</strong> </p>
-                <p class="producto-precio"></p>
+                <h3>YouTube</h3>
+                <img src="Imagenes/Permiso.jpg" alt="YouTube">
+                <p>Descubre videos de entretenimiento y aprendizaje.</p>
+                <a href="https://youtube.com" target="_blank"><i class="fab fa-youtube"></i> YouTube</a>
             </li>
             <li>
-                <h2>Tik Tok </h2>
-                <img class="horarios" src="Imagenes/horario.jpg">
-                <p class="producto-descripcion">Contenido entretenido <strong>"Versos y Programación Ideas libres"</strong></p>
-                <p class="producto-precio"></p>
+                <h3>TikTok</h3>
+                <img src="Imagenes/horario.jpg" alt="TikTok">
+                <p>Contenido divertido y creativo sobre programación.</p>
+                <a href="https://tiktok.com" target="_blank"><i class="fab fa-tiktok"></i> TikTok</a>
             </li>
         </ul>
     </div>
 
     <main>
-        <h2>Te dejo el formulario en linea para que me dejes saber tu inquietud y solicitud</h2>
-        <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAZ__vFFjmJUODdTQjMyQUYzOVI0SVdVNURRWjBJR0tCQi4u" target="_blank">Entra al Link de del Formulario</a>
-
+        <h2 style="text-align: center;">Formulario de Contacto</h2>
         <fieldset>
-            <legend>Dejo mis numeros de atencion Cisco y Link para WhatsApp</legend>
-
-            <label for="radio-email"><input type="radio" name="contacto" value="email" id="radio-email">Utiliza el Cisco 10212 si Trabajas en la Caja de Seguro Social</label>
-
-            <label for="radio-telefono"><input type="radio" name="contacto" value="telefono" id="radio-telefono">Llamada externa</label>
-            <a href="tel:513-0212" target="_blank">513-0212</a>
-
-            <label for="radio-whatsapp"><input type="radio" name="contacto" value="whatsapp" id="radio-whatsapp" checked>WhatsApp</label>
-            <a href="https://wa.me/message/DQ36YDUXXWRKP1" target="_blank">Entra al Link de WhatsApp</a>
-        </fieldset>
-
-        <fieldset>
-            <legend>Gracias por Contactarnos</legend>
+            <legend>Contáctanos</legend>
+            <label><input type="radio" name="contacto" value="email"> Cisco: 10212</label>
+            <label><input type="radio" name="contacto" value="telefono"> Llamada: <a href="tel:513-0212">513-0212</a></label>
+            <label><input type="radio" name="contacto" value="whatsapp" checked> WhatsApp: <a href="https://wa.me/message/DQ36YDUXXWRKP1">Enlace WhatsApp</a></label>
         </fieldset>
     </main>
 
     <footer>
-        <img class="bandera" src="Imagenes/NuevoLogo.png"> <alt="Logo">
-        <p class="copyright">© Copyright Creado Por Licdo. Carlos E. Gonzalez C.</p>
+        <p>© 2025 Creado por Licdo. Carlos E. Gonzalez C.</p>
     </footer>
 
-    <button id="btnModo" onclick="cambiarModo()">Modo Oscuro</button>
+    <button class="modo-oscuro-btn" onclick="cambiarModo()"><i class="fas fa-moon"></i></button>
 </body>
 
 </html>
-

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="shortcut icon" href="Imagenes/css (1).png">
+    <link rel="shortcut icon" href="Imagenes/css(1).png">
     <title>Calculadora de Décimo</title>
     <style>
         /* General Styling */
@@ -140,9 +140,9 @@
         /* Imagen responsiva */
         .logo {
             display: block;
-            margin: 0 auto;
-            max-width: 100%; /* Permite que la imagen se adapte al ancho del contenedor */
-            height: auto; /* Mantiene las proporciones de la imagen */
+            margin: 20px auto; /* Centra horizontalmente */
+            max-width: 100%; /* La imagen no excede el ancho del contenedor */
+            height: auto; /* Mantiene las proporciones */
         }
 
         /* Media Queries para pantallas pequeñas */
@@ -248,7 +248,7 @@
     </header>
 
     <div class="container">
-        <h1><img class="logo" src="Imagenes/css (1).png" alt="Logo"></h1>
+        <h1><img class="logo" src="Imagenes/css(1).png" alt="Logo"></h1>
         <h2>Calcula tu Décimo Tercer Mes</h2>
         <form id="formulario">
             <div class="input-group">
@@ -265,56 +265,9 @@
     </button>
 
     <footer>
-        <img src="Imagenes/css (1).png" alt="Logo">
+        <img src="Imagenes/css(1).png" alt="Logo">
         <p>© Creado por Licdo. Carlos E. Gonzalez C.</p>
     </footer>
-
-    <script>
-        // Calcular en tiempo real
-        document.getElementById('salario').addEventListener('input', calcular);
-
-        function calcular() {
-            const salario = parseFloat(document.getElementById('salario').value) || 0;
-            const salarioDividido = salario / 3;
-            const deduccion = salarioDividido * 0.1385;
-            const totalConDeduccion = salarioDividido - deduccion;
-
-            const resultadoDiv = document.getElementById('resultado');
-            resultadoDiv.innerHTML = `
-                <h3>Resultado</h3>
-                <p><strong>Total dividido por 3:</strong> $${salarioDividido.toFixed(2)}</p>
-                <p><strong>Descuento del 13.85%:</strong> $${deduccion.toFixed(2)}</p>
-                <p><strong>Total a pagar con descuento:</strong> $${totalConDeduccion.toFixed(2)}</p>`;
-        }
-
-        // Cambiar modo oscuro
-        function cambiarModo() {
-            const body = document.body;
-            body.classList.toggle("dark-mode");
-            const isDarkMode = body.classList.contains("dark-mode");
-            localStorage.setItem("modo-oscuro", isDarkMode);
-
-            const icon = document.getElementById("modoOscuroBtn").querySelector("i");
-            if (isDarkMode) {
-                icon.classList.remove("fa-moon");
-                icon.classList.add("fa-sun");
-            } else {
-                icon.classList.remove("fa-sun");
-                icon.classList.add("fa-moon");
-            }
-        }
-
-        // Restaurar la preferencia del modo oscuro al cargar
-        document.addEventListener("DOMContentLoaded", function () {
-            const isDarkMode = localStorage.getItem("modo-oscuro") === "true";
-            if (isDarkMode) {
-                document.body.classList.add("dark-mode");
-                const icon = document.getElementById("modoOscuroBtn").querySelector("i");
-                icon.classList.remove("fa-moon");
-                icon.classList.add("fa-sun");
-            }
-        });
-    </script>
 </body>
 
 </html>

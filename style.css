@@ -28,9 +28,26 @@ header {
     padding: 20px 10px;
 }
 
+/* Imagen responsiva */
 .logo {
-    width: 150px;
-    padding: 5px;
+    display: block;
+    margin: 0 auto;
+    max-width: 100%; /* La imagen no excede el ancho del contenedor */
+    height: auto;    /* Mantiene proporciones */
+}
+
+/* Media Queries para pantallas pequeñas */
+@media (max-width: 768px) {
+    .logo {
+        max-width: 80%; /* Ajusta el tamaño de la imagen en pantallas más pequeñas */
+    }
+}
+
+/* Media Queries para pantallas muy pequeñas */
+@media (max-width: 480px) {
+    .logo {
+        max-width: 70%; /* Ajusta aún más el tamaño de la imagen */
+    }
 }
 
 .caja {

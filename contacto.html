@@ -114,11 +114,6 @@
             color: #fff;
         }
 
-        .bandera {
-            width: 30px;
-            vertical-align: middle;
-        }
-
         .modo-oscuro-btn {
             position: fixed;
             bottom: 20px;
@@ -162,6 +157,20 @@
             background-color: #1f1f1f;
             border-color: #444;
         }
+
+        #selected-contact {
+            margin-top: 20px;
+            padding: 15px;
+            background: #e7f3ff;
+            border-left: 5px solid #007bff;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        body.dark-mode #selected-contact {
+            background: #444;
+            border-left-color: #ffc107;
+        }
     </style>
     <script>
         function cambiarModo() {
@@ -174,6 +183,34 @@
             if (localStorage.getItem("modo-oscuro") === "true") {
                 document.body.classList.add("dark-mode");
             }
+
+            // Dinámicamente muestra la selección
+            const radios = document.querySelectorAll('input[name="contacto"]');
+            const selectedContactDiv = document.getElementById('selected-contact');
+
+            radios.forEach(radio => {
+                radio.addEventListener('change', () => {
+                    const value = radio.value;
+                    let message = '';
+
+                    switch (value) {
+                        case 'email':
+                            message = 'Has seleccionado: <strong>Cisco</strong> - Extensión 10212.';
+                            break;
+                        case 'telefono':
+                            message = 'Has seleccionado: <strong>Llamada</strong>. <a href="tel:503-0212">Haz clic para llamar: 503-0212</a>';
+                            break;
+                        case 'whatsapp':
+                            message = 'Has seleccionado: <strong>WhatsApp</strong>. <a href="https://wa.me/message/DQ36YDUXXWRKP1" target="_blank">Haz clic para abrir el chat.</a>';
+                            break;
+                        case 'Correo':
+                            message = 'Has seleccionado: <strong>Correo de Trabajo</strong>. <a href="mailto:cengonzalez@css.gob.pa">Enviar correo</a>';
+                            break;
+                    }
+
+                    selectedContactDiv.innerHTML = message;
+                });
+            });
         });
     </script>
 </head>
@@ -189,63 +226,27 @@
         </nav>
     </header>
 
-    <div>
-        <h2 style="text-align: center;">Mis Redes Sociales</h2>
-        <ul class="productos">
-            <li>
-                <h3>Instagram</h3>
-                <img src="Imagenes/Instagram.jpg" alt="Instagram">
-                <p>Sígueme para contenido educativo y de entretenimiento.</p>
-                <a href="https://www.instagram.com/cg.concepcion?igsh=bnhxMXd4ZmQ1dTVo" target="_blank">
-                    <i class="fab fa-instagram"></i> Ir a Instagram
-                </a>
-            </li>
-            <li>
-                <h3>YouTube</h3>
-                <img src="Imagenes/YouTube.png" alt="YouTube">
-                <p>Descubre videos de entretenimiento y aprendizaje.</p>
-                <a href="https://www.youtube.com/@carlosgonzalezconcepcion446" target="_blank">
-                    <i class="fab fa-youtube"></i> Ir a YouTube
-                </a>
-            </li>
-            <li>
-                <h3>TikTok</h3>
-                <img src="Imagenes/tiktok.jpg" alt="TikTok">
-                <p>Contenido divertido y creativo Versos y Programación entre otros.</p>
-                <a href="https://www.tiktok.com/@developercode0?_t=ZM-8vcPV7X12hh&_r=1" target="_blank">
-                    <i class="fab fa-tiktok"></i> Ir a TikTok
-                </a>
-            </li>
-            <li>
-                <h3>LinkedIn</h3>
-                <img src="Imagenes/LinkedIn.png" alt="TikTok">
-                <p>Mi red social para las empresas interesadas en Sistemas y Programación. </p>
-                <a href="https://www.linkedin.com/in/carlos-gonz%C3%A1lez-concepci%C3%B3n-631672271?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app">
-                    <i class="fab fa-LinkedIn"></i> Ir a LinkedIn
-                </a>
-            </li>
-        </ul>
-    </div>
-
     <main>
-        
         <fieldset>
             <legend>Contactos del trabajo</legend>
             <label><input type="radio" name="contacto" value="email"> Cisco: 10212</label>
             <label><input type="radio" name="contacto" value="telefono"> Llamada: <a href="tel:503-0212">503-0212</a></label>
             <label><input type="radio" name="contacto" value="whatsapp" checked> WhatsApp: <a href="https://wa.me/message/DQ36YDUXXWRKP1">Enlace WhatsApp</a></label>
-            <label>
-    <input type="radio" name="contacto" value="Correo" checked>
-    Correo de Trabajo: 
-    <a href="mailto:cengonzalez@css.gob.pa">Enlace del Correo Institucional</a>
-</label>
+            <label><input type="radio" name="contacto" value="Correo"> Correo de Trabajo: <a href="mailto:cengonzalez@css.gob.pa">Enlace del Correo Institucional</a></label>
         </fieldset>
+
+        <div id="selected-contact">
+            Has seleccionado: <strong>WhatsApp</strong>.
+        </div>
     </main>
 
     <footer>
-        <p>© 2025 Creado por Licdo. Carlos E. González </p>
+        <p>© Creado por Licdo. Carlos E. Gonzalez C.</p>
     </footer>
-    <button class="modo-oscuro-btn" onclick="cambiarModo()"><i class="fas fa-moon"></i></button>
+
+    <button class="modo-oscuro-btn" onclick="cambiarModo()">
+        <i class="fas fa-moon"></i>
+    </button>
 </body>
 
 </html>

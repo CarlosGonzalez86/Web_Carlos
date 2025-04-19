@@ -195,7 +195,7 @@
             const body = document.body;
             const icon = document.querySelector(".modo-oscuro-btn i");
 
-            // Alternar la clase de modo oscuro
+            // Alternar modo oscuro
             body.classList.toggle("dark-mode");
 
             // Guardar preferencia en localStorage
@@ -221,6 +221,23 @@
                 icon.classList.remove("fa-moon");
                 icon.classList.add("fa-sun");
             }
+
+            // Agregar funcionalidad de cálculo
+            const formulario = document.getElementById("formulario");
+            const resultadoDiv = document.getElementById("resultado");
+
+            formulario.addEventListener("submit", function (event) {
+                event.preventDefault();
+                const salario = parseFloat(document.getElementById("salario").value);
+
+                if (isNaN(salario) || salario <= 0) {
+                    resultadoDiv.innerHTML = "<strong>Por favor, ingrese un salario válido.</strong>";
+                    return;
+                }
+
+                const decimo = salario / 12;
+                resultadoDiv.innerHTML = `<strong>El décimo correspondiente es: $${decimo.toFixed(2)}</strong>`;
+            });
         });
     </script>
 </head>
@@ -234,14 +251,15 @@
         </nav>
     </header>
 
-  <h1><img class="logo" src="Imagenes/css (1).png" alt="Logo" style="display: block; margin: 0 auto;"></h1>
+    <div class="container">
+        <h1><img class="logo" src="Imagenes/css (1).png" alt="Logo"></h1>
         <h2>Calcula tu Décimo Tercer Mes</h2>
         <form id="formulario">
             <div class="input-group">
                 <label for="salario">Salario mensual:</label>
-                <input type="number" id="salario" placeholder="Ingrese su salario mensual">
+                <input type="number" id="salario" placeholder="Ingrese su salario mensual" required>
             </div>
-
+            <button type="submit">Calcular</button>
             <div id="resultado"></div>
         </form>
     </div>

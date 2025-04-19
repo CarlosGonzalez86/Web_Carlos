@@ -187,13 +187,33 @@
     <script>
         function cambiarModo() {
             const body = document.body;
+            const icon = document.querySelector(".modo-oscuro-btn i");
+
+            // Toggle dark mode
             body.classList.toggle("dark-mode");
+
+            // Save preference in localStorage
             localStorage.setItem("modo-oscuro", body.classList.contains("dark-mode"));
+
+            // Change the icon
+            if (body.classList.contains("dark-mode")) {
+                icon.classList.remove("fa-moon");
+                icon.classList.add("fa-sun");
+            } else {
+                icon.classList.remove("fa-sun");
+                icon.classList.add("fa-moon");
+            }
         }
 
         document.addEventListener("DOMContentLoaded", function () {
+            const body = document.body;
+            const icon = document.querySelector(".modo-oscuro-btn i");
+
+            // Restore dark mode if previously enabled
             if (localStorage.getItem("modo-oscuro") === "true") {
-                document.body.classList.add("dark-mode");
+                body.classList.add("dark-mode");
+                icon.classList.remove("fa-moon");
+                icon.classList.add("fa-sun");
             }
         });
     </script>
@@ -201,7 +221,7 @@
 
 <body>
     <header>
-        <h1>    <img class="logo" src="Imagenes/NuevoLogo.png" alt="Logo" style="display: block; margin: 0 auto;"> Página Web Carlos González </h1>
+        <h1><img class="logo" src="Imagenes/NuevoLogo.png" alt="Logo" style="display: block; margin: 0 auto;"> Página Web Carlos González</h1>
         <nav>
             <ul>
                 <li><a href="contacto.html">Contacto</a></li>

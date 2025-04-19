@@ -16,10 +16,12 @@
             padding: 0;
             background-color: #f9f9f9;
             color: #333;
+            transition: background-color 0.3s, color 0.3s;
         }
 
+        /* Header con color personalizado */
         header {
-            background-color: #007bff;
+            background-color: #0056b3; /* Azul oscuro */
             color: #fff;
             padding: 20px 0;
             text-align: center;
@@ -49,12 +51,14 @@
             text-decoration: underline;
         }
 
+        /* Estilo para los divs */
         .productos {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             gap: 20px;
             padding: 20px;
+            background-color: #e7f3ff; /* Azul claro */
         }
 
         .productos li {
@@ -83,7 +87,7 @@
             padding: 20px;
             border: 1px solid #ddd;
             border-radius: 10px;
-            background-color: #fff;
+            background-color: #fff; /* Fondo blanco */
         }
 
         legend {
@@ -95,6 +99,15 @@
         label {
             display: block;
             margin-bottom: 10px;
+        }
+
+        #selected-contact {
+            margin-top: 20px;
+            padding: 15px;
+            background: #fdf5e6; /* Fondo amarillo claro */
+            border-left: 5px solid #ffd700; /* Borde amarillo */
+            border-radius: 5px;
+            font-size: 16px;
         }
 
         a {
@@ -110,7 +123,7 @@
         footer {
             text-align: center;
             padding: 20px;
-            background-color: #007bff;
+            background-color: #0056b3; /* Azul oscuro */
             color: #fff;
         }
 
@@ -147,8 +160,12 @@
             background-color: #1f1f1f;
         }
 
-        body.dark-mode .productos li {
+        body.dark-mode .productos {
             background-color: #1f1f1f;
+        }
+
+        body.dark-mode .productos li {
+            background-color: #2c2c2c;
             border-color: #444;
             color: #fff;
         }
@@ -156,15 +173,6 @@
         body.dark-mode fieldset {
             background-color: #1f1f1f;
             border-color: #444;
-        }
-
-        #selected-contact {
-            margin-top: 20px;
-            padding: 15px;
-            background: #e7f3ff;
-            border-left: 5px solid #007bff;
-            border-radius: 5px;
-            font-size: 16px;
         }
 
         body.dark-mode #selected-contact {
@@ -176,15 +184,18 @@
         function cambiarModo() {
             const body = document.body;
             body.classList.toggle("dark-mode");
+            const icon = document.querySelector(".modo-oscuro-btn i");
+            icon.classList.toggle("fa-moon");
+            icon.classList.toggle("fa-sun");
             localStorage.setItem("modo-oscuro", body.classList.contains("dark-mode"));
         }
 
         document.addEventListener("DOMContentLoaded", function () {
             if (localStorage.getItem("modo-oscuro") === "true") {
                 document.body.classList.add("dark-mode");
+                document.querySelector(".modo-oscuro-btn i").classList.replace("fa-moon", "fa-sun");
             }
 
-            // Dinámicamente muestra la selección
             const radios = document.querySelectorAll('input[name="contacto"]');
             const selectedContactDiv = document.getElementById('selected-contact');
 
@@ -225,6 +236,44 @@
             </ul>
         </nav>
     </header>
+
+    <div>
+        <h2 style="text-align: center;">Mis Redes Sociales</h2>
+        <ul class="productos">
+            <li>
+                <h3>Instagram</h3>
+                <img src="Imagenes/Instagram.jpg" alt="Instagram">
+                <p>Sígueme para contenido educativo y de entretenimiento.</p>
+                <a href="https://www.instagram.com/cg.concepcion?igsh=bnhxMXd4ZmQ1dTVo" target="_blank">
+                    <i class="fab fa-instagram"></i> Ir a Instagram
+                </a>
+            </li>
+            <li>
+                <h3>YouTube</h3>
+                <img src="Imagenes/YouTube.png" alt="YouTube">
+                <p>Descubre videos de entretenimiento y aprendizaje.</p>
+                <a href="https://www.youtube.com/@carlosgonzalezconcepcion446" target="_blank">
+                    <i class="fab fa-youtube"></i> Ir a YouTube
+                </a>
+            </li>
+            <li>
+                <h3>TikTok</h3>
+                <img src="Imagenes/tiktok.jpg" alt="TikTok">
+                <p>Contenido divertido y creativo Versos y Programación entre otros.</p>
+                <a href="https://www.tiktok.com/@developercode0?_t=ZM-8vcPV7X12hh&_r=1" target="_blank">
+                    <i class="fab fa-tiktok"></i> Ir a TikTok
+                </a>
+            </li>
+            <li>
+                <h3>LinkedIn</h3>
+                <img src="Imagenes/LinkedIn.png" alt="LinkedIn">
+                <p>Mi red social para las empresas interesadas en Sistemas y Programación.</p>
+                <a href="https://www.linkedin.com/in/carlos-gonz%C3%A1lez-concepci%C3%B3n-631672271?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app">
+                    <i class="fab fa-linkedin"></i> Ir a LinkedIn
+                </a>
+            </li>
+        </ul>
+    </div>
 
     <main>
         <fieldset>

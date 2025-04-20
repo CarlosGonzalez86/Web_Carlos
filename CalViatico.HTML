@@ -235,19 +235,19 @@
                     return;
                 }
 
-                // Calcular décimo
-                const decimo = salario / 12;
+                // Dividir el salario entre 3
+                const salarioDividido = salario / 3;
 
-                // Calcular 8.50% del salario
-                const porcentaje = salario * 0.085;
+                // Calcular el 8.50% del resultado
+                const porcentaje = salarioDividido * 0.085;
 
-                // Restar el 8.50% al salario
-                const salarioRestante = salario - porcentaje;
+                // Restar el 8.50% al resultado dividido
+                const salarioFinal = salarioDividido - porcentaje;
 
                 resultadoDiv.innerHTML = `
-                    <strong>El décimo correspondiente es: $${decimo.toFixed(2)}</strong><br>
-                    <strong>El 8.50% de su salario es: $${porcentaje.toFixed(2)}</strong><br>
-                    <strong>El salario restante después de restar el 8.50% es: $${salarioRestante.toFixed(2)}</strong>
+                    <strong>Salario dividido entre 3: $${salarioDividido.toFixed(2)}</strong><br>
+                    <strong>8.50% del resultado: $${porcentaje.toFixed(2)}</strong><br>
+                    <strong>Resultado final después de restar el 8.50%: $${salarioFinal.toFixed(2)}</strong>
                 `;
             });
         });
@@ -265,7 +265,7 @@
 
     <div class="container">
         <h1><img class="logo" src="Imagenes/css (1).png" alt="Logo"></h1>
-        <h2>Calcula tu Décimo Tercer Mes y 8.50%</h2>
+        <h2>Calcula tu Salario Dividido y 8.50%</h2>
         <form id="formulario">
             <div class="input-group">
                 <label for="salario">Salario mensual:</label>

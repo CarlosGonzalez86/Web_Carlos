@@ -235,8 +235,20 @@
                     return;
                 }
 
-                const decimo = salario / 3;
-                resultadoDiv.innerHTML = `<strong>El décimo correspondiente es: $${decimo.toFixed(2)}</strong>`;
+                // Calcular décimo
+                const decimo = salario / 12;
+
+                // Calcular 8.50% del salario
+                const porcentaje = salario * 0.085;
+
+                // Restar el 8.50% al salario
+                const salarioRestante = salario - porcentaje;
+
+                resultadoDiv.innerHTML = `
+                    <strong>El décimo correspondiente es: $${decimo.toFixed(2)}</strong><br>
+                    <strong>El 8.50% de su salario es: $${porcentaje.toFixed(2)}</strong><br>
+                    <strong>El salario restante después de restar el 8.50% es: $${salarioRestante.toFixed(2)}</strong>
+                `;
             });
         });
     </script>
@@ -253,7 +265,7 @@
 
     <div class="container">
         <h1><img class="logo" src="Imagenes/css (1).png" alt="Logo"></h1>
-        <h2>Calcula tu Décimo Tercer Mes</h2>
+        <h2>Calcula tu Décimo Tercer Mes y 8.50%</h2>
         <form id="formulario">
             <div class="input-group">
                 <label for="salario">Salario mensual:</label>

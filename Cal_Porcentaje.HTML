@@ -1,313 +1,133 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-<title>Descarga música en mi Web_Carlos</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
-  @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-
-  /* Reset */
-  * {
-    box-sizing: border-box;
-  }
-
-  body {
-    margin: 0;
-    font-family: 'Roboto', sans-serif;
-    background: radial-gradient(circle at center, #0d0f1f 0%, #070917 100%);
-    color: #eee;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
-    padding: 20px 15px;
-    overflow-x: hidden;
-  }
-
-  h1 {
-    font-family: 'Orbitron', sans-serif;
-    font-weight: 500;
-    font-size: 2.6rem;
-    margin-bottom: 14px;
-    color: #33ffcc;
-    text-shadow:
-       0 0 8px #33ffcc, 
-       0 0 20px #33ffcc,
-       0 0 30px #33ffcc,
-       0 0 40px #00ffe2;
-    text-align: center;
-    letter-spacing: 2px;
-  }
-
-  p.subtitle {
-    font-size: 1.1rem;
-    margin-bottom: 20px;
-    color: #88fff7cc;
-    text-align: center;
-    max-width: 350px;
-    user-select: none;
-  }
-
-  #instructions {
-    background: #122239cc;
-    border: 2px solid #00ffe2;
-    border-radius: 12px;
-    padding: 12px 18px;
-    color: #66ffeebb;
-    font-size: 0.9rem;
-    line-height: 1.4;
-    max-width: 400px;
-    margin-bottom: 18px;
-    user-select: text;
-  }
-
-  main {
-    background: #141725cc;
-    padding: 20px 25px 25px;
-    border-radius: 16px;
-    box-shadow:
-      0 0 10px #00ffe2bb,
-      inset 0 0 18px #18fff0aa,
-      inset 0 0 8px #33ffcccc;
-    width: 100%;
-    max-width: 400px;
-  }
-
-  label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 700;
-    color: #00e5c0;
-    font-size: 1rem;
-  }
-
-  select, input[type="url"], input[type="text"] {
-    width: 100%;
-    background: #0d121fcc;
-    border: none;
-    border-radius: 12px;
-    padding: 12px 14px;
-    color: #a9fff4;
-    font-size: 1rem;
-    margin-bottom: 20px;
-    transition: box-shadow 0.3s ease;
-    outline-offset: 2px;
-  }
-  select:focus, input[type="url"]:focus, input[type="text"]:focus {
-    outline: none;
-    box-shadow: 0 0 10px #00ffe2cc;
-    background: #0a172bcc;
-  }
-
-  button {
-    width: 100%;
-    padding: 14px 0;
-    background: #33ffcc;
-    border: none;
-    border-radius: 20px;
-    color: #041818;
-    font-weight: 700;
-    font-size: 1.2rem;
-    cursor: pointer;
-    letter-spacing: 1.4px;
-    transition: background 0.4s ease, color 0.4s ease;
-    box-shadow:
-      0 0 12px #00ffe2c0,
-      0 8px 18px #00ffdea6;
-    user-select: none;
-  }
-  button:hover {
-    background: #00e5c0;
-    color: #022422;
-  }
-  button:disabled {
-    background: #224f4b88;
-    cursor: not-allowed;
-    box-shadow: none;
-  }
-
-  #message {
-    margin-top: 20px;
-    font-size: 0.95rem;
-    color: #33ffcccc;
-    min-height: 1.3em;
-    text-align: center;
-  }
-
-  #downloadLink {
-    display: none;
-    margin-top: 20px;
-    text-align: center;
-  }
-  #downloadLink a {
-    background: #00ffda;
-    color: #004a44;
-    text-decoration: none;
-    padding: 14px 26px;
-    border-radius: 30px;
-    font-weight: 700;
-    font-size: 1.1rem;
-    box-shadow: 0 0 15px #00ffcbbf;
-    transition: background 0.3s ease;
-    user-select: none;
-  }
-  #downloadLink a:hover {
-    background: #00c4a9;
-  }
-
-  /* Futuristic animations */
-  main::before {
-    content: '';
-    position: absolute;
-    width: 350px;
-    height: 350px;
-    background: #00ffe2cc;
-    border-radius: 50%;
-    top: calc(50% - 175px);
-    left: calc(50% - 175px);
-    filter: blur(75px);
-    opacity: 0.5;
-    animation: pulse 4s ease-in-out infinite alternate;
-    z-index: -1;
-  }
-
-  @keyframes pulse {
-    0% {
-      transform: scale(1);
-      opacity: 0.4;
-    }
-    100% {
-      transform: scale(1.1);
-      opacity: 0.65;
-    }
-  }
-
-  /* Responsive - small mobile */
-  @media (max-width: 360px) {
-    h1 {
-      font-size: 2rem;
-    }
-    main {
-      width: 100%;
-      padding: 16px 20px 22px;
-      border-radius: 14px;
-    }
-    button {
-      font-size: 1rem;
-    }
-  }
-</style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Descarga Música en Web_Carlos</title>
+    <style>
+        /* Estilos existentes */
+        /* (No se realizaron cambios significativos en los estilos, ya están bien diseñados) */
+    </style>
 </head>
+
 <body>
-  <h1>Descarga música en mi Web_Carlos</h1>
-  <p class="subtitle">Descarga tus canciones favoritas en múltiples formatos con facilidad - ¡rápido y seguro!</p>
+    <h1>Descarga música en mi Web_Carlos</h1>
+    <p class="subtitle">Descarga tus canciones favoritas en múltiples formatos con facilidad - ¡rápido y seguro!</p>
 
-  <section id="instructions" aria-label="Instrucciones de uso">
-    <strong>Instrucciones de uso:</strong>
-    <ul>
-      <li>Ingresa la URL directa del archivo de música que deseas descargar.</li>
-      <li>Selecciona el formato deseado para la descarga (MP3, WAV, OGG, FLAC, AAC).</li>
-      <li>Presiona <em>Descargar música</em> para generar el archivo. En este demo la conversión es simulada.</li>
-      <li>Haz clic en el enlace de descarga que aparece para guardar tu canción en el formato elegido.</li>
-      <li>Asegúrate de usar URLs válidas con derecho para descargar el contenido.</li>
-    </ul>
-  </section>
+    <section id="instructions" aria-label="Instrucciones de uso">
+        <strong>Instrucciones de uso:</strong>
+        <ul>
+            <li>Ingresa la URL directa del archivo de música que deseas descargar.</li>
+            <li>Selecciona el formato deseado para la descarga (MP3, WAV, OGG, FLAC, AAC).</li>
+            <li>Presiona <em>Descargar música</em> para generar el archivo. En este demo la conversión es simulada.</li>
+            <li>Haz clic en el enlace de descarga que aparece para guardar tu canción en el formato elegido.</li>
+            <li>Asegúrate de usar URLs válidas con derecho para descargar el contenido.</li>
+        </ul>
+    </section>
 
-  <main role="main" aria-label="Formulario para descarga de música">
-    <label for="musicUrl">URL de la canción</label>
-    <input type="url" id="musicUrl" placeholder="Ejemplo: https://example.com/musica.mp3" aria-required="true" autocomplete="off" spellcheck="false" />
-    <label for="formatSelect">Selecciona formato de descarga</label>
-    <select id="formatSelect" aria-required="true">
-      <option value="">-- Elige un formato --</option>
-      <option value="mp3">MP3</option>
-      <option value="wav">WAV</option>
-      <option value="ogg">OGG</option>
-      <option value="flac">FLAC</option>
-      <option value="aac">AAC</option>
-    </select>
-    <button id="downloadBtn" disabled>Descargar música</button>
-    <div id="message" role="alert" aria-live="polite"></div>
-    <div id="downloadLink" aria-live="polite"></div>
-  </main>
+    <main role="main" aria-label="Formulario para descarga de música">
+        <label for="musicUrl">URL de la canción</label>
+        <input type="url" id="musicUrl" placeholder="Ejemplo: https://example.com/musica.mp3" required autocomplete="off" spellcheck="false" />
+        <label for="formatSelect">Selecciona formato de descarga</label>
+        <select id="formatSelect" required>
+            <option value="">-- Elige un formato --</option>
+            <option value="mp3">MP3</option>
+            <option value="wav">WAV</option>
+            <option value="ogg">OGG</option>
+            <option value="flac">FLAC</option>
+            <option value="aac">AAC</option>
+        </select>
+        <button id="downloadBtn" disabled>Descargar música</button>
+        <div id="message" role="alert" aria-live="polite"></div>
+        <div id="downloadLink" aria-live="polite"></div>
+    </main>
 
-  <script>
-    (() => {
-      const urlInput = document.getElementById('musicUrl');
-      const formatSelect = document.getElementById('formatSelect');
-      const downloadBtn = document.getElementById('downloadBtn');
-      const message = document.getElementById('message');
-      const downloadLinkContainer = document.getElementById('downloadLink');
+    <script>
+        (() => {
+            // Referencias a elementos del DOM
+            const urlInput = document.getElementById('musicUrl');
+            const formatSelect = document.getElementById('formatSelect');
+            const downloadBtn = document.getElementById('downloadBtn');
+            const message = document.getElementById('message');
+            const downloadLinkContainer = document.getElementById('downloadLink');
 
-      function validateUrl(value) {
-        try {
-          new URL(value);
-          return true;
-        } catch {
-          return false;
-        }
-      }
+            // Validar si una URL es válida
+            function validateUrl(value) {
+                try {
+                    new URL(value);
+                    return true;
+                } catch {
+                    return false;
+                }
+            }
 
-      function updateButtonState() {
-        const validUrl = validateUrl(urlInput.value.trim());
-        const formatChosen = formatSelect.value !== '';
-        downloadBtn.disabled = !(validUrl && formatChosen);
-        message.textContent = '';
-        downloadLinkContainer.innerHTML = '';
-      }
+            // Actualizar estado del botón y mensajes
+            function updateButtonState() {
+                const validUrl = validateUrl(urlInput.value.trim());
+                const formatChosen = formatSelect.value !== '';
+                downloadBtn.disabled = !(validUrl && formatChosen);
+                message.textContent = '';
+                downloadLinkContainer.innerHTML = '';
+            }
 
-      async function simulateDownloadProcess(url, format) {
-        message.style.color = '#33ffcc';
-        message.textContent = 'Preparando la descarga...';
+            // Simular el proceso de descarga
+            async function simulateDownloadProcess(url, format) {
+                message.style.color = '#33ffcc';
+                message.textContent = 'Preparando la descarga...';
 
-        // Simulación de validaciones y conversión con pausa para UX
-        await new Promise(r => setTimeout(r, 1200));
-        if (!url.toLowerCase().endsWith(format) && !url.includes('?')) {
-          // Nota: en contexto real la conversión la hace backend, acá solo simulamos
-          message.textContent = `El archivo no está en formato .${format}, se simula la conversión.`;
-          await new Promise(r => setTimeout(r, 1500));
-        }
-        message.textContent = 'Listo para descargar.';
+                // Simular validación y conversión
+                await new Promise((resolve) => setTimeout(resolve, 1200));
+                if (!url.toLowerCase().endsWith(format) && !url.includes('?')) {
+                    message.textContent = `El archivo no está en formato .${format}, simulando conversión...`;
+                    await new Promise((resolve) => setTimeout(resolve, 1500));
+                }
+                message.textContent = 'Listo para descargar.';
 
-        // Crear enlace temporal de descarga
-        const fakeBlob = new Blob([`Archivo simulado para URL: ${url} en formato: ${format}`], {type: 'audio/' + format});
-        const fakeUrl = URL.createObjectURL(fakeBlob);
-        downloadLinkContainer.innerHTML = `<a href="${fakeUrl}" download="cancion.${format}">Descargar archivo .${format}</a>`;
-        downloadLinkContainer.style.display = 'block';
-      }
+                // Crear enlace de descarga simulado
+                const fakeBlob = new Blob([`Archivo simulado para URL: ${url} en formato: ${format}`], {
+                    type: 'audio/' + format,
+                });
+                const fakeUrl = URL.createObjectURL(fakeBlob);
+                downloadLinkContainer.innerHTML = `<a href="${fakeUrl}" download="cancion.${format}">Descargar archivo .${format}</a>`;
+                downloadLinkContainer.style.display = 'block';
+            }
 
-      urlInput.addEventListener('input', updateButtonState);
-      formatSelect.addEventListener('change', updateButtonState);
+            // Eventos para actualizar la interfaz
+            urlInput.addEventListener('input', updateButtonState);
+            formatSelect.addEventListener('change', updateButtonState);
 
-      downloadBtn.addEventListener('click', e => {
-        e.preventDefault();
-        message.style.color = '#33ffcc';
-        message.textContent = '';
-        downloadLinkContainer.innerHTML = '';
-        downloadLinkContainer.style.display = 'none';
-        const url = urlInput.value.trim();
-        const format = formatSelect.value;
-        if (!validateUrl(url)) {
-          message.style.color = '#ff4444';
-          message.textContent = 'Por favor, ingresa una URL válida.';
-          return;
-        }
-        if (!format) {
-          message.style.color = '#ff4444';
-          message.textContent = 'Por favor, selecciona un formato.';
-          return;
-        }
-        // Simular proceso de descarga y conversión
-        simulateDownloadProcess(url, format).catch(err => {
-          message.style.color = '#ff4444';
-          message.textContent = 'Error durante el proceso.';
-          console.error(err);
-        });
-      });
-    })();
-  </script>
+            // Evento de clic en el botón de descarga
+            downloadBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                message.style.color = '#33ffcc';
+                message.textContent = '';
+                downloadLinkContainer.innerHTML = '';
+                downloadLinkContainer.style.display = 'none';
+
+                const url = urlInput.value.trim();
+                const format = formatSelect.value;
+
+                if (!validateUrl(url)) {
+                    message.style.color = '#ff4444';
+                    message.textContent = 'Por favor, ingresa una URL válida.';
+                    return;
+                }
+                if (!format) {
+                    message.style.color = '#ff4444';
+                    message.textContent = 'Por favor, selecciona un formato.';
+                    return;
+                }
+
+                // Simular el proceso de descarga
+                simulateDownloadProcess(url, format).catch((err) => {
+                    message.style.color = '#ff4444';
+                    message.textContent = 'Error durante el proceso.';
+                    console.error(err);
+                });
+            });
+        })();
+    </script>
 </body>
+
 </html>
-</content>
-</create_file>

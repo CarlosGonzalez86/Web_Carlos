@@ -1,90 +1,289 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administrador - Departamento de Seguridad</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
-        header {
-            background-color: #003366;
-            color: white;
-            text-align: center;
-            padding: 20px 0;
-            font-size: 24px;
-            font-weight: bold;
-        }
-        .container {
-            width: 90%;
-            max-width: 600px;
-            margin: 40px auto;
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        .file-item {
-            margin: 10px 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        button {
-            background-color: #003366;
-            color: white;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #005299;
-        }
-    </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>App de Mensajería por Bluetooth</title>
+<style>
+  /* Reset */
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    max-height: 600px; /* For mobile fit */
+    max-width: 350px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  }
+
+  header {
+    padding: 16px;
+    background: rgba(0,0,0,0.15);
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.25rem;
+    letter-spacing: 1.5px;
+  }
+
+  main {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    padding: 8px;
+    overflow: hidden;
+  }
+
+  #messages {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    padding: 8px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.1);
+    margin-bottom: 8px;
+  }
+
+  .message {
+    margin-bottom: 8px;
+    max-width: 75%;
+    padding: 10px 14px;
+    border-radius: 14px;
+    word-wrap: break-word;
+    line-height: 1.3;
+    font-size: 1rem;
+  }
+
+  .message.sent {
+    background: #2575fc;
+    align-self: flex-end;
+    border-bottom-right-radius: 2px;
+    box-shadow: 0 2px 8px #1a52c6;
+  }
+
+  .message.received {
+    background: #6a11cb;
+    align-self: flex-start;
+    border-bottom-left-radius: 2px;
+    box-shadow: 0 2px 8px #4f0fa5;
+  }
+
+  footer {
+    display: flex;
+    padding: 8px;
+    background: rgba(0,0,0,0.15);
+    align-items: center;
+  }
+
+  #inputMessage {
+    flex: 1 1 auto;
+    padding: 10px 14px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 20px;
+    outline: none;
+    margin-right: 8px;
+  }
+
+  #sendBtn, #connectBtn {
+    background: #2575fc;
+    border: none;
+    color: white;
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 10px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+
+  #sendBtn:disabled, #connectBtn:disabled {
+    background: #6a11cb98;
+    cursor: default;
+  }
+
+  #sendBtn:hover:not(:disabled), #connectBtn:hover:not(:disabled) {
+    background: #1a52c6;
+  }
+
+  #status {
+    text-align: center;
+    font-size: 0.85rem;
+    margin: 6px 0;
+    min-height: 1.2em;
+    color: #dcdcdc;
+  }
+
+  /* Scrollbar for messages */
+  #messages::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  #messages::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.3);
+    border-radius: 3px;
+  }
+
+  #messages::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  @media (max-width: 400px) {
+    body {
+      max-width: 100vw;
+      border-radius: 0;
+    }
+  }
+</style>
 </head>
 <body>
-    <header>
-        Departamento de Seguridad - Administrador
-    </header>
-    <div class="container">
-        <h2>Archivos Subidos por Usuarios</h2>
-        <div id="userFilesList">No hay archivos disponibles.</div>
-    </div>
-    <script>
-        const userFiles = [
-            { name: 'archivo1.txt', url: 'ruta/archivo1.txt' },
-            { name: 'archivo2.pdf', url: 'ruta/archivo2.pdf' }
-        ];
+<header>Mensajería Bluetooth</header>
+<main>
+  <div id="status">Desconectado</div>
+  <div id="messages" aria-live="polite" aria-atomic="false" role="log"></div>
+</main>
+<footer>
+  <input type="text" id="inputMessage" placeholder="Escribe tu mensaje..." aria-label="Campo de mensaje" disabled />
+  <button id="sendBtn" disabled>Enviar</button>
+</footer>
+<div style="text-align:center; padding: 10px;">
+  <button id="connectBtn">Conectar Bluetooth</button>
+</div>
 
-        function displayUserFiles() {
-            const userFilesList = document.getElementById('userFilesList');
-            userFilesList.innerHTML = '';
+<script>
+(async () => {
+  const connectBtn = document.getElementById('connectBtn');
+  const sendBtn = document.getElementById('sendBtn');
+  const inputMessage = document.getElementById('inputMessage');
+  const messages = document.getElementById('messages');
+  const status = document.getElementById('status');
 
-            if (userFiles.length === 0) {
-                userFilesList.innerHTML = '<p>No hay archivos disponibles.</p>';
-                return;
-            }
+  let device = null;
+  let server = null;
+  let service = null;
+  let txCharacteristic = null; // characteristic to write to (send messages)
+  let rxCharacteristic = null; // characteristic to receive notifications (receive messages)
 
-            userFiles.forEach(file => {
-                const fileItem = document.createElement('div');
-                fileItem.className = 'file-item';
-                fileItem.innerHTML = `
-                    <span>${file.name}</span>
-                    <a href="${file.url}" download>
-                        <button>Descargar</button>
-                    </a>
-                `;
-                userFilesList.appendChild(fileItem);
-            });
-        }
+  // UUIDs for a custom UART-like Bluetooth service (common in Bluetooth chat examples)
+  const UART_SERVICE_UUID = '6e400001-b5a3-f393-e0a9-e50e24dcca9e';
+  const UART_TX_CHARACTERISTIC_UUID = '6e400002-b5a3-f393-e0a9-e50e24dcca9e'; // write
+  const UART_RX_CHARACTERISTIC_UUID = '6e400003-b5a3-f393-e0a9-e50e24dcca9e'; // notify
 
-        // Simula la carga de archivos al abrir la página
-        displayUserFiles();
-    </script>
+  function appendMessage(text, type) {
+    const msg = document.createElement('div');
+    msg.classList.add('message', type);
+    msg.textContent = text;
+    messages.appendChild(msg);
+    // Scroll to bottom
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  function setStatus(text) {
+    status.textContent = text;
+  }
+
+  function enableMessaging(enabled) {
+    inputMessage.disabled = !enabled;
+    sendBtn.disabled = !enabled;
+    if(enabled) {
+      inputMessage.focus();
+    } else {
+      inputMessage.value = '';
+    }
+  }
+
+  async function connectBluetooth() {
+    if (!navigator.bluetooth) {
+      alert('Tu navegador no soporta la API Web Bluetooth.');
+      return;
+    }
+    setStatus('Solicitando dispositivo Bluetooth...');
+    try {
+      device = await navigator.bluetooth.requestDevice({
+        filters: [{services: [UART_SERVICE_UUID]}]
+      });
+
+      device.addEventListener('gattserverdisconnected', onDisconnected);
+
+      setStatus('Conectando a GATT servidor...');
+      server = await device.gatt.connect();
+
+      setStatus('Buscando servicio UART...');
+      service = await server.getPrimaryService(UART_SERVICE_UUID);
+
+      setStatus('Obteniendo características...');
+      txCharacteristic = await service.getCharacteristic(UART_TX_CHARACTERISTIC_UUID);
+      rxCharacteristic = await service.getCharacteristic(UART_RX_CHARACTERISTIC_UUID);
+
+      await rxCharacteristic.startNotifications();
+      rxCharacteristic.addEventListener('characteristicvaluechanged', handleIncomingMessage);
+
+      setStatus(`Conectado a: ${device.name}`);
+      enableMessaging(true);
+
+    } catch (error) {
+      setStatus('Error: ' + error.message);
+      console.error(error);
+    }
+  }
+
+  function onDisconnected(event) {
+    setStatus('Desconectado');
+    appendMessage('¡La conexión Bluetooth se perdió!', 'received');
+    enableMessaging(false);
+  }
+
+  function handleIncomingMessage(event) {
+    const value = event.target.value;
+    // Convert bytes to string assuming UTF-8
+    const decoder = new TextDecoder('utf-8');
+    const message = decoder.decode(value);
+    appendMessage(message, 'received');
+  }
+
+  async function sendMessage() {
+    if (!txCharacteristic) return;
+    const msg = inputMessage.value.trim();
+    if (msg.length === 0) return;
+
+    // Encode string to bytes
+    const encoder = new TextEncoder();
+    const data = encoder.encode(msg);
+
+    try {
+      await txCharacteristic.writeValue(data);
+      appendMessage(msg, 'sent');
+      inputMessage.value = '';
+    } catch (error) {
+      console.error('Error enviando mensaje:', error);
+      setStatus('Error enviando mensaje: ' + error.message);
+    }
+  }
+
+  connectBtn.addEventListener('click', connectBluetooth);
+  sendBtn.addEventListener('click', sendMessage);
+  inputMessage.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !sendBtn.disabled) {
+      sendMessage();
+      e.preventDefault();
+    }
+  });
+
+  // Initial state
+  enableMessaging(false);
+  setStatus('Desconectado - Usa "Conectar Bluetooth" para iniciar');
+})();
+</script>
 </body>
 </html>
+</content>
+</create_file>

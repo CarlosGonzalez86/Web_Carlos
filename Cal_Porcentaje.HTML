@@ -6,8 +6,180 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Descarga Música en Web_Carlos</title>
     <style>
-        /* Estilos existentes */
-        /* (No se realizaron cambios significativos en los estilos, ya están bien diseñados) */
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+        /* Reset */
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background: radial-gradient(circle at center, #0d0f1f 0%, #070917 100%);
+            color: #eee;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px 15px;
+            overflow-x: hidden;
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 500;
+            font-size: 2.6rem;
+            margin-bottom: 14px;
+            color: #33ffcc;
+            text-shadow:
+                0 0 8px #33ffcc,
+                0 0 20px #33ffcc,
+                0 0 30px #33ffcc,
+                0 0 40px #00ffe2;
+            text-align: center;
+            letter-spacing: 2px;
+        }
+
+        p.subtitle {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            color: #88fff7cc;
+            text-align: center;
+            max-width: 350px;
+            user-select: none;
+        }
+
+        #instructions {
+            background: #122239cc;
+            border: 2px solid #00ffe2;
+            border-radius: 12px;
+            padding: 12px 18px;
+            color: #66ffeebb;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            max-width: 400px;
+            margin-bottom: 18px;
+            user-select: text;
+        }
+
+        main {
+            background: #141725cc;
+            padding: 20px 25px 25px;
+            border-radius: 16px;
+            box-shadow:
+                0 0 10px #00ffe2bb,
+                inset 0 0 18px #18fff0aa,
+                inset 0 0 8px #33ffcccc;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 700;
+            color: #00e5c0;
+            font-size: 1rem;
+        }
+
+        select,
+        input[type="url"] {
+            width: 100%;
+            background: #0d121fcc;
+            border: none;
+            border-radius: 12px;
+            padding: 12px 14px;
+            color: #a9fff4;
+            font-size: 1rem;
+            margin-bottom: 20px;
+            transition: box-shadow 0.3s ease;
+            outline-offset: 2px;
+        }
+
+        select:focus,
+        input[type="url"]:focus {
+            outline: none;
+            box-shadow: 0 0 10px #00ffe2cc;
+            background: #0a172bcc;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px 0;
+            background: #33ffcc;
+            border: none;
+            border-radius: 20px;
+            color: #041818;
+            font-weight: 700;
+            font-size: 1.2rem;
+            cursor: pointer;
+            letter-spacing: 1.4px;
+            transition: background 0.4s ease, color 0.4s ease;
+            box-shadow:
+                0 0 12px #00ffe2c0,
+                0 8px 18px #00ffdea6;
+            user-select: none;
+        }
+
+        button:hover {
+            background: #00e5c0;
+            color: #022422;
+        }
+
+        button:disabled {
+            background: #224f4b88;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        #message {
+            margin-top: 20px;
+            font-size: 0.95rem;
+            color: #33ffcccc;
+            min-height: 1.3em;
+            text-align: center;
+        }
+
+        #downloadLink {
+            display: none;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        #downloadLink a {
+            background: #00ffda;
+            color: #004a44;
+            text-decoration: none;
+            padding: 14px 26px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            box-shadow: 0 0 15px #00ffcbbf;
+            transition: background 0.3s ease;
+            user-select: none;
+        }
+
+        #downloadLink a:hover {
+            background: #00c4a9;
+        }
+
+        @media (max-width: 360px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            main {
+                width: 100%;
+                padding: 16px 20px 22px;
+                border-radius: 14px;
+            }
+
+            button {
+                font-size: 1rem;
+            }
+        }
     </style>
 </head>
 
@@ -45,14 +217,12 @@
 
     <script>
         (() => {
-            // Referencias a elementos del DOM
             const urlInput = document.getElementById('musicUrl');
             const formatSelect = document.getElementById('formatSelect');
             const downloadBtn = document.getElementById('downloadBtn');
             const message = document.getElementById('message');
             const downloadLinkContainer = document.getElementById('downloadLink');
 
-            // Validar si una URL es válida
             function validateUrl(value) {
                 try {
                     new URL(value);
@@ -62,7 +232,6 @@
                 }
             }
 
-            // Actualizar estado del botón y mensajes
             function updateButtonState() {
                 const validUrl = validateUrl(urlInput.value.trim());
                 const formatChosen = formatSelect.value !== '';
@@ -71,34 +240,27 @@
                 downloadLinkContainer.innerHTML = '';
             }
 
-            // Simular el proceso de descarga
             async function simulateDownloadProcess(url, format) {
                 message.style.color = '#33ffcc';
                 message.textContent = 'Preparando la descarga...';
 
-                // Simular validación y conversión
-                await new Promise((resolve) => setTimeout(resolve, 1200));
+                await new Promise(r => setTimeout(r, 1200));
                 if (!url.toLowerCase().endsWith(format) && !url.includes('?')) {
-                    message.textContent = `El archivo no está en formato .${format}, simulando conversión...`;
-                    await new Promise((resolve) => setTimeout(resolve, 1500));
+                    message.textContent = `El archivo no está en formato .${format}, se simula la conversión.`;
+                    await new Promise(r => setTimeout(r, 1500));
                 }
                 message.textContent = 'Listo para descargar.';
 
-                // Crear enlace de descarga simulado
-                const fakeBlob = new Blob([`Archivo simulado para URL: ${url} en formato: ${format}`], {
-                    type: 'audio/' + format,
-                });
+                const fakeBlob = new Blob([`Archivo simulado para URL: ${url} en formato: ${format}`], { type: 'audio/' + format });
                 const fakeUrl = URL.createObjectURL(fakeBlob);
                 downloadLinkContainer.innerHTML = `<a href="${fakeUrl}" download="cancion.${format}">Descargar archivo .${format}</a>`;
                 downloadLinkContainer.style.display = 'block';
             }
 
-            // Eventos para actualizar la interfaz
             urlInput.addEventListener('input', updateButtonState);
             formatSelect.addEventListener('change', updateButtonState);
 
-            // Evento de clic en el botón de descarga
-            downloadBtn.addEventListener('click', (e) => {
+            downloadBtn.addEventListener('click', e => {
                 e.preventDefault();
                 message.style.color = '#33ffcc';
                 message.textContent = '';
@@ -113,14 +275,14 @@
                     message.textContent = 'Por favor, ingresa una URL válida.';
                     return;
                 }
+
                 if (!format) {
                     message.style.color = '#ff4444';
                     message.textContent = 'Por favor, selecciona un formato.';
                     return;
                 }
 
-                // Simular el proceso de descarga
-                simulateDownloadProcess(url, format).catch((err) => {
+                simulateDownloadProcess(url, format).catch(err => {
                     message.style.color = '#ff4444';
                     message.textContent = 'Error durante el proceso.';
                     console.error(err);

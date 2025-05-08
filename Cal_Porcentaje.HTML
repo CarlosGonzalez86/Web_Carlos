@@ -1,295 +1,370 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Descarga Música en Web_Carlos</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>StreamFlix - Películas en Streamers</title>
+<style>
+  /* Reset and base */
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #121212, #1f1f1f);
+    color: #eee;
+    display: flex;
+    flex-direction: column;
+    min-height: 600px;
+    max-width: 350px;
+    margin: auto;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 15px rgba(0,0,0,0.9);
+  }
+  header {
+    background: #e50914;
+    padding: 1rem;
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    user-select: none;
+  }
+  main {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0.75rem 1rem 1rem 1rem;
+  }
+  #searchBar {
+    width: 100%;
+    padding: 8px 12px;
+    border-radius: 4px;
+    border: none;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+  #moviesList {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .movie-card {
+    background: #222;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgb(0 0 0 / 0.7);
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    transition: transform 0.15s ease;
+  }
+  .movie-card:hover {
+    transform: scale(1.05);
+  }
+  .movie-thumb {
+    width: 100%;
+    object-fit: cover;
+    height: 120px;
+  }
+  .movie-info {
+    padding: 0.5rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .movie-title {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+    text-align: center;
+  }
+  .watch-btn {
+    background: #e50914;
+    border: none;
+    color: white;
+    font-weight: 700;
+    padding: 6px 0;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 0.9rem;
+    user-select: none;
+  }
+  .watch-btn:hover {
+    background: #b0060f;
+  }
 
-        /* Reset */
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            font-family: 'Roboto', sans-serif;
-            background: radial-gradient(circle at center, #0d0f1f 0%, #070917 100%);
-            color: #eee;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px 15px;
-            overflow-x: hidden;
-        }
-
-        h1 {
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 500;
-            font-size: 2.6rem;
-            margin-bottom: 14px;
-            color: #33ffcc;
-            text-shadow:
-                0 0 8px #33ffcc,
-                0 0 20px #33ffcc,
-                0 0 30px #33ffcc,
-                0 0 40px #00ffe2;
-            text-align: center;
-            letter-spacing: 2px;
-        }
-
-        p.subtitle {
-            font-size: 1.1rem;
-            margin-bottom: 20px;
-            color: #88fff7cc;
-            text-align: center;
-            max-width: 350px;
-            user-select: none;
-        }
-
-        #instructions {
-            background: #122239cc;
-            border: 2px solid #00ffe2;
-            border-radius: 12px;
-            padding: 12px 18px;
-            color: #66ffeebb;
-            font-size: 0.9rem;
-            line-height: 1.4;
-            max-width: 400px;
-            margin-bottom: 18px;
-            user-select: text;
-        }
-
-        main {
-            background: #141725cc;
-            padding: 20px 25px 25px;
-            border-radius: 16px;
-            box-shadow:
-                0 0 10px #00ffe2bb,
-                inset 0 0 18px #18fff0aa,
-                inset 0 0 8px #33ffcccc;
-            width: 100%;
-            max-width: 400px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 700;
-            color: #00e5c0;
-            font-size: 1rem;
-        }
-
-        select,
-        input[type="url"] {
-            width: 100%;
-            background: #0d121fcc;
-            border: none;
-            border-radius: 12px;
-            padding: 12px 14px;
-            color: #a9fff4;
-            font-size: 1rem;
-            margin-bottom: 20px;
-            transition: box-shadow 0.3s ease;
-            outline-offset: 2px;
-        }
-
-        select:focus,
-        input[type="url"]:focus {
-            outline: none;
-            box-shadow: 0 0 10px #00ffe2cc;
-            background: #0a172bcc;
-        }
-
-        button {
-            width: 100%;
-            padding: 14px 0;
-            background: #33ffcc;
-            border: none;
-            border-radius: 20px;
-            color: #041818;
-            font-weight: 700;
-            font-size: 1.2rem;
-            cursor: pointer;
-            letter-spacing: 1.4px;
-            transition: background 0.4s ease, color 0.4s ease;
-            box-shadow:
-                0 0 12px #00ffe2c0,
-                0 8px 18px #00ffdea6;
-            user-select: none;
-        }
-
-        button:hover {
-            background: #00e5c0;
-            color: #022422;
-        }
-
-        button:disabled {
-            background: #224f4b88;
-            cursor: not-allowed;
-            box-shadow: none;
-        }
-
-        #message {
-            margin-top: 20px;
-            font-size: 0.95rem;
-            color: #33ffcccc;
-            min-height: 1.3em;
-            text-align: center;
-        }
-
-        #downloadLink {
-            display: none;
-            margin-top: 20px;
-            text-align: center;
-        }
-
-        #downloadLink a {
-            background: #00ffda;
-            color: #004a44;
-            text-decoration: none;
-            padding: 14px 26px;
-            border-radius: 30px;
-            font-weight: 700;
-            font-size: 1.1rem;
-            box-shadow: 0 0 15px #00ffcbbf;
-            transition: background 0.3s ease;
-            user-select: none;
-        }
-
-        #downloadLink a:hover {
-            background: #00c4a9;
-        }
-
-        @media (max-width: 360px) {
-            h1 {
-                font-size: 2rem;
-            }
-
-            main {
-                width: 100%;
-                padding: 16px 20px 22px;
-                border-radius: 14px;
-            }
-
-            button {
-                font-size: 1rem;
-            }
-        }
-    </style>
+  /* Modal styles */
+  #modalOverlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.8);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    z-index: 999;
+  }
+  #modalContent {
+    background: #121212;
+    padding: 1rem;
+    border-radius: 8px;
+    max-width: 320px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+  }
+  #modalContent iframe {
+    width: 100%;
+    height: 180px;
+    border-radius: 6px;
+  }
+  #modalClose {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    font-size: 1.5rem;
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+    user-select: none;
+  }
+  #streamLinks {
+    margin-top: 1rem;
+  }
+  .stream-link {
+    display: block;
+    background: #e50914;
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+    text-align: center;
+    font-weight: 700;
+  }
+  .stream-link:hover {
+    background: #b0060f;
+  }
+  footer {
+    text-align: center;
+    font-size: 0.8rem;
+    padding: 0.7rem;
+    color: #666;
+    user-select:none;
+  }
+  @media (max-width: 360px) {
+    body {
+      max-width: 100vw;
+      border-radius: 0;
+      min-height: 100vh;
+    }
+    #modalContent iframe {
+      height: 160px;
+    }
+  }
+</style>
 </head>
-
 <body>
-    <h1>Descarga música en mi Web_Carlos</h1>
-    <p class="subtitle">Descarga tus canciones favoritas en múltiples formatos con facilidad - ¡rápido y seguro!</p>
+<header>StreamFlix</header>
+<main>
+  <input id="searchBar" type="search" placeholder="Buscar película..." aria-label="Buscar película" />
+  <div id="moviesList" aria-live="polite" aria-relevant="additions"></div>
+</main>
 
-    <section id="instructions" aria-label="Instrucciones de uso">
-        <strong>Instrucciones de uso:</strong>
-        <ul>
-            <li>Ingresa la URL directa del archivo de música que deseas descargar.</li>
-            <li>Selecciona el formato deseado para la descarga (MP3, WAV, OGG, FLAC, AAC).</li>
-            <li>Presiona <em>Descargar música</em> para generar el archivo. En este demo la conversión es simulada.</li>
-            <li>Haz clic en el enlace de descarga que aparece para guardar tu canción en el formato elegido.</li>
-            <li>Asegúrate de usar URLs válidas con derecho para descargar el contenido.</li>
-        </ul>
-    </section>
+<div id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div id="modalContent">
+    <span id="modalClose" role="button" aria-label="Cerrar">×</span>
+    <h2 id="modalTitle"></h2>
+    <div id="videoContainer"></div>
+    <div id="streamLinks"></div>
+  </div>
+</div>
 
-    <main role="main" aria-label="Formulario para descarga de música">
-        <label for="musicUrl">URL de la canción</label>
-        <input type="url" id="musicUrl" placeholder="Ejemplo: https://example.com/musica.mp3" required autocomplete="off" spellcheck="false" />
-        <label for="formatSelect">Selecciona formato de descarga</label>
-        <select id="formatSelect" required>
-            <option value="">-- Elige un formato --</option>
-            <option value="mp3">MP3</option>
-            <option value="wav">WAV</option>
-            <option value="ogg">OGG</option>
-            <option value="flac">FLAC</option>
-            <option value="aac">AAC</option>
-        </select>
-        <button id="downloadBtn" disabled>Descargar música</button>
-        <div id="message" role="alert" aria-live="polite"></div>
-        <div id="downloadLink" aria-live="polite"></div>
-    </main>
+<footer>© 2024 StreamFlix - App de ejemplo con películas en streamers</footer>
 
-    <script>
-        (() => {
-            const urlInput = document.getElementById('musicUrl');
-            const formatSelect = document.getElementById('formatSelect');
-            const downloadBtn = document.getElementById('downloadBtn');
-            const message = document.getElementById('message');
-            const downloadLinkContainer = document.getElementById('downloadLink');
+<script>
+  const movies = [
+    {
+      id: 1,
+      title: "Big Buck Bunny",
+      thumbnail: "https://peach.blender.org/wp-content/uploads/title_anouncement.jpg?x11217",
+      streams: [
+        {name: "YouTube", url: "https://www.youtube.com/embed/YE7VzlLtp-4"},
+        {name: "Vimeo", url: "https://player.vimeo.com/video/45954802"}
+      ]
+    },
+    {
+      id: 2,
+      title: "Sintel",
+      thumbnail: "https://media.wired.com/photos/59265275734dcf5f91be0ebb/master/pass/sintel-blender-movie.jpg",
+      streams: [
+        {name: "YouTube", url: "https://www.youtube.com/embed/eRsGyueVLvQ"},
+      ]
+    },
+    {
+      id: 3,
+      title: "Tears of Steel",
+      thumbnail: "https://mango.blender.org/wp-content/themes/mango/img/tears-of-steel-poster.jpg",
+      streams: [
+        {name: "YouTube", url: "https://www.youtube.com/embed/uc08Lf35iN8"}
+      ]
+    },
+    {
+      id: 4,
+      title: "Trailer Interstellar",
+      thumbnail: "https://m.media-amazon.com/images/I/81kzKFlgZ1L._SL1500_.jpg",
+      streams: [
+        {name: "YouTube", url: "https://www.youtube.com/embed/zSWdZVtXT7E"}
+      ]
+    },
+    {
+      id: 5,
+      title: "Trailer Inception",
+      thumbnail: "https://m.media-amazon.com/images/I/51s+O96QjgL._AC_.jpg",
+      streams: [
+        {name: "YouTube", url: "https://www.youtube.com/embed/YoHD9XEInc0"}
+      ]
+    }
+  ];
 
-            function validateUrl(value) {
-                try {
-                    new URL(value);
-                    return true;
-                } catch {
-                    return false;
-                }
-            }
+  const moviesList = document.getElementById('moviesList');
+  const searchBar = document.getElementById('searchBar');
+  const modalOverlay = document.getElementById('modalOverlay');
+  const modalClose = document.getElementById('modalClose');
+  const modalTitle = document.getElementById('modalTitle');
+  const videoContainer = document.getElementById('videoContainer');
+  const streamLinks = document.getElementById('streamLinks');
 
-            function updateButtonState() {
-                const validUrl = validateUrl(urlInput.value.trim());
-                const formatChosen = formatSelect.value !== '';
-                downloadBtn.disabled = !(validUrl && formatChosen);
-                message.textContent = '';
-                downloadLinkContainer.innerHTML = '';
-            }
+  function createMovieCard(movie) {
+    const card = document.createElement('div');
+    card.className = 'movie-card';
+    card.tabIndex = 0;
+    card.setAttribute('role', 'button');
+    card.setAttribute('aria-pressed', 'false');
+    card.setAttribute('aria-label', `Ver ${movie.title}`);
 
-            async function simulateDownloadProcess(url, format) {
-                message.style.color = '#33ffcc';
-                message.textContent = 'Preparando la descarga...';
+    card.innerHTML = `
+      <img class="movie-thumb" src="${movie.thumbnail}" alt="Portada ${movie.title}" />
+      <div class="movie-info">
+        <div class="movie-title">${movie.title}</div>
+        <button class="watch-btn" aria-label="Ver ${movie.title}">Ver</button>
+      </div>
+    `;
 
-                await new Promise(r => setTimeout(r, 1200));
-                if (!url.toLowerCase().endsWith(format) && !url.includes('?')) {
-                    message.textContent = `El archivo no está en formato .${format}, se simula la conversión.`;
-                    await new Promise(r => setTimeout(r, 1500));
-                }
-                message.textContent = 'Listo para descargar.';
+    const btn = card.querySelector('.watch-btn');
+    btn.addEventListener('click', () => openPlayer(movie));
+    card.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openPlayer(movie);
+      }
+    });
 
-                const fakeBlob = new Blob([`Archivo simulado para URL: ${url} en formato: ${format}`], { type: 'audio/' + format });
-                const fakeUrl = URL.createObjectURL(fakeBlob);
-                downloadLinkContainer.innerHTML = `<a href="${fakeUrl}" download="cancion.${format}">Descargar archivo .${format}</a>`;
-                downloadLinkContainer.style.display = 'block';
-            }
+    return card;
+  }
 
-            urlInput.addEventListener('input', updateButtonState);
-            formatSelect.addEventListener('change', updateButtonState);
+  function openPlayer(movie) {
+    modalTitle.textContent = movie.title;
+    videoContainer.innerHTML = '';
+    streamLinks.innerHTML = '';
 
-            downloadBtn.addEventListener('click', e => {
-                e.preventDefault();
-                message.style.color = '#33ffcc';
-                message.textContent = '';
-                downloadLinkContainer.innerHTML = '';
-                downloadLinkContainer.style.display = 'none';
+    if (movie.streams.length === 1) {
+      // Embed the video directly if only one stream
+      const iframe = document.createElement('iframe');
+      iframe.src = movie.streams[0].url + "?autoplay=1&rel=0";
+      iframe.title = movie.title;
+      iframe.setAttribute('allowfullscreen', '');
+      iframe.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture');
+      videoContainer.appendChild(iframe);
+    } else {
+      // If multiple streams, show links and embed first one
+      const iframe = document.createElement('iframe');
+      iframe.src = movie.streams[0].url + "?autoplay=1&rel=0";
+      iframe.title = movie.title;
+      iframe.setAttribute('allowfullscreen', '');
+      iframe.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture');
+      videoContainer.appendChild(iframe);
 
-                const url = urlInput.value.trim();
-                const format = formatSelect.value;
+      movie.streams.forEach(stream => {
+        const a = document.createElement('a');
+        a.href = stream.url;
+        a.target = "_blank";
+        a.rel = "noopener noreferrer";
+        a.className = 'stream-link';
+        a.textContent = `Ver en ${stream.name}`;
+        streamLinks.appendChild(a);
+      });
+    }
+    modalOverlay.style.display = 'flex';
+    modalOverlay.focus();
+  }
 
-                if (!validateUrl(url)) {
-                    message.style.color = '#ff4444';
-                    message.textContent = 'Por favor, ingresa una URL válida.';
-                    return;
-                }
+  function closePlayer() {
+    modalOverlay.style.display = 'none';
+    videoContainer.innerHTML = '';
+    streamLinks.innerHTML = '';
+  }
 
-                if (!format) {
-                    message.style.color = '#ff4444';
-                    message.textContent = 'Por favor, selecciona un formato.';
-                    return;
-                }
+  modalClose.addEventListener('click', closePlayer);
+  modalOverlay.addEventListener('click', (e) => {
+    if(e.target === modalOverlay) {
+      closePlayer();
+    }
+  });
 
-                simulateDownloadProcess(url, format).catch(err => {
-                    message.style.color = '#ff4444';
-                    message.textContent = 'Error durante el proceso.';
-                    console.error(err);
-                });
-            });
-        })();
-    </script>
+  searchBar.addEventListener('input', () => {
+    renderMovies(searchBar.value.toLowerCase());
+  });
+
+  function renderMovies(searchTerm = '') {
+    moviesList.innerHTML = '';
+    const filtered = movies.filter(m => m.title.toLowerCase().includes(searchTerm));
+    if(filtered.length === 0) {
+      moviesList.innerHTML = '<p style="grid-column:1/-1; text-align:center; color:#ccc;">No se encontraron películas.</p>';
+      return;
+    }
+    filtered.forEach(movie => {
+      moviesList.appendChild(createMovieCard(movie));
+    });
+  }
+
+  renderMovies();
+
+  // Accessibility: trap focus in modal when open
+  document.addEventListener('keydown', (e) => {
+    if(modalOverlay.style.display === 'flex') {
+      if(e.key === 'Escape') {
+        closePlayer();
+      }
+      const focusableElements = modalOverlay.querySelectorAll('a, button, [tabindex]:not([tabindex="-1"])');
+      if (e.key === 'Tab') {
+        // trap focus
+        const first = focusableElements[0];
+        const last = focusableElements[focusableElements.length - 1];
+        if (e.shiftKey) {
+          if(document.activeElement === first) {
+            e.preventDefault();
+            last.focus();
+          }
+        } else {
+          if(document.activeElement === last) {
+            e.preventDefault();
+            first.focus();
+          }
+        }
+      }
+    }
+  });
+</script>
 </body>
-
-</html> 
+</html>
+</content>
+</create_file>

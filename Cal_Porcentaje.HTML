@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Juego de Carreras</title>
   <style>
-    /* Estilos del juego - se mantienen iguales */
+    /* Estilos del juego */
     * {
       box-sizing: border-box;
       margin: 0;
@@ -167,10 +167,10 @@
   </div>
 
   <!-- Archivos de audio -->
-  <audio id="move-sound" src="https://example.com/move.mp3"></audio>
-  <audio id="coin-sound" src="https://example.com/coin.mp3"></audio>
-  <audio id="collision-sound" src="https://example.com/collision.mp3"></audio>
-  <audio id="background-music" src="https://example.com/background.mp3" loop></audio>
+  <audio id="move-sound" src="https://www.soundjay.com/button/beep-07.mp3"></audio>
+  <audio id="coin-sound" src="https://www.soundjay.com/button/beep-06.mp3"></audio>
+  <audio id="collision-sound" src="https://www.soundjay.com/button/beep-05.mp3"></audio>
+  <audio id="background-music" src="https://www.soundjay.com/button/beep-04.mp3" loop></audio>
 
   <script>
     (() => {
@@ -202,7 +202,7 @@
 
       // Iniciar fondo musical
       backgroundMusic.volume = 0.2;
-      backgroundMusic.play();
+      backgroundMusic.play().catch(error => console.log('Error al reproducir música:', error));
 
       function setPlayerPosition() {
         const position = laneWidth * playerLane + laneWidth / 2 - playerCar.offsetWidth / 2;

@@ -3,11 +3,29 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="Imagenes/NuevoLogo.png" />
-   <h1 style="text-align: center;">
-    <img class="logo" src="Imagenes/NuevoLogo.png" alt="Logo" style="display: block; margin: 0 auto;"</h1>
-  <title>Juega contra la Ai batalla de X y O</title>
+  <link rel="shortcut icon" href="Imagenes/NuevoLogo.png" />
+  <title>Juega contra la AI - X y O</title>
   <style>
+    :root {
+      --bg-color: #0f172a;
+      --primary: #9333ea;
+      --primary-dark: #7e22ce;
+      --accent: #38bdf8;
+      --text-color: #ffffff;
+      --cell-bg: #1e293b;
+      --cell-hover: #334155;
+    }
+
+    .light-mode {
+      --bg-color: #f3f4f6;
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --accent: #1d4ed8;
+      --text-color: #1e293b;
+      --cell-bg: #e2e8f0;
+      --cell-hover: #cbd5e1;
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -16,42 +34,63 @@
 
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #1e3a8a, #9333ea);
-      color: white;
+      background-color: var(--bg-color);
+      color: var(--text-color);
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding-top: 50px;
+      padding: 30px 10px;
       min-height: 100vh;
+      transition: background 0.5s, color 0.5s;
+    }
+
+    .logo {
+      width: 100px;
+      margin-bottom: 20px;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
     }
 
     h1 {
       font-size: 32px;
       margin-bottom: 10px;
-      text-shadow: 2px 2px #000;
+      text-align: center;
+      text-shadow: 1px 1px rgba(0,0,0,0.3);
     }
 
-    #score {
-      font-size: 20px;
-      margin-bottom: 20px;
-      text-shadow: 1px 1px #000;
+    #score, #status {
+      font-size: 18px;
+      margin: 10px 0;
+      text-shadow: 1px 1px rgba(0,0,0,0.2);
     }
 
     #difficulty {
-      margin-bottom: 20px;
+      margin: 10px 0 20px;
     }
 
     #difficulty label {
-      margin: 0 10px;
+      margin: 0 15px;
       font-weight: bold;
+      cursor: pointer;
     }
 
     #game-container {
-      background-color: #0f172a;
+      background-color: rgba(15, 23, 42, 0.85);
       padding: 20px;
       border-radius: 15px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
       text-align: center;
+      transition: background 0.5s;
+    }
+
+    .light-mode #game-container {
+      background-color: #ffffff;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
     }
 
     #board {
@@ -64,20 +103,20 @@
     .cell {
       width: 100px;
       height: 100px;
-      background: #1e293b;
-      border-radius: 10px;
+      background: var(--cell-bg);
+      border-radius: 12px;
       font-size: 36px;
       font-weight: bold;
       display: flex;
       justify-content: center;
       align-items: center;
-      color: #38bdf8;
+      color: var(--accent);
       cursor: pointer;
-      transition: transform 0.2s;
+      transition: all 0.3s ease;
     }
 
     .cell:hover:not(.taken) {
-      background: #334155;
+      background: var(--cell-hover);
       transform: scale(1.05);
     }
 
@@ -85,42 +124,44 @@
       pointer-events: none;
     }
 
-    #status {
-      font-size: 18px;
-      margin-bottom: 10px;
-    }
-
     button {
-      background: #9333ea;
+      background: var(--primary);
       border: none;
-      padding: 10px 20px;
+      padding: 10px 25px;
       border-radius: 10px;
       font-weight: bold;
       color: white;
       cursor: pointer;
-      transition: background 0.3s;
-      margin: 5px;
+      font-size: 16px;
+      transition: background 0.3s, transform 0.2s;
+      margin: 10px;
     }
 
     button:hover {
-      background: #7e22ce;
+      background: var(--primary-dark);
+      transform: scale(1.05);
     }
   </style>
 </head>
 <body>
-  <h1>Juega contra la AI batalla de X y O</h1>
+  <img class="logo" src="Imagenes/NuevoLogo.png" alt="Logo" />
+  <h1>Juega contra la AI - Batalla de X y O</h1>
+  
   <div id="score">
-    <p>Usuario (X): <span id="user-score">0</span> | IA (O): <span id="ai-score">0</span></p>
+    Usuario (X): <span id="user-score">0</span> | IA (O): <span id="ai-score">0</span>
   </div>
+
   <div id="difficulty">
     <label><input type="radio" name="level" value="easy" checked /> Fácil</label>
     <label><input type="radio" name="level" value="medium" /> Medio</label>
     <label><input type="radio" name="level" value="hard" /> Difícil</label>
   </div>
+
   <div id="game-container">
     <div id="board"></div>
     <div id="status">Turno de: <span id="current-player">X</span></div>
     <button id="restart-btn">Reiniciar</button>
+    <button id="theme-toggle">Cambiar Modo</button>
   </div>
 
   <script>
@@ -128,6 +169,7 @@
     const status = document.getElementById('status');
     const currentPlayerSpan = document.getElementById('current-player');
     const restartBtn = document.getElementById('restart-btn');
+    const themeToggle = document.getElementById('theme-toggle');
     const levelRadios = document.getElementsByName('level');
     const userScoreSpan = document.getElementById('user-score');
     const aiScoreSpan = document.getElementById('ai-score');
@@ -306,6 +348,10 @@
         return minEval;
       }
     }
+
+    themeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('light-mode');
+    });
 
     restartBtn.addEventListener('click', createBoard);
     createBoard();

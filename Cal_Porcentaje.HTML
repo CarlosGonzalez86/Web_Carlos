@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Juego de Carreras Mejorado</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Juego de X y O Moderno</title>
   <style>
-    /* Estilos del juego */
     * {
       box-sizing: border-box;
       margin: 0;
@@ -14,279 +13,180 @@
 
     body {
       font-family: Arial, sans-serif;
-      background: #1a1a1a;
+      background: linear-gradient(45deg, #1e3a8a, #9333ea);
       color: #fff;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      overflow: hidden;
     }
 
     #game-container {
-      position: relative;
-      width: 360px;
-      height: 640px;
-      background: linear-gradient(to bottom, #2c3e50, #34495e);
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 0 15px #000;
-    }
-
-    #road {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(to bottom, #7f8c8d 30%, #2c3e50 100%);
-    }
-
-    .lane {
-      position: absolute;
-      width: 8px;
-      height: 80px;
-      background: #ecf0f1;
-      left: calc(50% - 4px);
-      opacity: 0.5;
-      animation: laneMove 1.2s linear infinite;
-    }
-
-    @keyframes laneMove {
-      from {
-        top: -80px;
-      }
-      to {
-        top: 640px;
-      }
-    }
-
-    #player-car {
-      position: absolute;
-      bottom: 20px;
-      left: calc(50% - 25px);
-      width: 50px;
-      height: 100px;
-      background: linear-gradient(to bottom, #27ae60, #2ecc71);
-      border-radius: 8px;
-      box-shadow: 0 0 10px #2ecc71;
-    }
-
-    .enemy-car {
-      position: absolute;
-      width: 50px;
-      height: 100px;
-      background: linear-gradient(to bottom, #c0392b, #e74c3c);
-      border-radius: 8px;
-      box-shadow: 0 0 10px #e74c3c;
-    }
-
-    .coin {
-      position: absolute;
-      width: 30px;
-      height: 30px;
-      background: radial-gradient(circle, #f1c40f, #f39c12);
-      border-radius: 50%;
-      box-shadow: 0 0 10px #f1c40f;
-    }
-
-    #score {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      font-size: 18px;
-      color: #fff;
-    }
-
-    #level {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      font-size: 18px;
-      color: #fff;
-    }
-
-    #controls {
-      position: absolute;
-      bottom: 20px;
-      width: 100%;
       display: flex;
-      justify-content: space-around;
-    }
-
-    .control-btn {
-      width: 60px;
-      height: 60px;
-      background: #2980b9;
-      border: none;
-      border-radius: 50%;
-      font-size: 24px;
-      color: #fff;
-      box-shadow: 0 0 10px #000;
-      text-align: center;
-      line-height: 60px;
-      cursor: pointer;
-      user-select: none;
-    }
-
-    .control-btn:active {
-      background: #3498db;
-    }
-
-    #game-over {
-      display: none;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      text-align: center;
-      color: #fff;
-      font-size: 24px;
-      background: rgba(0, 0, 0, 0.8);
+      flex-direction: column;
+      align-items: center;
+      background: #1e293b;
+      width: 320px;
       padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    }
+
+    #game-title {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      text-align: center;
+      color: #38bdf8;
+      text-shadow: 0 0 10px #38bdf8;
+    }
+
+    #board {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      width: 100%;
+    }
+
+    .cell {
+      width: 100px;
+      height: 100px;
+      background: #0f172a;
       border-radius: 8px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 36px;
+      font-weight: bold;
+      color: #38bdf8;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      transition: background 0.3s ease;
+    }
+
+    .cell:hover {
+      background: #1e293b;
+    }
+
+    .cell.taken {
+      pointer-events: none;
+    }
+
+    #status {
+      margin-top: 20px;
+      font-size: 18px;
+      color: #facc15;
+      text-align: center;
     }
 
     #restart-btn {
-      margin-top: 10px;
+      margin-top: 20px;
       padding: 10px 20px;
-      background: #27ae60;
+      background: #9333ea;
       border: none;
-      border-radius: 5px;
-      color: #fff;
+      border-radius: 8px;
       font-size: 16px;
+      font-weight: bold;
+      color: #fff;
       cursor: pointer;
+      transition: background 0.3s ease;
     }
 
     #restart-btn:hover {
-      background: #2ecc71;
+      background: #7e22ce;
     }
   </style>
 </head>
 <body>
   <div id="game-container">
-    <div id="road">
-      <div class="lane"></div>
-      <div class="lane"></div>
-      <div class="lane"></div>
-    </div>
-    <div id="player-car"></div>
-    <div id="score">Puntaje: 0</div>
-    <div id="level">Nivel: 1</div>
-    <div id="controls">
-      <button class="control-btn" id="left-btn">&#9664;</button>
-      <button class="control-btn" id="right-btn">&#9654;</button>
-    </div>
-    <div id="game-over">
-      <p>¡Juego Terminado!</p>
-      <button id="restart-btn">Reiniciar</button>
-    </div>
+    <div id="game-title">Juego de X y O</div>
+    <div id="board"></div>
+    <div id="status">Turno de: <span id="current-player">X</span></div>
+    <button id="restart-btn">Reiniciar Juego</button>
   </div>
-
-  <!-- Archivos de audio -->
-  <audio id="move-sound" src="https://www.soundjay.com/button/beep-07.mp3"></audio>
-  <audio id="coin-sound" src="https://www.soundjay.com/button/beep-06.mp3"></audio>
-  <audio id="collision-sound" src="https://www.soundjay.com/button/beep-05.mp3"></audio>
-  <audio id="background-music" src="https://www.soundjay.com/button/beep-04.mp3" loop></audio>
 
   <script>
     (() => {
-      const gameContainer = document.getElementById('game-container');
-      const playerCar = document.getElementById('player-car');
-      const scoreDisplay = document.getElementById('score');
-      const levelDisplay = document.getElementById('level');
-      const gameOverDisplay = document.getElementById('game-over');
+      const boardElement = document.getElementById('board');
+      const statusElement = document.getElementById('status');
+      const currentPlayerElement = document.getElementById('current-player');
       const restartButton = document.getElementById('restart-btn');
-      const leftButton = document.getElementById('left-btn');
-      const rightButton = document.getElementById('right-btn');
 
-      // Sonidos
-      const moveSound = document.getElementById('move-sound');
-      const coinSound = document.getElementById('coin-sound');
-      const collisionSound = document.getElementById('collision-sound');
-      const backgroundMusic = document.getElementById('background-music');
+      const boardState = Array(9).fill(null); // Estado inicial del tablero
+      let currentPlayer = 'X'; // Jugador actual
 
-      const containerWidth = gameContainer.offsetWidth;
-      const laneWidth = containerWidth / 3;
-      let playerLane = 1; // 0: Izquierda, 1: Centro, 2: Derecha
-      let score = 0;
-      let level = 1;
-      let gameRunning = true;
+      // Combos ganadores
+      const winningCombos = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6]
+      ];
 
-      const enemyCars = [];
-      const coins = [];
-      let enemySpeed = 4;
+      // Crear el tablero
+      function createBoard() {
+        boardElement.innerHTML = '';
+        boardState.fill(null);
+        currentPlayer = 'X';
+        currentPlayerElement.textContent = currentPlayer;
+        statusElement.textContent = `Turno de: ${currentPlayer}`;
 
-      // Iniciar fondo musical
-      backgroundMusic.volume = 0.2;
-      backgroundMusic.play().catch(error => console.log('Error al reproducir música:', error));
-
-      function setPlayerPosition() {
-        const position = laneWidth * playerLane + laneWidth / 2 - playerCar.offsetWidth / 2;
-        playerCar.style.left = `${position}px`;
+        for (let i = 0; i < 9; i++) {
+          const cell = document.createElement('div');
+          cell.classList.add('cell');
+          cell.dataset.index = i;
+          cell.addEventListener('click', handleCellClick);
+          boardElement.appendChild(cell);
+        }
       }
 
-      function createEnemyCar() {
-        const lane = Math.floor(Math.random() * 3); 
-        const enemyCar = document.createElement('div');
-        enemyCar.classList.add('enemy-car');
-        const position = laneWidth * lane + laneWidth / 2 - 25;
-        enemyCar.style.left = `${position}px`;
-        enemyCar.style.top = '-120px';
-        gameContainer.appendChild(enemyCar);
-        enemyCars.push({ element: enemyCar, lane });
-      }
+      // Manejar el clic en una celda
+      function handleCellClick(event) {
+        const cell = event.target;
+        const index = parseInt(cell.dataset.index, 10);
 
-      function createCoin() {
-        const lane = Math.floor(Math.random() * 3); 
-        const coin = document.createElement('div');
-        coin.classList.add('coin');
-        const position = laneWidth * lane + laneWidth / 2 - 15;
-        coin.style.left = `${position}px`;
-        coin.style.top = '-50px';
-        gameContainer.appendChild(coin);
-        coins.push({ element: coin, lane });
-      }
+        if (!boardState[index]) {
+          boardState[index] = currentPlayer;
+          cell.textContent = currentPlayer;
+          cell.classList.add('taken');
 
-      function moveEnemies() {
-        for (let i = enemyCars.length - 1; i >= 0; i--) {
-          const enemy = enemyCars[i];
-          const top = parseInt(enemy.element.style.top) + enemySpeed;
-          enemy.element.style.top = `${top}px`;
-
-          if (enemy.lane === playerLane && top >= 520 && top <= 620) {
-            collisionSound.play();
-            gameOver();
-            return;
-          }
-
-          if (top > 640) {
-            gameContainer.removeChild(enemy.element);
-            enemyCars.splice(i, 1);
-            score += 10;
-            updateScoreAndLevel();
+          if (checkWin(currentPlayer)) {
+            statusElement.textContent = `¡${currentPlayer} ha ganado!`;
+            endGame();
+          } else if (boardState.every(cell => cell)) {
+            statusElement.textContent = '¡Es un empate!';
+            endGame();
+          } else {
+            currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+            currentPlayerElement.textContent = currentPlayer;
+            statusElement.textContent = `Turno de: ${currentPlayer}`;
           }
         }
       }
 
-      function moveCoins() {
-        for (let i = coins.length - 1; i >= 0; i--) {
-          const coin = coins[i];
-          const top = parseInt(coin.element.style.top) + enemySpeed;
-          coin.element.style.top = `${top}px`;
-
-          if (coin.lane === playerLane && top >= 520 && top <= 580) {
-            coinSound.play();
-            gameContainer.removeChild(coin.element);
-            coins.splice(i, 1);
-            score += 20;
-            updateScoreAndLevel();
-          }
-
-          if (top > 640) {
-            gameContainer.removeChild(coin.element);
-            coins.splice(i, 1);
-          }
-        }
+      // Comprobar si un jugador ha ganado
+      function checkWin(player) {
+        return winningCombos.some(combo =>
+          combo.every(index => boardState[index] === player)
+        );
       }
 
-      function updateScoreAndLevel() {
-        scoreDisplay11
+      // Terminar el juego
+      function endGame() {
+        const cells = document.querySelectorAll('.cell');
+        cells.forEach(cell => cell.removeEventListener('click', handleCellClick));
+      }
+
+      // Reiniciar el juego
+      restartButton.addEventListener('click', createBoard);
+
+      // Inicializar el juego
+      createBoard();
+    })();
+  </script>
+</body>
+</html>

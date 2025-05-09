@@ -1,20 +1,17 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Tetris Moderno - 20 Niveles</title>
+    <title>Tetris Moderno - Corregido</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-
         * {
             box-sizing: border-box;
         }
-
         body {
             margin: 0;
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Orbitron', sans-serif;
             background: radial-gradient(circle, #1e293b, #0f172a);
             color: #f8fafc;
             display: flex;
@@ -23,7 +20,6 @@
             height: 100vh;
             overflow: hidden;
         }
-
         #tetris {
             width: 320px;
             height: 640px;
@@ -36,146 +32,97 @@
             padding: 15px;
             position: relative;
         }
-
         canvas {
             background: #1e293b;
             border-radius: 8px;
             box-shadow: inset 0 0 10px #00d8ff77;
             image-rendering: pixelated;
         }
-
         #game {
             width: 240px;
             height: 480px;
             margin-bottom: 10px;
         }
-
         #info-panel {
             text-align: center;
             margin-bottom: 15px;
         }
-
         #info-panel h1 {
             margin: 0;
-            font-family: 'Orbitron', sans-serif;
             font-size: 1.5rem;
             color: #00eaff;
             text-shadow: 0 0 10px #00d8ff;
         }
-
-        #info-panel .stats {
-            display: flex;
-            justify-content: space-between;
-            font-size: 1rem;
-            margin-top: 8px;
-        }
-
-        #next-piece {
-            margin-top: 10px;
-            padding: 10px;
-            background: #1c2e46;
-            border-radius: 8px;
-            box-shadow: 0 0 8px #00d8ff99;
-        }
-
-        #next-piece h2 {
-            margin: 0 0 5px;
-            font-size: 1rem;
-            color: #00eaff;
-        }
-
-        #controls {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 10px;
-            width: 100%;
-        }
-
-        .control-btn {
-            background: #00bcd4;
-            border: none;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            color: #fff;
-            font-size: 1.2rem;
-            font-weight: bold;
-            text-align: center;
-            line-height: 50px;
-            cursor: pointer;
-            box-shadow: 0 0 10px #00d8ff;
-            transition: background 0.3s, box-shadow 0.3s;
-        }
-
-        .control-btn:active {
-            background: #00eaff;
-            box-shadow: 0 0 20px #00ffff;
-        }
-
-        #pause-restart {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 10px;
-            width: 100%;
-        }
-
-        .action-btn {
-            width: 45%;
-            padding: 10px;
-            border: none;
-            border-radius: 8px;
-            background: #00bcd4;
-            color: #fff;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            text-align: center;
-            box-shadow: 0 0 10px #00d8ff;
-            transition: background 0.3s, box-shadow 0.3s;
-        }
-
-        .action-btn:active {
-            background: #00eaff;
-            box-shadow: 0 0 20px #00ffff;
-        }
-
-        #footer-text {
-            margin-top: 10px;
-            font-size: 0.75rem;
-            color: #94a3b8;
-            text-align: center;
-        }
     </style>
 </head>
 <body>
-    <div id="tetris" role="main" aria-label="Juego de Tetris Moderno con 20 niveles">
-        <canvas id="game" aria-label="Tablero del Juego"></canvas>
-        <div id="info-panel" aria-live="polite">
+    <div id="tetris">
+        <canvas id="game" width="240" height="480" aria-label="Tablero del Juego"></canvas>
+        <div id="info-panel">
             <h1>TETRIS MODERNO</h1>
             <div class="stats">
                 <div>Nivel: <span id="level">1</span></div>
                 <div>Puntos: <span id="score">0</span></div>
                 <div>Filas: <span id="lines">0</span></div>
             </div>
-            <div id="next-piece">
-                <h2>Siguiente</h2>
-                <canvas id="next" width="96" height="96"></canvas>
-            </div>
         </div>
-        <div id="pause-restart">
-            <button id="pause-btn" class="action-btn">Pausar</button>
-            <button id="restart-btn" class="action-btn">Reiniciar</button>
-        </div>
-        <div id="controls">
-            <button id="btn-left" class="control-btn" aria-label="Mover izquierda">&larr;</button>
-            <button id="btn-rotate" class="control-btn" aria-label="Rotar pieza">&#8635;</button>
-            <button id="btn-right" class="control-btn" aria-label="Mover derecha">&rarr;</button>
-            <button id="btn-drop" class="control-btn" aria-label="Soltar rápido">▼</button>
-        </div>
-        <div id="footer-text">Usa teclas &larr; &rarr; ↑ ↓ o botones para jugar.</div>
     </div>
     <script>
-        // Tu archivo JavaScript actual seguirá siendo funcional aquí.
+        // Configuración inicial del Canvas y del contexto
+        const canvas = document.getElementById('game');
+        const ctx = canvas.getContext('2d');
+
+        if (!ctx) {
+            console.error("Error: No se pudo inicializar el contexto del canvas.");
+        } else {
+            console.log("Contexto del canvas inicializado correctamente.");
+
+            // Dibujar un rectángulo simple para confirmar que el canvas funciona
+            ctx.fillStyle = 'blue';
+            ctx.fillRect(50, 50, 100, 100);
+        }
+
+        // Clase básica para el juego Tetris
+        class Tetris {
+            constructor() {
+                console.log("Tetris inicializado");
+                this.board = this.createBoard(10, 20);
+                this.score = 0;
+                this.level = 1;
+                this.lines = 0;
+            }
+
+            createBoard(cols, rows) {
+                const board = [];
+                for (let y = 0; y < rows; y++) {
+                    board.push(new Array(cols).fill(0));
+                }
+                return board;
+            }
+
+            drawBoard() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                for (let y = 0; y < this.board.length; y++) {
+                    for (let x = 0; x < this.board[y].length; x++) {
+                        if (this.board[y][x] !== 0) {
+                            ctx.fillStyle = 'cyan';
+                            ctx.fillRect(x * 24, y * 24, 24, 24);
+                        }
+                    }
+                }
+            }
+        }
+
+        const game = new Tetris();
+
+        // Ciclo de Animación
+        function animate() {
+            console.log("Ciclo de animación ejecutándose.");
+            game.drawBoard();
+            requestAnimationFrame(animate);
+        }
+
+        animate();
     </script>
 </body>
 </html>

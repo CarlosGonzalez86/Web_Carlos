@@ -79,10 +79,27 @@
       box-shadow: 0 0 10px #ff0000;
     }
 
+    .coin {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      background: radial-gradient(circle, #ffd700, #b8860b);
+      border-radius: 50%;
+      box-shadow: 0 0 10px #ffd700;
+    }
+
     #score {
       position: absolute;
       top: 10px;
       left: 10px;
+      font-size: 18px;
+      color: #fff;
+    }
+
+    #level {
+      position: absolute;
+      top: 10px;
+      right: 10px;
       font-size: 18px;
       color: #fff;
     }
@@ -138,6 +155,7 @@
     </div>
     <div id="player-car"></div>
     <div id="score">Puntaje: 0</div>
+    <div id="level">Nivel: 1</div>
     <div id="controls">
       <button class="control-btn" id="left-btn">&#9664;</button>
       <button class="control-btn" id="right-btn">&#9654;</button>
@@ -153,6 +171,7 @@
       const gameContainer = document.getElementById('game-container');
       const playerCar = document.getElementById('player-car');
       const scoreDisplay = document.getElementById('score');
+      const levelDisplay = document.getElementById('level');
       const gameOverDisplay = document.getElementById('game-over');
       const restartButton = document.getElementById('restart-btn');
       const leftButton = document.getElementById('left-btn');
@@ -162,10 +181,12 @@
       const laneWidth = containerWidth / 3;
       let playerLane = 1; // 0: Izquierda, 1: Centro, 2: Derecha
       let score = 0;
+      let level = 1;
       let gameRunning = true;
 
       const enemyCars = [];
-      const enemySpeed = 4;
+      const coins = [];
+      let enemySpeed = 4;
 
       // Coloca el jugador en la posición inicial
       function setPlayerPosition() {
@@ -185,7 +206,19 @@
         enemyCars.push({ element: enemyCar, lane });
       }
 
-      // Mueve los enemigos hacia abajo
+      // Crear una moneda recolectable
+      function createCoin() {
+        const lane = Math.floor(Math.random() * 3); // Seleccionar un carril aleatorio
+        const coin = document.createElement('div');
+        coin.classList.add('coin');
+        const position = laneWidth * lane + laneWidth / 2 - 15;
+        coin.style.left = `${position}px`;
+        coin.style.top = '-50px';
+        gameContainer.appendChild(coin);
+        coins.push({ element: coin, lane });
+      }
+
+      // Mueve los enemigos y verifica colisiones
       function moveEnemies() {
         enemyCars.forEach((enemy, index) => {
           const top = parseInt(enemy.element.style.top) + enemySpeed;
@@ -201,9 +234,41 @@
             gameContainer.removeChild(enemy.element);
             enemyCars.splice(index, 1);
             score += 10; // Incrementar puntaje
-            scoreDisplay.textContent = `Puntaje: ${score}`;
+            updateScoreAndLevel();
           }
         });
+      }
+
+      // Mueve las monedas y verifica si se recolectan
+      function moveCoins() {
+        coins.forEach((coin, index) => {
+          const top = parseInt(coin.element.style.top) + enemySpeed;
+          coin.element.style.top = `${top}px`;
+
+          // Detectar recolección
+          if (coin.lane === playerLane && top >= 520 && top <= 580) {
+            gameContainer.removeChild(coin.element);
+            coins.splice(index, 1);
+            score += 20; // Incrementar puntaje extra
+            updateScoreAndLevel();
+          }
+
+          // Eliminar monedas fuera de la pantalla
+          if (top > 640) {
+            gameContainer.removeChild(coin.element);
+            coins.splice(index, 1);
+          }
+        });
+      }
+
+      // Actualiza el puntaje y el nivel
+      function updateScoreAndLevel() {
+        scoreDisplay.textContent = `Puntaje: ${score}`;
+        if (score >= level * 100) {
+          level++;
+          levelDisplay.textContent = `Nivel: ${level}`;
+          enemySpeed += 1; // Incrementar velocidad con cada nivel
+        }
       }
 
       // Terminar el juego
@@ -216,16 +281,18 @@
       function restartGame() {
         gameRunning = true;
         score = 0;
+        level = 1;
+        enemySpeed = 4;
         scoreDisplay.textContent = 'Puntaje: 0';
-        enemyCars.forEach(enemy => {
-          if (enemy.element.parentNode) {
-            gameContainer.removeChild(enemy.element);
-          }
-        });
+        levelDisplay.textContent = 'Nivel: 1';
+        enemyCars.forEach(enemy => enemy.element.remove());
+        coins.forEach(coin => coin.element.remove());
         enemyCars.length = 0;
+        coins.length = 0;
         playerLane = 1;
         setPlayerPosition();
         gameOverDisplay.style.display = 'none';
+        gameLoop();
       }
 
       // Mover el auto del jugador
@@ -249,7 +316,11 @@
           if (Math.random() < 0.02) {
             createEnemyCar();
           }
+          if (Math.random() < 0.01) {
+            createCoin();
+          }
           moveEnemies();
+          moveCoins();
           requestAnimationFrame(gameLoop);
         }
       }

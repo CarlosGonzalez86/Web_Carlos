@@ -24,8 +24,14 @@
 
     h1 {
       font-size: 32px;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
       text-shadow: 2px 2px #000;
+    }
+
+    #score {
+      font-size: 20px;
+      margin-bottom: 20px;
+      text-shadow: 1px 1px #000;
     }
 
     #difficulty {
@@ -90,6 +96,7 @@
       color: white;
       cursor: pointer;
       transition: background 0.3s;
+      margin: 5px;
     }
 
     button:hover {
@@ -99,6 +106,9 @@
 </head>
 <body>
   <h1>Bienvenido al juego de X y O</h1>
+  <div id="score">
+    <p>Usuario (X): <span id="user-score">0</span> | IA (O): <span id="ai-score">0</span></p>
+  </div>
   <div id="difficulty">
     <label><input type="radio" name="level" value="easy" checked /> Fácil</label>
     <label><input type="radio" name="level" value="medium" /> Medio</label>
@@ -116,10 +126,14 @@
     const currentPlayerSpan = document.getElementById('current-player');
     const restartBtn = document.getElementById('restart-btn');
     const levelRadios = document.getElementsByName('level');
+    const userScoreSpan = document.getElementById('user-score');
+    const aiScoreSpan = document.getElementById('ai-score');
 
     let cells = [];
     let boardState = Array(9).fill(null);
     let currentPlayer = 'X';
+    let userScore = 0;
+    let aiScore = 0;
 
     const winningCombos = [
       [0,1,2], [3,4,5], [6,7,8],
@@ -189,6 +203,13 @@
     function checkGameOver() {
       if (checkWinner(currentPlayer)) {
         updateStatus(`¡${currentPlayer} ha ganado!`);
+        if (currentPlayer === 'X') {
+          userScore++;
+          userScoreSpan.textContent = userScore;
+        } else {
+          aiScore++;
+          aiScoreSpan.textContent = aiScore;
+        }
         disableBoard();
         return true;
       } else if (checkDraw()) {

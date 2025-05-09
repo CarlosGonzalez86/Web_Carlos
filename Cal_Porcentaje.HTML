@@ -155,4 +155,136 @@
       const idx = parseInt(e.target.dataset.index);
       if (!boardState[idx] && currentPlayer === 'X') {
         makeMove(idx, 'X');
-        if (!checkGameOver
+        if (!checkGameOver()) {
+          setTimeout(() => computerMove(), 500);
+        }
+      }
+    }
+
+    function makeMove(index, player) {
+      boardState[index] = player;
+      cells[index].textContent = player;
+      cells[index].classList.add('taken');
+    }
+
+    function updateStatus(message) {
+      if (message) {
+        status.textContent = message;
+      } else {
+        status.textContent = `Turno de: ${currentPlayer}`;
+        currentPlayerSpan.textContent = currentPlayer;
+      }
+    }
+
+    function checkWinner(player) {
+      return winningCombos.some(combo =>
+        combo.every(index => boardState[index] === player)
+      );
+    }
+
+    function checkDraw() {
+      return boardState.every(cell => cell !== null);
+    }
+
+    function checkGameOver() {
+      if (checkWinner(currentPlayer)) {
+        updateStatus(`¡${currentPlayer} ha ganado!`);
+        disableBoard();
+        return true;
+      } else if (checkDraw()) {
+        updateStatus('¡Empate!');
+        return true;
+      }
+      currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+      updateStatus();
+      return false;
+    }
+
+    function disableBoard() {
+      cells.forEach(cell => cell.removeEventListener('click', handleClick));
+    }
+
+    function computerMove() {
+      const difficulty = getDifficulty();
+      let move;
+      if (difficulty === 'easy') {
+        move = getRandomMove();
+      } else if (difficulty === 'medium') {
+        move = getBlockingMove() || getRandomMove();
+      } else {
+        move = getBestMove();
+      }
+      if (move !== null) {
+        makeMove(move, 'O');
+        checkGameOver();
+      }
+    }
+
+    function getRandomMove() {
+      const available = boardState.map((v, i) => v === null ? i : null).filter(v => v !== null);
+      return available[Math.floor(Math.random() * available.length)];
+    }
+
+    function getBlockingMove() {
+      for (const combo of winningCombos) {
+        const [a, b, c] = combo;
+        const line = [boardState[a], boardState[b], boardState[c]];
+        if (line.filter(v => v === 'X').length === 2 && line.includes(null)) {
+          return combo[line.indexOf(null)];
+        }
+      }
+      return null;
+    }
+
+    function getBestMove() {
+      let bestScore = -Infinity;
+      let move = null;
+      for (let i = 0; i < 9; i++) {
+        if (boardState[i] === null) {
+          boardState[i] = 'O';
+          let score = minimax(boardState, 0, false);
+          boardState[i] = null;
+          if (score > bestScore) {
+            bestScore = score;
+            move = i;
+          }
+        }
+      }
+      return move;
+    }
+
+    function minimax(board, depth, isMaximizing) {
+      if (checkWinner('O')) return 10 - depth;
+      if (checkWinner('X')) return depth - 10;
+      if (checkDraw()) return 0;
+
+      if (isMaximizing) {
+        let maxEval = -Infinity;
+        for (let i = 0; i < 9; i++) {
+          if (board[i] === null) {
+            board[i] = 'O';
+            const eval = minimax(board, depth + 1, false);
+            board[i] = null;
+            maxEval = Math.max(maxEval, eval);
+          }
+        }
+        return maxEval;
+      } else {
+        let minEval = Infinity;
+        for (let i = 0; i < 9; i++) {
+          if (board[i] === null) {
+            board[i] = 'X';
+            const eval = minimax(board, depth + 1, true);
+            board[i] = null;
+            minEval = Math.min(minEval, eval);
+          }
+        }
+        return minEval;
+      }
+    }
+
+    restartBtn.addEventListener('click', createBoard);
+    createBoard();
+  </script>
+</body>
+</html>

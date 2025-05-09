@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Juego de Carreras</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Juego de Carreras Mejorado</title>
   <style>
     /* Estilos del juego */
     * {
@@ -14,7 +14,7 @@
 
     body {
       font-family: Arial, sans-serif;
-      background: #222;
+      background: #1a1a1a;
       color: #fff;
       display: flex;
       justify-content: center;
@@ -27,7 +27,7 @@
       position: relative;
       width: 360px;
       height: 640px;
-      background: #333;
+      background: linear-gradient(to bottom, #2c3e50, #34495e);
       border-radius: 12px;
       overflow: hidden;
       box-shadow: 0 0 15px #000;
@@ -37,14 +37,14 @@
       position: absolute;
       width: 100%;
       height: 100%;
-      background: linear-gradient(to bottom, #444 30%, #222 100%);
+      background: linear-gradient(to bottom, #7f8c8d 30%, #2c3e50 100%);
     }
 
     .lane {
       position: absolute;
       width: 8px;
       height: 80px;
-      background: #fff;
+      background: #ecf0f1;
       left: calc(50% - 4px);
       opacity: 0.5;
       animation: laneMove 1.2s linear infinite;
@@ -65,27 +65,27 @@
       left: calc(50% - 25px);
       width: 50px;
       height: 100px;
-      background: linear-gradient(to bottom, #00ff00, #006600);
+      background: linear-gradient(to bottom, #27ae60, #2ecc71);
       border-radius: 8px;
-      box-shadow: 0 0 10px #00ff00;
+      box-shadow: 0 0 10px #2ecc71;
     }
 
     .enemy-car {
       position: absolute;
       width: 50px;
       height: 100px;
-      background: linear-gradient(to bottom, #ff0000, #660000);
+      background: linear-gradient(to bottom, #c0392b, #e74c3c);
       border-radius: 8px;
-      box-shadow: 0 0 10px #ff0000;
+      box-shadow: 0 0 10px #e74c3c;
     }
 
     .coin {
       position: absolute;
       width: 30px;
       height: 30px;
-      background: radial-gradient(circle, #ffd700, #b8860b);
+      background: radial-gradient(circle, #f1c40f, #f39c12);
       border-radius: 50%;
-      box-shadow: 0 0 10px #ffd700;
+      box-shadow: 0 0 10px #f1c40f;
     }
 
     #score {
@@ -115,7 +115,7 @@
     .control-btn {
       width: 60px;
       height: 60px;
-      background: #555;
+      background: #2980b9;
       border: none;
       border-radius: 50%;
       font-size: 24px;
@@ -128,7 +128,7 @@
     }
 
     .control-btn:active {
-      background: #888;
+      background: #3498db;
     }
 
     #game-over {
@@ -143,6 +143,21 @@
       background: rgba(0, 0, 0, 0.8);
       padding: 20px;
       border-radius: 8px;
+    }
+
+    #restart-btn {
+      margin-top: 10px;
+      padding: 10px 20px;
+      background: #27ae60;
+      border: none;
+      border-radius: 5px;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    #restart-btn:hover {
+      background: #2ecc71;
     }
   </style>
 </head>
@@ -232,108 +247,46 @@
       }
 
       function moveEnemies() {
-        enemyCars.forEach((enemy, index) => {
+        for (let i = enemyCars.length - 1; i >= 0; i--) {
+          const enemy = enemyCars[i];
           const top = parseInt(enemy.element.style.top) + enemySpeed;
           enemy.element.style.top = `${top}px`;
 
           if (enemy.lane === playerLane && top >= 520 && top <= 620) {
             collisionSound.play();
             gameOver();
+            return;
           }
 
           if (top > 640) {
             gameContainer.removeChild(enemy.element);
-            enemyCars.splice(index, 1);
+            enemyCars.splice(i, 1);
             score += 10;
             updateScoreAndLevel();
           }
-        });
+        }
       }
 
       function moveCoins() {
-        coins.forEach((coin, index) => {
+        for (let i = coins.length - 1; i >= 0; i--) {
+          const coin = coins[i];
           const top = parseInt(coin.element.style.top) + enemySpeed;
           coin.element.style.top = `${top}px`;
 
           if (coin.lane === playerLane && top >= 520 && top <= 580) {
             coinSound.play();
             gameContainer.removeChild(coin.element);
-            coins.splice(index, 1);
+            coins.splice(i, 1);
             score += 20;
             updateScoreAndLevel();
           }
 
           if (top > 640) {
             gameContainer.removeChild(coin.element);
-            coins.splice(index, 1);
+            coins.splice(i, 1);
           }
-        });
+        }
       }
 
       function updateScoreAndLevel() {
-        scoreDisplay.textContent = `Puntaje: ${score}`;
-        if (score >= level * 100) {
-          level++;
-          levelDisplay.textContent = `Nivel: ${level}`;
-          enemySpeed += 1;
-        }
-      }
-
-      function gameOver() {
-        gameRunning = false;
-        gameOverDisplay.style.display = 'block';
-        backgroundMusic.pause();
-      }
-
-      function restartGame() {
-        gameRunning = true;
-        score = 0;
-        level = 1;
-        enemySpeed = 4;
-        scoreDisplay.textContent = 'Puntaje: 0';
-        levelDisplay.textContent = 'Nivel: 1';
-        enemyCars.forEach(enemy => enemy.element.remove());
-        coins.forEach(coin => coin.element.remove());
-        enemyCars.length = 0;
-        coins.length = 0;
-        playerLane = 1;
-        setPlayerPosition();
-        gameOverDisplay.style.display = 'none';
-        backgroundMusic.play();
-        gameLoop();
-      }
-
-      function movePlayer(direction) {
-        moveSound.play();
-        if (direction === 'left' && playerLane > 0) {
-          playerLane--;
-        } else if (direction === 'right' && playerLane < 2) {
-          playerLane++;
-        }
-        setPlayerPosition();
-      }
-
-      leftButton.addEventListener('click', () => movePlayer('left'));
-      rightButton.addEventListener('click', () => movePlayer('right'));
-      restartButton.addEventListener('click', restartGame);
-
-      function gameLoop() {
-        if (gameRunning) {
-          if (Math.random() < 0.02) {
-            createEnemyCar();
-          }
-          if (Math.random() < 0.01) {
-            createCoin();
-          }
-          moveEnemies();
-          moveCoins();
-          requestAnimationFrame(gameLoop);
-        }
-      }
-
-      setPlayerPosition();
-      gameLoop();
-    })();
-  </script>
-</body>
-</html>
+        scoreDisplay11

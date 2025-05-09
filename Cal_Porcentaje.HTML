@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Juego de Carreras</title>
   <style>
+    /* Estilos del juego - se mantienen iguales */
     * {
       box-sizing: border-box;
       margin: 0;
@@ -37,7 +38,6 @@
       width: 100%;
       height: 100%;
       background: linear-gradient(to bottom, #444 30%, #222 100%);
-      overflow: hidden;
     }
 
     .lane {
@@ -166,6 +166,12 @@
     </div>
   </div>
 
+  <!-- Archivos de audio -->
+  <audio id="move-sound" src="https://example.com/move.mp3"></audio>
+  <audio id="coin-sound" src="https://example.com/coin.mp3"></audio>
+  <audio id="collision-sound" src="https://example.com/collision.mp3"></audio>
+  <audio id="background-music" src="https://example.com/background.mp3" loop></audio>
+
   <script>
     (() => {
       const gameContainer = document.getElementById('game-container');
@@ -176,6 +182,12 @@
       const restartButton = document.getElementById('restart-btn');
       const leftButton = document.getElementById('left-btn');
       const rightButton = document.getElementById('right-btn');
+
+      // Sonidos
+      const moveSound = document.getElementById('move-sound');
+      const coinSound = document.getElementById('coin-sound');
+      const collisionSound = document.getElementById('collision-sound');
+      const backgroundMusic = document.getElementById('background-music');
 
       const containerWidth = gameContainer.offsetWidth;
       const laneWidth = containerWidth / 3;
@@ -188,15 +200,17 @@
       const coins = [];
       let enemySpeed = 4;
 
-      // Coloca el jugador en la posición inicial
+      // Iniciar fondo musical
+      backgroundMusic.volume = 0.2;
+      backgroundMusic.play();
+
       function setPlayerPosition() {
         const position = laneWidth * playerLane + laneWidth / 2 - playerCar.offsetWidth / 2;
         playerCar.style.left = `${position}px`;
       }
 
-      // Crear un auto enemigo
       function createEnemyCar() {
-        const lane = Math.floor(Math.random() * 3); // Seleccionar un carril aleatorio
+        const lane = Math.floor(Math.random() * 3); 
         const enemyCar = document.createElement('div');
         enemyCar.classList.add('enemy-car');
         const position = laneWidth * lane + laneWidth / 2 - 25;
@@ -206,9 +220,8 @@
         enemyCars.push({ element: enemyCar, lane });
       }
 
-      // Crear una moneda recolectable
       function createCoin() {
-        const lane = Math.floor(Math.random() * 3); // Seleccionar un carril aleatorio
+        const lane = Math.floor(Math.random() * 3); 
         const coin = document.createElement('div');
         coin.classList.add('coin');
         const position = laneWidth * lane + laneWidth / 2 - 15;
@@ -218,42 +231,38 @@
         coins.push({ element: coin, lane });
       }
 
-      // Mueve los enemigos y verifica colisiones
       function moveEnemies() {
         enemyCars.forEach((enemy, index) => {
           const top = parseInt(enemy.element.style.top) + enemySpeed;
           enemy.element.style.top = `${top}px`;
 
-          // Detectar colisión
           if (enemy.lane === playerLane && top >= 520 && top <= 620) {
+            collisionSound.play();
             gameOver();
           }
 
-          // Eliminar enemigos fuera de la pantalla
           if (top > 640) {
             gameContainer.removeChild(enemy.element);
             enemyCars.splice(index, 1);
-            score += 10; // Incrementar puntaje
+            score += 10;
             updateScoreAndLevel();
           }
         });
       }
 
-      // Mueve las monedas y verifica si se recolectan
       function moveCoins() {
         coins.forEach((coin, index) => {
           const top = parseInt(coin.element.style.top) + enemySpeed;
           coin.element.style.top = `${top}px`;
 
-          // Detectar recolección
           if (coin.lane === playerLane && top >= 520 && top <= 580) {
+            coinSound.play();
             gameContainer.removeChild(coin.element);
             coins.splice(index, 1);
-            score += 20; // Incrementar puntaje extra
+            score += 20;
             updateScoreAndLevel();
           }
 
-          // Eliminar monedas fuera de la pantalla
           if (top > 640) {
             gameContainer.removeChild(coin.element);
             coins.splice(index, 1);
@@ -261,23 +270,21 @@
         });
       }
 
-      // Actualiza el puntaje y el nivel
       function updateScoreAndLevel() {
         scoreDisplay.textContent = `Puntaje: ${score}`;
         if (score >= level * 100) {
           level++;
           levelDisplay.textContent = `Nivel: ${level}`;
-          enemySpeed += 1; // Incrementar velocidad con cada nivel
+          enemySpeed += 1;
         }
       }
 
-      // Terminar el juego
       function gameOver() {
         gameRunning = false;
         gameOverDisplay.style.display = 'block';
+        backgroundMusic.pause();
       }
 
-      // Reiniciar el juego
       function restartGame() {
         gameRunning = true;
         score = 0;
@@ -292,11 +299,12 @@
         playerLane = 1;
         setPlayerPosition();
         gameOverDisplay.style.display = 'none';
+        backgroundMusic.play();
         gameLoop();
       }
 
-      // Mover el auto del jugador
       function movePlayer(direction) {
+        moveSound.play();
         if (direction === 'left' && playerLane > 0) {
           playerLane--;
         } else if (direction === 'right' && playerLane < 2) {
@@ -305,12 +313,10 @@
         setPlayerPosition();
       }
 
-      // Controles táctiles
       leftButton.addEventListener('click', () => movePlayer('left'));
       rightButton.addEventListener('click', () => movePlayer('right'));
       restartButton.addEventListener('click', restartGame);
 
-      // Ciclo del juego
       function gameLoop() {
         if (gameRunning) {
           if (Math.random() < 0.02) {
@@ -325,7 +331,6 @@
         }
       }
 
-      // Inicializar el juego
       setPlayerPosition();
       gameLoop();
     })();

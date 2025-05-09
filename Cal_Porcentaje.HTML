@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Juego de X y O Moderno</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bienvenido a X y O</title>
   <style>
     * {
       box-sizing: border-box;
@@ -12,181 +12,147 @@
     }
 
     body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(45deg, #1e3a8a, #9333ea);
-      color: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-
-    #game-container {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #1e3a8a, #9333ea);
+      color: white;
       display: flex;
       flex-direction: column;
       align-items: center;
-      background: #1e293b;
-      width: 320px;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+      padding-top: 50px;
+      min-height: 100vh;
     }
 
-    #game-title {
-      font-size: 24px;
-      font-weight: bold;
+    h1 {
+      font-size: 32px;
       margin-bottom: 20px;
+      text-shadow: 2px 2px #000;
+    }
+
+    #difficulty {
+      margin-bottom: 20px;
+    }
+
+    #difficulty label {
+      margin: 0 10px;
+      font-weight: bold;
+    }
+
+    #game-container {
+      background-color: #0f172a;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
       text-align: center;
-      color: #38bdf8;
-      text-shadow: 0 0 10px #38bdf8;
     }
 
     #board {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(3, 100px);
       gap: 10px;
-      width: 100%;
+      margin: 20px auto;
     }
 
     .cell {
       width: 100px;
       height: 100px;
-      background: #0f172a;
-      border-radius: 8px;
+      background: #1e293b;
+      border-radius: 10px;
+      font-size: 36px;
+      font-weight: bold;
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 36px;
-      font-weight: bold;
       color: #38bdf8;
       cursor: pointer;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-      transition: background 0.3s ease;
+      transition: transform 0.2s;
     }
 
-    .cell:hover {
-      background: #1e293b;
+    .cell:hover:not(.taken) {
+      background: #334155;
+      transform: scale(1.05);
     }
 
-    .cell.taken {
+    .taken {
       pointer-events: none;
     }
 
     #status {
-      margin-top: 20px;
       font-size: 18px;
-      color: #facc15;
-      text-align: center;
+      margin-bottom: 10px;
     }
 
-    #restart-btn {
-      margin-top: 20px;
-      padding: 10px 20px;
+    button {
       background: #9333ea;
       border: none;
-      border-radius: 8px;
-      font-size: 16px;
+      padding: 10px 20px;
+      border-radius: 10px;
       font-weight: bold;
-      color: #fff;
+      color: white;
       cursor: pointer;
-      transition: background 0.3s ease;
+      transition: background 0.3s;
     }
 
-    #restart-btn:hover {
+    button:hover {
       background: #7e22ce;
     }
   </style>
 </head>
 <body>
+  <h1>Bienvenido al juego de X y O</h1>
+  <div id="difficulty">
+    <label><input type="radio" name="level" value="easy" checked /> Fácil</label>
+    <label><input type="radio" name="level" value="medium" /> Medio</label>
+    <label><input type="radio" name="level" value="hard" /> Difícil</label>
+  </div>
   <div id="game-container">
-    <div id="game-title">Juego de X y O</div>
     <div id="board"></div>
     <div id="status">Turno de: <span id="current-player">X</span></div>
-    <button id="restart-btn">Reiniciar Juego</button>
+    <button id="restart-btn">Reiniciar</button>
   </div>
 
   <script>
-    (() => {
-      const boardElement = document.getElementById('board');
-      const statusElement = document.getElementById('status');
-      const currentPlayerElement = document.getElementById('current-player');
-      const restartButton = document.getElementById('restart-btn');
+    const board = document.getElementById('board');
+    const status = document.getElementById('status');
+    const currentPlayerSpan = document.getElementById('current-player');
+    const restartBtn = document.getElementById('restart-btn');
+    const levelRadios = document.getElementsByName('level');
 
-      const boardState = Array(9).fill(null); // Estado inicial del tablero
-      let currentPlayer = 'X'; // Jugador actual
+    let cells = [];
+    let boardState = Array(9).fill(null);
+    let currentPlayer = 'X';
 
-      // Combos ganadores
-      const winningCombos = [
-        [0, 1, 2],
-        [3, 4, 5],
-        [6, 7, 8],
-        [0, 3, 6],
-        [1, 4, 7],
-        [2, 5, 8],
-        [0, 4, 8],
-        [2, 4, 6]
-      ];
+    const winningCombos = [
+      [0,1,2], [3,4,5], [6,7,8],
+      [0,3,6], [1,4,7], [2,5,8],
+      [0,4,8], [2,4,6]
+    ];
 
-      // Crear el tablero
-      function createBoard() {
-        boardElement.innerHTML = '';
-        boardState.fill(null);
-        currentPlayer = 'X';
-        currentPlayerElement.textContent = currentPlayer;
-        statusElement.textContent = `Turno de: ${currentPlayer}`;
-
-        for (let i = 0; i < 9; i++) {
-          const cell = document.createElement('div');
-          cell.classList.add('cell');
-          cell.dataset.index = i;
-          cell.addEventListener('click', handleCellClick);
-          boardElement.appendChild(cell);
-        }
+    function getDifficulty() {
+      for (const radio of levelRadios) {
+        if (radio.checked) return radio.value;
       }
+      return 'easy';
+    }
 
-      // Manejar el clic en una celda
-      function handleCellClick(event) {
-        const cell = event.target;
-        const index = parseInt(cell.dataset.index, 10);
+    function createBoard() {
+      board.innerHTML = '';
+      cells = [];
+      boardState = Array(9).fill(null);
+      currentPlayer = 'X';
+      updateStatus();
 
-        if (!boardState[index]) {
-          boardState[index] = currentPlayer;
-          cell.textContent = currentPlayer;
-          cell.classList.add('taken');
-
-          if (checkWin(currentPlayer)) {
-            statusElement.textContent = `¡${currentPlayer} ha ganado!`;
-            endGame();
-          } else if (boardState.every(cell => cell)) {
-            statusElement.textContent = '¡Es un empate!';
-            endGame();
-          } else {
-            currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
-            currentPlayerElement.textContent = currentPlayer;
-            statusElement.textContent = `Turno de: ${currentPlayer}`;
-          }
-        }
+      for (let i = 0; i < 9; i++) {
+        const cell = document.createElement('div');
+        cell.classList.add('cell');
+        cell.dataset.index = i;
+        cell.addEventListener('click', handleClick);
+        board.appendChild(cell);
+        cells.push(cell);
       }
+    }
 
-      // Comprobar si un jugador ha ganado
-      function checkWin(player) {
-        return winningCombos.some(combo =>
-          combo.every(index => boardState[index] === player)
-        );
-      }
-
-      // Terminar el juego
-      function endGame() {
-        const cells = document.querySelectorAll('.cell');
-        cells.forEach(cell => cell.removeEventListener('click', handleCellClick));
-      }
-
-      // Reiniciar el juego
-      restartButton.addEventListener('click', createBoard);
-
-      // Inicializar el juego
-      createBoard();
-    })();
-  </script>
-</body>
-</html>
+    function handleClick(e) {
+      const idx = parseInt(e.target.dataset.index);
+      if (!boardState[idx] && currentPlayer === 'X') {
+        makeMove(idx, 'X');
+        if (!checkGameOver

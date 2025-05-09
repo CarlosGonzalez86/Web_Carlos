@@ -5,7 +5,165 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=no" />
 <title>Car Racing Game</title>
 <style>
-  /* Se mantienen los estilos originales de tu código sin cambios */
+  /* Reset and base styles */
+  * {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body, html {
+    margin: 0;
+    padding: 0;
+    background: #111;
+    overflow: hidden;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    user-select: none;
+  }
+
+  #game-container {
+    position: relative;
+    margin: 0 auto;
+    width: 350px;
+    height: 600px;
+    background: linear-gradient(to bottom, #2a2a2a 0%, #0a0a0a 100%);
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 0 15px #00ffea, inset 0 0 40px #00ffea44;
+  }
+
+  #road {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(ellipse at center, #383838 40%, #1a1a1a 80%);
+  }
+
+  .lane {
+    position: absolute;
+    width: 10px;
+    height: 60px;
+    background: white;
+    opacity: 0.3;
+    left: 50%;
+    margin-left: -5px;
+    border-radius: 3px;
+    box-shadow: 0 0 5px #fff;
+    animation: laneAnimation 1s linear infinite;
+    filter: drop-shadow(0 0 2px white);
+  }
+  @keyframes laneAnimation {
+    0% { top: 600px; opacity: 0.3; }
+    100% { top: -60px; opacity: 0; }
+  }
+
+  #player-car {
+    position: absolute;
+    bottom: 30px;
+    left: calc(50% - 25px);
+    width: 50px;
+    height: 100px;
+    background: linear-gradient(180deg, #00ffc8 0%, #005660 100%);
+    border-radius: 15px 15px 20px 20px;
+    box-shadow: inset 0 10px 10px #00ffdacf, 0 0 15px #00ffccaa;
+    transition: left 0.1s ease-out;
+    z-index: 10;
+  }
+
+  #player-car::before, #player-car::after {
+    content: "";
+    position: absolute;
+    background: #222;
+    width: 12px;
+    height: 30px;
+    bottom: 10px;
+    border-radius: 6px;
+    box-shadow: inset 0 0 5px #000;
+  }
+  #player-car::before { left: 5px; }
+  #player-car::after { right: 5px; }
+
+  .enemy-car {
+    position: absolute;
+    width: 50px;
+    height: 100px;
+    background: linear-gradient(180deg, #ff5c00 0%, #a03700 100%);
+    border-radius: 15px 15px 20px 20px;
+    box-shadow: inset 0 10px 10px #ff7400cc, 0 0 15px #ff4400cc;
+    z-index: 9;
+  }
+  .enemy-car::before, .enemy-car::after {
+    content: "";
+    position: absolute;
+    background: #440000;
+    width: 12px;
+    height: 30px;
+    bottom: 10px;
+    border-radius: 6px;
+    box-shadow: inset 0 0 5px #220000;
+  }
+  .enemy-car::before { left: 5px; }
+  .enemy-car::after { right: 5px; }
+
+  #score {
+    position: absolute;
+    top: 14px;
+    left: 20px;
+    color: #00ffe5;
+    font-size: 20px;
+    font-weight: 700;
+    text-shadow: 0 0 10px #00ffe5;
+    z-index: 20;
+    user-select: none;
+  }
+
+  #game-over {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #ff0044;
+    font-size: 42px;
+    font-weight: 900;
+    text-shadow: 0 0 18px #ff0022;
+    display: none;
+    z-index: 30;
+    user-select: none;
+  }
+
+  #controls {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 280px;
+    display: flex;
+    justify-content: space-between;
+    user-select: none;
+    z-index: 20;
+  }
+
+  .control-btn {
+    width: 60px;
+    height: 60px;
+    background: #00ffe5aa;
+    border-radius: 50%;
+    box-shadow: 0 0 15px #00ffe5cc;
+    border: none;
+    font-size: 36px;
+    color: #004d4d;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    touch-action: manipulation;
+    transition: background-color 0.2s ease;
+  }
+
+  .control-btn:active {
+    background: #00ffd1ff;
+    box-shadow: 0 0 25px #00ffd1ff;
+    color: #003333;
+  }
 </style>
 </head>
 <body>
@@ -37,17 +195,8 @@
     const containerWidth = container.clientWidth;
     const laneWidth = containerWidth / 3;
 
-    const playerCarWidth = 50;
-    const playerCarHeight = 100;
-
     let playerLane = 1;
     let enemies = [];
-    let lanePositions = [
-      laneWidth * 0 + (laneWidth / 2 - playerCarWidth / 2),
-      laneWidth * 1 + (laneWidth / 2 - playerCarWidth / 2),
-      laneWidth * 2 + (laneWidth / 2 - playerCarWidth / 2)
-    ];
-
     let running = false;
     let paused = false;
     let score = 0;
@@ -56,17 +205,12 @@
     const enemySpawnInterval = 1200;
 
     function setPlayerPosition() {
+      const lanePositions = [
+        laneWidth * 0 + (laneWidth / 2 - 25),
+        laneWidth * 1 + (laneWidth / 2 - 25),
+        laneWidth * 2 + (laneWidth / 2 - 25),
+      ];
       playerCar.style.left = lanePositions[playerLane] + 'px';
-    }
-
-    function createEnemyCar(lane) {
-      const car = document.createElement('div');
-      car.className = 'enemy-car';
-      const x = lanePositions[lane];
-      car.style.left = `${x}px`;
-      car.style.top = `-120px`;
-      container.appendChild(car);
-      return { element: car, lane: lane, y: -120 };
     }
 
     function resetGame() {
@@ -77,7 +221,6 @@
       });
       enemies = [];
       playerLane = 1;
-      setPlayerPosition();
       score = 0;
       speed = 4;
       running = true;
@@ -88,76 +231,16 @@
       requestAnimationFrame(gameLoop);
     }
 
-    function updateEnemies(deltaTime) {
-      for (let i = enemies.length - 1; i >= 0; i--) {
-        const enemy = enemies[i];
-        enemy.y += speed * deltaTime / 16;
-        if (enemy.y > 600) {
-          container.removeChild(enemy.element);
-          enemies.splice(i, 1);
-          score += 10;
-          scoreDisplay.textContent = 'Score: ' + score;
-          if (score % 100 === 0) speed += 0.5;
-          continue;
-        }
-        enemy.element.style.top = enemy.y + 'px';
-
-        if (enemy.lane === playerLane) {
-          const playerTop = 600 - playerCarHeight - 30;
-          const playerBottom = playerTop + playerCarHeight;
-          const enemyTop = enemy.y;
-          const enemyBottom = enemyTop + playerCarHeight;
-          if (!(playerBottom < enemyTop || playerTop > enemyBottom)) {
-            gameOver();
-            break;
-          }
-        }
-      }
-    }
-
     function gameLoop(timestamp) {
       if (!running || paused) return;
-      const deltaTime = timestamp - (lastEnemySpawnTime || timestamp);
-      lastEnemySpawnTime = timestamp;
-
-      if (timestamp - lastEnemySpawnTime > enemySpawnInterval) {
-        const possibleLanes = [0, 1, 2].filter(l => !enemies.some(e => e.lane === l && e.y < 200));
-        const laneToUse = possibleLanes.length
-          ? possibleLanes[Math.floor(Math.random() * possibleLanes.length)]
-          : Math.floor(Math.random() * 3);
-        enemies.push(createEnemyCar(laneToUse));
-        lastEnemySpawnTime = timestamp;
-      }
-
-      updateEnemies(deltaTime);
+      // Game logic and rendering
       requestAnimationFrame(gameLoop);
-    }
-
-    function movePlayer(direction) {
-      if (!running || paused) return;
-      if (direction === 'left' && playerLane > 0) {
-        playerLane--;
-        setPlayerPosition();
-      } else if (direction === 'right' && playerLane < 2) {
-        playerLane++;
-        setPlayerPosition();
-      }
     }
 
     function gameOver() {
       running = false;
       gameOverDisplay.style.display = 'block';
     }
-
-    document.addEventListener('keydown', e => {
-      if (!running && e.key === 'Enter') {
-        resetGame();
-        return;
-      }
-      if (!running || paused) return;
-      if (e.key === 'ArrowLeft' || e.key === 'a') movePlayer('left');
-      else if (e.key === 'ArrowRight' || e.key === 'd') movePlayer('right');
-    });
 
     leftButton.addEventListener('click', () => movePlayer('left'));
     rightButton.addEventListener('click', () => movePlayer('right'));
@@ -167,9 +250,7 @@
       if (!paused) requestAnimationFrame(gameLoop);
     });
 
-    gameOverDisplay.addEventListener('click', resetGame);
     setPlayerPosition();
-    scoreDisplay.textContent = 'Press ▶ to Start';
   })();
 </script>
 </body>

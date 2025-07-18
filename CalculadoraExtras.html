@@ -242,14 +242,14 @@
             const horas = parseFloat(document.getElementById('horas').value) || 0;
             const tarifa = parseFloat(document.getElementById('tarifa').value) || 0;
             const total = horas * tarifa;
-            const deduccion = total * 0.1385;
+            const deduccion = total * 0.142465;
             const totalConDeduccion = total - deduccion;
 
             const resultadoDiv = document.getElementById('resultado');
             resultadoDiv.innerHTML = `
                 <h3>Resultado</h3>
                 <p><strong>Total a pagar:</strong> $${total.toFixed(2)}</p>
-                <p><strong>Descuento del 13.85%:</strong> $${deduccion.toFixed(2)}</p>
+                <p><strong>Descuento:</strong> $${deduccion.toFixed(2)}</p>
                 <p><strong>Total a pagar con descuento:</strong> $${totalConDeduccion.toFixed(2)}</p>`;
         }
 

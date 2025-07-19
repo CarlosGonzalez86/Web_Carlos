@@ -1,308 +1,233 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="es">
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Contáctame</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-    <link rel="shortcut icon" href="Imagenes/NuevoLogo.png" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Descuentos de Salario Funcionarios Públicos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f9f9f9;
-            color: #333;
-            transition: background-color 0.3s, color 0.3s;
+        body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #e0e7ff 0%, #f0f4f8 100%); }
+        .glass {
+            background: rgba(255,255,255,0.85);
+            box-shadow: 0 8px 32px 0 rgba(31,38,135,0.15);
+            backdrop-filter: blur(5px);
+            border-radius: 1rem;
         }
-
-        /* Header con color personalizado */
-        header {
-            background-color: #0056b3; /* Azul oscuro */
-            color: #fff;
-            padding: 20px 0;
-            text-align: center;
+        .floating-label {
+            position:relative;
         }
-
-        header .logo {
-            width: 50px;
-            height: auto;
+        .floating-label input {
+            padding-top: 1.25rem;
         }
-
-        nav ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            gap: 20px;
+        .floating-label label {
+            position: absolute;
+            top: 0.75rem;
+            left: 1rem;
+            pointer-events: none;
+            color: #3b82f6;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.2s;
         }
-
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        nav a:hover {
-            text-decoration: underline;
-        }
-
-        /* Estilo para los divs */
-        .productos {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-            padding: 20px;
-            background-color: #e7f3ff; /* Azul claro */
-        }
-
-        .productos li {
-            width: 300px;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            padding: 15px;
-            background-color: #fff;
-            text-align: center;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .productos li:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .productos img {
-            width: 100%;
-            border-radius: 10px;
-        }
-
-        fieldset {
-            margin: 20px auto;
-            max-width: 800px;
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            background-color: #fff; /* Fondo blanco */
-        }
-
-        legend {
-            font-weight: bold;
-            font-size: 1.2em;
-            margin-bottom: 10px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        #selected-contact {
-            margin-top: 20px;
-            padding: 15px;
-            background: #fdf5e6; /* Fondo amarillo claro */
-            border-left: 5px solid #ffd700; /* Borde amarillo */
-            border-radius: 5px;
-            font-size: 16px;
-        }
-
-        a {
-            color: #007bff;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        footer {
-            text-align: center;
-            padding: 20px;
-            background-color: #0056b3; /* Azul oscuro */
-            color: #fff;
-        }
-
-        .modo-oscuro-btn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .modo-oscuro-btn:hover {
-            background-color: #0056b3;
-        }
-
-        /* Modo oscuro */
-        body.dark-mode {
-            background-color: #121212;
-            color: #f0f0f0;
-        }
-
-        body.dark-mode header,
-        body.dark-mode footer {
-            background-color: #1f1f1f;
-        }
-
-        body.dark-mode .productos {
-            background-color: #1f1f1f;
-        }
-
-        body.dark-mode .productos li {
-            background-color: #2c2c2c;
-            border-color: #444;
-            color: #fff;
-        }
-
-        body.dark-mode fieldset {
-            background-color: #1f1f1f;
-            border-color: #444;
-        }
-
-        body.dark-mode #selected-contact {
-            background: #444;
-            border-left-color: #ffc107;
+        .floating-label input:focus + label,
+        .floating-label input:not(:placeholder-shown) + label {
+            top: 0.2rem;
+            left: 0.9rem;
+            font-size: 0.85rem;
+            color: #2563eb;
         }
     </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+    <div class="glass w-full max-w-xl mx-auto p-8">
+        <h1 class="text-4xl font-extrabold text-center text-blue-900 drop-shadow mb-6 tracking-tight">
+            Calculadora de Descuentos de Salario
+        </h1>
+        <p class="text-center text-gray-500 mb-8 text-lg">
+            Estima tus deducciones mensuales por Seguro Social, Impuesto de Educación, Impuesto sobre la Renta y SIACAP en Panamá.
+        </p>
+
+        <div class="mb-8 p-6 bg-blue-50 rounded-xl shadow-inner">
+            <div class="mb-4">
+                <label class="block text-lg font-semibold text-blue-700 mb-3">
+                    Tipo de Salario:
+                </label>
+                <div class="flex space-x-6 justify-center">
+                    <label class="inline-flex items-center cursor-pointer">
+                        <input type="radio" name="salaryType" value="monthly" checked onchange="updateSalaryInputLabel()"
+                               class="form-radio h-5 w-5 text-blue-600 accent-blue-600 transition">
+                        <span class="ml-2 text-gray-700 font-medium">Mensual</span>
+                    </label>
+                    <label class="inline-flex items-center cursor-pointer">
+                        <input type="radio" name="salaryType" value="biweekly" onchange="updateSalaryInputLabel()"
+                               class="form-radio h-5 w-5 text-blue-600 accent-blue-600 transition">
+                        <span class="ml-2 text-gray-700 font-medium">Quincenal</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="floating-label mt-6">
+                <input type="number" id="salaryInput"
+                    class="w-full p-3 border border-blue-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 ease-in-out bg-white text-gray-800 text-xl placeholder-transparent"
+                    placeholder=" " min="0" step="0.01" value="0">
+                <label for="salaryInput" id="salaryInputLabel">Ingresa tu Salario Mensual Bruto (B/.):</label>
+            </div>
+            <p class="text-sm text-gray-500 mt-2">
+                *El cálculo del Impuesto sobre la Renta se basa en un ingreso anual de 13 salarios mensuales.
+            </p>
+            <div class="mt-4 flex items-center">
+                <input type="checkbox" id="isPublicServant" class="form-checkbox h-5 w-5 text-blue-600 accent-blue-600 rounded">
+                <label for="isPublicServant" class="ml-2 text-gray-700 font-medium">Soy Servidor Público (para incluir SIACAP)</label>
+            </div>
+        </div>
+
+        <button onclick="calculateCombinedDeductions()"
+            class="w-full bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white font-bold py-3 px-6 rounded-xl shadow-lg transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-green-300 text-xl tracking-wide">
+            Calcular Descuentos
+        </button>
+
+        <div id="result" class="mt-8 hidden">
+            <!-- Empleado -->
+            <div class="result-section bg-green-50 border border-green-200 rounded-xl mb-4 p-6">
+                <h2 class="text-2xl font-semibold text-green-800 mb-4 text-center">Descuentos del Empleado (Mensual):</h2>
+                <div class="result-item">
+                    <span class="text-gray-700">Seguro Social (CSS 9.75%):</span>
+                    <span id="employeeCss" class="font-semibold text-red-700">B/. 0.00</span>
+                </div>
+                <div class="result-item">
+                    <span class="text-gray-700">Impuesto de Educación (1.25%):</span>
+                    <span id="employeeEducation" class="font-semibold text-red-700">B/. 0.00</span>
+                </div>
+                <div class="result-item">
+                    <span class="text-gray-700">Impuesto sobre la Renta (ISR):</span>
+                    <span id="employeeIsr" class="font-semibold text-red-700">B/. 0.00</span>
+                </div>
+                <div class="result-item" id="siacapEmployeeRow">
+                    <span class="text-gray-700">SIACAP (2%):</span>
+                    <span id="employeeSiacap" class="font-semibold text-red-700">B/. 0.00</span>
+                </div>
+                <div class="result-item font-bold text-lg text-green-800 mt-4">
+                    <span>Total Descuentos del Empleado (Mensual):</span>
+                    <span id="totalEmployeeDeductions">B/. 0.00</span>
+                </div>
+                <div class="result-item font-extrabold text-2xl text-blue-900 mt-4 pt-4 border-t-2 border-blue-300">
+                    <span>Salario Quincenal Neto Estimado:</span>
+                    <span id="netSalary">B/. 0.00</span>
+                </div>
+            </div>
+
+            <!-- Empleador -->
+            <div class="result-section bg-blue-50 border border-blue-200 rounded-xl p-6">
+                <h2 class="text-2xl font-semibold text-blue-800 mb-4 text-center">Contribuciones del Empleador (Mensual):</h2>
+                <div class="result-item">
+                    <span class="text-gray-700">Seguro Social (CSS 12.25%):</span>
+                    <span id="employerCss" class="font-semibold text-gray-800">B/. 0.00</span>
+                </div>
+                <div class="result-item">
+                    <span class="text-gray-700">Impuesto de Educación (1.50%):</span>
+                    <span id="employerEducation" class="font-semibold text-gray-800">B/. 0.00</span>
+                </div>
+                <div class="result-item" id="siacapStateRow">
+                    <span class="text-gray-700">SIACAP (Estado 0.3%):</span>
+                    <span id="stateSiacap" class="font-semibold text-gray-800">B/. 0.00</span>
+                </div>
+                <div class="result-item font-bold text-lg text-blue-800 mt-4">
+                    <span>Total Contribuciones del Empleador (Mensual):</span>
+                    <span id="totalEmployerContributions">B/. 0.00</span>
+                </div>
+            </div>
+
+            <p class="text-sm text-gray-500 mt-6 text-center">
+                *Este cálculo es una estimación basada en tasas actuales. Las contribuciones al Seguro Social pueden estar sujetas a un techo salarial máximo que se ajusta periódicamente. Las deducciones de ISR no consideran deducciones personales adicionales. Las tasas de descuento para el Décimo Tercer Mes son diferentes (CSS 7.25%, Impuesto de Educación 0%). Para información oficial, consulta la CSS, la DGI y la Secretaría Ejecutiva del SIACAP de Panamá.
+            </p>
+        </div>
+    </div>
     <script>
-        function cambiarModo() {
-            const body = document.body;
-            body.classList.toggle("dark-mode");
-            const icon = document.querySelector(".modo-oscuro-btn i");
-            icon.classList.toggle("fa-moon");
-            icon.classList.toggle("fa-sun");
-            localStorage.setItem("modo-oscuro", body.classList.contains("dark-mode"));
+        function updateSalaryInputLabel() {
+            const salaryType = document.querySelector('input[name="salaryType"]:checked').value;
+            const label = document.getElementById('salaryInputLabel');
+            if (salaryType === 'monthly') {
+                label.textContent = 'Ingresa tu Salario Mensual Bruto (B/.):';
+            } else {
+                label.textContent = 'Ingresa tu Salario Quincenal Bruto (B/.):';
+            }
+            document.getElementById('salaryInput').value = "0";
+            document.getElementById('result').classList.add('hidden');
         }
 
-        document.addEventListener("DOMContentLoaded", function () {
-            if (localStorage.getItem("modo-oscuro") === "true") {
-                document.body.classList.add("dark-mode");
-                document.querySelector(".modo-oscuro-btn i").classList.replace("fa-moon", "fa-sun");
+        function calculateCombinedDeductions() {
+            const salaryInput = document.getElementById('salaryInput');
+            let inputSalary = parseFloat(salaryInput.value) || 0;
+            const salaryType = document.querySelector('input[name="salaryType"]:checked').value;
+            const isPublicServant = document.getElementById('isPublicServant').checked;
+
+            let monthlySalary = salaryType === 'biweekly' ? inputSalary * 2 : inputSalary;
+
+            // Employee
+            const employeeCssRate = 0.0975;
+            const employeeEducationRate = 0.0125;
+            const employeeSiacapRate = 0.02;
+
+            // Employer
+            const employerCssRate = 0.1225;
+            const employerEducationRate = 0.0150;
+            const stateSiacapRate = 0.003;
+
+            let employeeCss = monthlySalary * employeeCssRate;
+            let employeeEducation = monthlySalary * employeeEducationRate;
+            let employeeIsr = 0;
+            let employeeSiacap = 0;
+
+            // ISR
+            const annualIncomeForISR = monthlySalary * 13;
+            if (annualIncomeForISR <= 11000) employeeIsr = 0;
+            else if (annualIncomeForISR <= 50000) employeeIsr = (annualIncomeForISR - 11000) * 0.15;
+            else employeeIsr = 5850 + (annualIncomeForISR - 50000) * 0.25;
+            employeeIsr = employeeIsr / 13;
+
+            if (isPublicServant) {
+                employeeSiacap = monthlySalary * employeeSiacapRate;
+                document.getElementById('siacapEmployeeRow').classList.remove('hidden');
+            } else {
+                document.getElementById('siacapEmployeeRow').classList.add('hidden');
             }
+            const totalEmployeeDeductions = employeeCss + employeeEducation + employeeIsr + employeeSiacap;
+            const netSalaryMonthly = monthlySalary - totalEmployeeDeductions;
+            const netSalaryBiweekly = netSalaryMonthly / 2;
 
-            const radios = document.querySelectorAll('input[name="contacto"]');
-            const selectedContactDiv = document.getElementById('selected-contact');
+            let employerCss = monthlySalary * employerCssRate;
+            let employerEducation = monthlySalary * employerEducationRate;
+            let stateSiacap = 0;
+            if (isPublicServant) {
+                stateSiacap = monthlySalary * stateSiacapRate;
+                document.getElementById('siacapStateRow').classList.remove('hidden');
+            } else {
+                document.getElementById('siacapStateRow').classList.add('hidden');
+            }
+            const totalEmployerContributions = employerCss + employerEducation + stateSiacap;
 
-            radios.forEach(radio => {
-                radio.addEventListener('change', () => {
-                    const value = radio.value;
-                    let message = '';
+            document.getElementById('employeeCss').textContent = `B/. ${employeeCss.toFixed(2)}`;
+            document.getElementById('employeeEducation').textContent = `B/. ${employeeEducation.toFixed(2)}`;
+            document.getElementById('employeeIsr').textContent = `B/. ${employeeIsr.toFixed(2)}`;
+            document.getElementById('employeeSiacap').textContent = `B/. ${employeeSiacap.toFixed(2)}`;
+            document.getElementById('totalEmployeeDeductions').textContent = `B/. ${totalEmployeeDeductions.toFixed(2)}`;
+            document.getElementById('netSalary').textContent = `B/. ${netSalaryBiweekly.toFixed(2)}`;
 
-                    switch (value) {
-                        case 'email':
-                            message = 'Has seleccionado: <strong>Cisco</strong> - Extensión 10212.';
-                            break;
-                        case 'telefono':
-                            message = 'Has seleccionado: <strong>Llamada</strong>. <a href="tel:503-0212">Haz clic para llamar: 503-0212</a>';
-                            break;
-                        case 'whatsapp':
-                            message = 'Has seleccionado: <strong>WhatsApp</strong>. <a href="https://wa.me/message/DQ36YDUXXWRKP1" target="_blank">Haz clic para abrir el chat.</a>';
-                            break;
-                        case 'Correo':
-                            message = 'Has seleccionado: <strong>Correo de Trabajo</strong>. <a href="mailto:cengonzalez@css.gob.pa">Enviar correo</a>';
-                            break;
-                    }
+            document.getElementById('employerCss').textContent = `B/. ${employerCss.toFixed(2)}`;
+            document.getElementById('employerEducation').textContent = `B/. ${employerEducation.toFixed(2)}`;
+            document.getElementById('stateSiacap').textContent = `B/. ${stateSiacap.toFixed(2)}`;
+            document.getElementById('totalEmployerContributions').textContent = `B/. ${totalEmployerContributions.toFixed(2)}`;
 
-                    selectedContactDiv.innerHTML = message;
-                });
-            });
-        });
+            document.getElementById('result').classList.remove('hidden');
+        }
+        window.onload = () => {
+            updateSalaryInputLabel();
+            document.getElementById('salaryInput').value = "0";
+            document.getElementById('isPublicServant').checked = false;
+            document.getElementById('siacapEmployeeRow').classList.add('hidden');
+            document.getElementById('siacapStateRow').classList.add('hidden');
+        };
     </script>
-</head>
-
-<body>
-    <header>
-
-   <h1 style="text-align: center;">
-    <img class="logo" src="Imagenes/NuevoLogo.png" alt="Logo" style="display: block; margin: 0 auto;">
-    Dejo opciones de comunicación en enlaces directos
-</h1>
-        <nav>
-            <ul>
-                <li><a href="index.html">Inicio</a></li>
-                <li><a href="CalculadoraExtras.html">Extras</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <div>
-        <h2 style="text-align: center;">Mis Redes Sociales</h2>
-        <ul class="productos">
-            <li>
-                <h3>Instagram</h3>
-                <img src="Imagenes/Instagram.jpg" alt="Instagram">
-                <p>Sígueme para contenido educativo y de entretenimiento.</p>
-                <a href="https://www.instagram.com/cg.concepcion?igsh=bnhxMXd4ZmQ1dTVo" target="_blank">
-                    <i class="fab fa-instagram"></i> Ir a Instagram
-                </a>
-            </li>
-            <li>
-                <h3>YouTube</h3>
-                <img src="Imagenes/YouTube.png" alt="YouTube">
-                <p>Descubre videos de entretenimiento y aprendizaje.</p>
-                <a href="https://www.youtube.com/@carlosgonzalezconcepcion446" target="_blank">
-                    <i class="fab fa-youtube"></i> Ir a YouTube
-                </a>
-            </li>
-            <li>
-                <h3>TikTok</h3>
-                <img src="Imagenes/tiktok.jpg" alt="TikTok">
-                <p>Contenido divertido y creativo Versos y Programación entre otros.</p>
-                <a href="https://www.tiktok.com/@developercode0?_t=ZM-8vcPV7X12hh&_r=1" target="_blank">
-                    <i class="fab fa-tiktok"></i> Ir a TikTok
-                </a>
-            </li>
-            <li>
-                <h3>LinkedIn</h3>
-                <img src="Imagenes/LinkedIn.png" alt="LinkedIn">
-                <p>Mi red social para las empresas interesadas en Sistemas y Programación.</p>
-                <a href="https://www.linkedin.com/in/carlos-gonz%C3%A1lez-concepci%C3%B3n-631672271?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app">
-                    <i class="fab fa-linkedin"></i> Ir a LinkedIn
-                </a>
-            </li>
-        </ul>
-    </div>
-
-    <main>
-        <fieldset>
-            <legend>Contactos del trabajo</legend>
-            <label>
-            <input type="radio" name="contacto" value="email">
-           Número de Cisco  <span class="numero-oculto"></span>
-        </label>
-            <label><input type="radio" name="contacto" value="telefono"> Número de Oficina <a href="tel:503-0212"></a></label>
-            <label><input type="radio" name="contacto" value="whatsapp" checked> WhatsApp de Trabajo  <a href="https://wa.me/message/DQ36YDUXXWRKP1"></a></label>
-            <label><input type="radio" name="contacto" value="Correo"> Correo de institucional <a href="mailto:cengonzalez@css.gob.pa"></a></label>
-        </fieldset>
-
-        <div id="selected-contact">
-            Has seleccionado: <strong>WhatsApp</strong>.
-        </div>
-    </main>
-
-    <footer>
-        <p>© Creado por Licdo. Carlos E. Gonzalez C.</p>
-    </footer>
-
-    <button class="modo-oscuro-btn" onclick="cambiarModo()">
-        <i class="fas fa-moon"></i>
-    </button>
 </body>
-
 </html>

@@ -59,11 +59,6 @@
                                class="form-radio h-5 w-5 text-blue-600 accent-blue-600 transition">
                         <span class="ml-2 text-gray-700 font-medium">Mensual</span>
                     </label>
-                    <label class="inline-flex items-center cursor-pointer">
-                        <input type="radio" name="salaryType" value="biweekly" onchange="updateSalaryInputLabel()"
-                               class="form-radio h-5 w-5 text-blue-600 accent-blue-600 transition">
-                        <span class="ml-2 text-gray-700 font-medium">Quincenal</span>
-                    </label>
                 </div>
             </div>
 
@@ -148,7 +143,7 @@
             const salaryType = document.querySelector('input[name="salaryType"]:checked').value;
             const label = document.getElementById('salaryInputLabel');
             if (salaryType === 'monthly') {
-                label.textContent = 'Ingresa tu Salario Mensual Bruto (B/.):';
+                label.textContent = 'Ingresa tu Salario Mensual:';
             } else {
                 label.textContent = 'Ingresa tu Salario Quincenal Bruto (B/.):';
             }

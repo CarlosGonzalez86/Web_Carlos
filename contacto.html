@@ -103,7 +103,8 @@
                     <span id="employeeSiacap" class="font-semibold text-red-700">B/. 0.00</span>
                 </div>
                 <div class="result-item font-bold text-lg text-green-800 mt-4">
-                    <span>Total Descuentos del Empleado (Mensual):</span>
+                    <span>Total Descuentos del Empleado (Mensual)
+Lo divides entre (2) verás tus descuentos quincenal según la ley Panameña:</span>
                     <span id="totalEmployeeDeductions">B/. 0.00</span>
                 </div>
                 <div class="result-item font-extrabold text-2xl text-blue-900 mt-4 pt-4 border-t-2 border-blue-300">
@@ -143,9 +144,9 @@
             const salaryType = document.querySelector('input[name="salaryType"]:checked').value;
             const label = document.getElementById('salaryInputLabel');
             if (salaryType === 'monthly') {
-                label.textContent = 'Ingresa tu Salario Mensual:';
+                label.textContent = 'Ingresa tu Salario Quincenal :';
             } else {
-                label.textContent = 'Ingresa tu Salario Quincenal Bruto (B/.):';
+                label.textContent = 'Ingresa tu Salario Quincenal :';
             }
             document.getElementById('salaryInput').value = "0";
             document.getElementById('result').classList.add('hidden');

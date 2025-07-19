@@ -7,93 +7,89 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f0f4f8; /* Light blue-gray background */
+        body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #e0e7ff 0%, #f0f4f8 100%); }
+        .glass {
+            background: rgba(255,255,255,0.85);
+            box-shadow: 0 8px 32px 0 rgba(31,38,135,0.15);
+            backdrop-filter: blur(5px);
+            border-radius: 1rem;
         }
-        .container {
-            max-width: 90%; /* Responsive width */
-            margin: 2rem auto;
-            padding: 2rem;
-            background-color: #ffffff;
-            border-radius: 1rem; /* More rounded corners */
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Softer shadow */
+        .floating-label {
+            position:relative;
         }
-        input[type="number"] {
-            -moz-appearance: textfield; /* Firefox */
+        .floating-label input {
+            padding-top: 1.25rem;
         }
-        input::-webkit-outer-spin-button,
-        input::-webkit-inner-spin-button {
-            -webkit-appearance: none; /* Chrome, Safari, Edge */
-            margin: 0;
+        .floating-label label {
+            position: absolute;
+            top: 0.75rem;
+            left: 1rem;
+            pointer-events: none;
+            color: #3b82f6;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.2s;
         }
-        .result-section {
-            padding: 1rem;
-            border-radius: 0.75rem;
-            margin-top: 1.5rem;
-        }
-        .result-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 0.5rem 0;
-            border-bottom: 1px dashed #e2e8f0; /* Light dashed border */
-        }
-        .result-item:last-child {
-            border-bottom: none;
+        .floating-label input:focus + label,
+        .floating-label input:not(:placeholder-shown) + label {
+            top: 0.2rem;
+            left: 0.9rem;
+            font-size: 0.85rem;
+            color: #2563eb;
         }
     </style>
 </head>
-<body class="flex items-center justify-center min-h-screen p-4">
-    <div class="container w-full md:w-3/4 lg:w-2/3 xl:w-1/2">
-        <h1 class="text-3xl md:text-4xl font-bold text-center text-blue-800 mb-6">
+<body class="min-h-screen flex items-center justify-center p-4">
+    <div class="glass w-full max-w-xl mx-auto p-8">
+        <h1 class="text-4xl font-extrabold text-center text-blue-900 drop-shadow mb-6 tracking-tight">
             Calculadora de Descuentos de Salario
         </h1>
-        <p class="text-center text-gray-600 mb-8">
+        <p class="text-center text-gray-500 mb-8 text-lg">
             Estima tus deducciones mensuales por Seguro Social, Impuesto de Educación, Impuesto sobre la Renta y SIACAP en Panamá.
         </p>
 
-        <div class="mb-8 p-6 bg-blue-50 rounded-lg shadow-inner">
+        <div class="mb-8 p-6 bg-blue-50 rounded-xl shadow-inner">
             <div class="mb-4">
                 <label class="block text-lg font-semibold text-blue-700 mb-3">
                     Tipo de Salario:
                 </label>
-                <div class="flex space-x-4">
-                    <label class="inline-flex items-center">
+                <div class="flex space-x-6 justify-center">
+                    <label class="inline-flex items-center cursor-pointer">
                         <input type="radio" name="salaryType" value="monthly" checked onchange="updateSalaryInputLabel()"
-                               class="form-radio h-5 w-5 text-blue-600">
-                        <span class="ml-2 text-gray-700">Mensual</span>
+                               class="form-radio h-5 w-5 text-blue-600 accent-blue-600 transition">
+                        <span class="ml-2 text-gray-700 font-medium">Mensual</span>
                     </label>
-                    <label class="inline-flex items-center">
+                    <label class="inline-flex items-center cursor-pointer">
                         <input type="radio" name="salaryType" value="biweekly" onchange="updateSalaryInputLabel()"
-                               class="form-radio h-5 w-5 text-blue-600">
-                        <span class="ml-2 text-gray-700">Quincenal</span>
+                               class="form-radio h-5 w-5 text-blue-600 accent-blue-600 transition">
+                        <span class="ml-2 text-gray-700 font-medium">Quincenal</span>
                     </label>
                 </div>
             </div>
 
-            <label for="salaryInput" class="block text-lg font-semibold text-blue-700 mb-3" id="salaryInputLabel">
-                Ingresa tu Salario Mensual Bruto (B/.):
-            </label>
-            <input type="number" id="salaryInput"
-                   class="w-full p-3 border border-blue-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 ease-in-out bg-white text-gray-800 text-center text-xl"
-                   placeholder="Ej. 1200.00" min="0" step="0.01" value="0">
+            <div class="floating-label mt-6">
+                <input type="number" id="salaryInput"
+                    class="w-full p-3 border border-blue-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 ease-in-out bg-white text-gray-800 text-xl placeholder-transparent"
+                    placeholder=" " min="0" step="0.01" value="0">
+                <label for="salaryInput" id="salaryInputLabel">Ingresa tu Salario Mensual Bruto (B/.):</label>
+            </div>
             <p class="text-sm text-gray-500 mt-2">
                 *El cálculo del Impuesto sobre la Renta se basa en un ingreso anual de 13 salarios mensuales.
             </p>
             <div class="mt-4 flex items-center">
-                <input type="checkbox" id="isPublicServant" class="form-checkbox h-5 w-5 text-blue-600 rounded">
+                <input type="checkbox" id="isPublicServant" class="form-checkbox h-5 w-5 text-blue-600 accent-blue-600 rounded">
                 <label for="isPublicServant" class="ml-2 text-gray-700 font-medium">Soy Servidor Público (para incluir SIACAP)</label>
             </div>
         </div>
 
         <button onclick="calculateCombinedDeductions()"
-                class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-green-300">
+            class="w-full bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white font-bold py-3 px-6 rounded-xl shadow-lg transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-green-300 text-xl tracking-wide">
             Calcular Descuentos
         </button>
 
         <div id="result" class="mt-8 hidden">
-            <!-- Sección de Contribuciones del Empleado -->
-            <div class="result-section bg-green-50 border border-green-200">
+            <!-- Empleado -->
+            <div class="result-section bg-green-50 border border-green-200 rounded-xl mb-4 p-6">
                 <h2 class="text-2xl font-semibold text-green-800 mb-4 text-center">Descuentos del Empleado (Mensual):</h2>
                 <div class="result-item">
                     <span class="text-gray-700">Seguro Social (CSS 9.75%):</span>
@@ -121,8 +117,8 @@
                 </div>
             </div>
 
-            <!-- Sección de Contribuciones del Empleador -->
-            <div class="result-section bg-blue-50 border border-blue-200">
+            <!-- Empleador -->
+            <div class="result-section bg-blue-50 border border-blue-200 rounded-xl p-6">
                 <h2 class="text-2xl font-semibold text-blue-800 mb-4 text-center">Contribuciones del Empleador (Mensual):</h2>
                 <div class="result-item">
                     <span class="text-gray-700">Seguro Social (CSS 12.25%):</span>
@@ -143,11 +139,10 @@
             </div>
 
             <p class="text-sm text-gray-500 mt-6 text-center">
-                *Este cálculo es una estimación basada en las tasas actuales. Las contribuciones al Seguro Social pueden estar sujetas a un techo salarial máximo que se ajusta periódicamente. Las deducciones de ISR no consideran deducciones personales adicionales. Las tasas de descuento para el Décimo Tercer Mes son diferentes (CSS 7.25%, Impuesto de Educación 0%). Para información oficial, consulta las fuentes de la Caja de Seguro Social (CSS), la Dirección General de Ingresos (DGI) y la Secretaría Ejecutiva del SIACAP de Panamá.
+                *Este cálculo es una estimación basada en tasas actuales. Las contribuciones al Seguro Social pueden estar sujetas a un techo salarial máximo que se ajusta periódicamente. Las deducciones de ISR no consideran deducciones personales adicionales. Las tasas de descuento para el Décimo Tercer Mes son diferentes (CSS 7.25%, Impuesto de Educación 0%). Para información oficial, consulta la CSS, la DGI y la Secretaría Ejecutiva del SIACAP de Panamá.
             </p>
         </div>
     </div>
-
     <script>
         function updateSalaryInputLabel() {
             const salaryType = document.querySelector('input[name="salaryType"]:checked').value;
@@ -157,110 +152,82 @@
             } else {
                 label.textContent = 'Ingresa tu Salario Quincenal Bruto (B/.):';
             }
-            // Reset input value when changing type to avoid confusion
             document.getElementById('salaryInput').value = "0";
-            document.getElementById('result').classList.add('hidden'); // Hide results on input type change
+            document.getElementById('result').classList.add('hidden');
         }
 
         function calculateCombinedDeductions() {
             const salaryInput = document.getElementById('salaryInput');
-            let inputSalary = parseFloat(salaryInput.value) || 0; // Get the input value
+            let inputSalary = parseFloat(salaryInput.value) || 0;
             const salaryType = document.querySelector('input[name="salaryType"]:checked').value;
-            const isPublicServant = document.getElementById('isPublicServant').checked; // Check if public servant
+            const isPublicServant = document.getElementById('isPublicServant').checked;
 
-            let monthlySalary;
-            if (salaryType === 'biweekly') {
-                monthlySalary = inputSalary * 2; // Convert bi-weekly to monthly
-            } else {
-                monthlySalary = inputSalary; // Already monthly
-            }
+            let monthlySalary = salaryType === 'biweekly' ? inputSalary * 2 : inputSalary;
 
-            // --- Contribution Rates ---
             // Employee
-            const employeeCssRate = 0.0975;      // 9.75%
-            const employeeEducationRate = 0.0125; // 1.25%
-            const employeeSiacapRate = 0.02;     // 2% (for public servants)
+            const employeeCssRate = 0.0975;
+            const employeeEducationRate = 0.0125;
+            const employeeSiacapRate = 0.02;
 
             // Employer
-            const employerCssRate = 0.1225;      // 12.25%
-            const employerEducationRate = 0.0150; // 1.50%
-            const stateSiacapRate = 0.003;       // 0.3% (State's contribution to SIACAP)
+            const employerCssRate = 0.1225;
+            const employerEducationRate = 0.0150;
+            const stateSiacapRate = 0.003;
 
-            // --- Employee Deductions Calculations ---
             let employeeCss = monthlySalary * employeeCssRate;
             let employeeEducation = monthlySalary * employeeEducationRate;
             let employeeIsr = 0;
             let employeeSiacap = 0;
 
-            // Income Tax (ISR) Calculation
-            const annualIncomeForISR = monthlySalary * 13; // Annual salary including 13th month
-            if (annualIncomeForISR <= 11000) {
-                employeeIsr = 0;
-            } else if (annualIncomeForISR <= 50000) {
-                employeeIsr = (annualIncomeForISR - 11000) * 0.15;
-            } else {
-                employeeIsr = 5850 + (annualIncomeForISR - 50000) * 0.25;
-            }
-            employeeIsr = employeeIsr / 13; // Divide annual ISR into 13 periods for monthly withholding
+            // ISR
+            const annualIncomeForISR = monthlySalary * 13;
+            if (annualIncomeForISR <= 11000) employeeIsr = 0;
+            else if (annualIncomeForISR <= 50000) employeeIsr = (annualIncomeForISR - 11000) * 0.15;
+            else employeeIsr = 5850 + (annualIncomeForISR - 50000) * 0.25;
+            employeeIsr = employeeIsr / 13;
 
-            // SIACAP Calculation (only if public servant)
             if (isPublicServant) {
                 employeeSiacap = monthlySalary * employeeSiacapRate;
                 document.getElementById('siacapEmployeeRow').classList.remove('hidden');
             } else {
                 document.getElementById('siacapEmployeeRow').classList.add('hidden');
             }
-
-            // Total employee deductions (monthly)
             const totalEmployeeDeductions = employeeCss + employeeEducation + employeeIsr + employeeSiacap;
-
-            // Net Employee Salary (monthly)
             const netSalaryMonthly = monthlySalary - totalEmployeeDeductions;
-            // Net Employee Salary (bi-weekly)
             const netSalaryBiweekly = netSalaryMonthly / 2;
 
-
-            // --- Employer Contributions Calculations ---
             let employerCss = monthlySalary * employerCssRate;
             let employerEducation = monthlySalary * employerEducationRate;
             let stateSiacap = 0;
-
-            // SIACAP (State's contribution, only if public servant)
             if (isPublicServant) {
                 stateSiacap = monthlySalary * stateSiacapRate;
                 document.getElementById('siacapStateRow').classList.remove('hidden');
             } else {
                 document.getElementById('siacapStateRow').classList.add('hidden');
             }
-
             const totalEmployerContributions = employerCss + employerEducation + stateSiacap;
 
-            // --- Display Results ---
             document.getElementById('employeeCss').textContent = `B/. ${employeeCss.toFixed(2)}`;
             document.getElementById('employeeEducation').textContent = `B/. ${employeeEducation.toFixed(2)}`;
             document.getElementById('employeeIsr').textContent = `B/. ${employeeIsr.toFixed(2)}`;
             document.getElementById('employeeSiacap').textContent = `B/. ${employeeSiacap.toFixed(2)}`;
             document.getElementById('totalEmployeeDeductions').textContent = `B/. ${totalEmployeeDeductions.toFixed(2)}`;
-            document.getElementById('netSalary').textContent = `B/. ${netSalaryBiweekly.toFixed(2)}`; // Display bi-weekly net salary
+            document.getElementById('netSalary').textContent = `B/. ${netSalaryBiweekly.toFixed(2)}`;
 
             document.getElementById('employerCss').textContent = `B/. ${employerCss.toFixed(2)}`;
             document.getElementById('employerEducation').textContent = `B/. ${employerEducation.toFixed(2)}`;
             document.getElementById('stateSiacap').textContent = `B/. ${stateSiacap.toFixed(2)}`;
             document.getElementById('totalEmployerContributions').textContent = `B/. ${totalEmployerContributions.toFixed(2)}`;
 
-            document.getElementById('result').classList.remove('hidden'); // Show the results section
+            document.getElementById('result').classList.remove('hidden');
         }
-
-        // Set initial value to 0 and hide SIACAP on page load
         window.onload = () => {
-            updateSalaryInputLabel(); // Set initial label
+            updateSalaryInputLabel();
             document.getElementById('salaryInput').value = "0";
-            document.getElementById('isPublicServant').checked = false; // Ensure checkbox is unchecked on load
+            document.getElementById('isPublicServant').checked = false;
             document.getElementById('siacapEmployeeRow').classList.add('hidden');
             document.getElementById('siacapStateRow').classList.add('hidden');
         };
     </script>
 </body>
 </html>
-
-

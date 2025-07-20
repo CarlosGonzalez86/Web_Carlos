@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora Horas Extras</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
 body {
@@ -15,6 +16,9 @@ body {
 .dark body {
     background: linear-gradient(135deg, #18181b 0%, #27272a 100%);
     color: #f3f4f6;
+}
+h1, h3, p, label, #resultado, .glass-btn, .result-footer {
+    text-align: center !important;
 }
 h1 {
     color: #2563eb;
@@ -44,6 +48,7 @@ label {
 input {
     background: #fff;
     color: #111;
+    text-align: center;
 }
 .dark input {
     background: #18181b;
@@ -76,11 +81,64 @@ button:hover {
     border-left-color: #60a5fa;
     color: #93c5fd;
 }
+.action-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 1.5rem;
+}
+.glass-btn {
+    background: rgba(255,255,255,0.65);
+    border: 1px solid #2563eb;
+    color: #2563eb;
+    font-weight: bold;
+    padding: 0.7rem 1.6rem;
+    border-radius: 0.9rem;
+    box-shadow: 0 4px 20px 0 rgba(31,38,135,0.09);
+    cursor: pointer;
+    transition: background .18s, color .18s, border .18s;
+    font-size: 1.07rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    justify-content: center;
+    text-align: center;
+}
+.glass-btn:hover {
+    background: #2563eb;
+    color: #fff;
+    border: 1px solid #1e40af;
+}
+@media (max-width: 520px) {
+    .action-buttons { gap: 0.5rem; flex-direction: column; }
+    .glass-btn { width: 100%; justify-content: center; }
+}
+.result-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+    text-align: center;
+}
+.result-footer img {
+    height: 40px;
+    width: auto;
+}
+.result-footer p {
+    font-size: 0.95rem;
+    color: #2563eb;
+    text-align: center;
+}
+.dark .result-footer p {
+    color: #93c5fd;
+}
 footer {
     background: #fff;
     color: #2563eb;
     border-top: 1px solid #2563eb;
     box-shadow: 0 4px 10px rgba(31,38,135,0.07);
+    text-align: center;
 }
 .dark footer {
     background: #18181b;
@@ -94,6 +152,7 @@ footer img {
 footer p {
     margin: 0;
     font-size: 0.95rem;
+    text-align: center;
 }
 #darkModeToggle {
     position: fixed;
@@ -160,14 +219,34 @@ nav ul li a:hover {
         <form id="formulario">
             <div class="mb-6">
                 <label for="horas">Horas trabajadas:</label>
-                <input type="number" id="horas" placeholder="Ingrese las horas trabajadas" class="w-full p-3 border border-blue-300 dark:border-gray-700 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 ease-in-out text-xl">
+                <input type="number" id="horas" placeholder="Ingrese las horas trabajadas" class="w-full p-3 border border-blue-300 dark:border-gray-700 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 ease-in-out text-xl text-center">
             </div>
             <div class="mb-6">
                 <label for="tarifa">Tarifa por hora:</label>
-                <input type="number" id="tarifa" placeholder="Ingrese la tarifa por hora" class="w-full p-3 border border-blue-300 dark:border-gray-700 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 ease-in-out text-xl">
+                <input type="number" id="tarifa" placeholder="Ingrese la tarifa por hora" class="w-full p-3 border border-blue-300 dark:border-gray-700 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 ease-in-out text-xl text-center">
             </div>
             <div id="resultado"></div>
         </form>
+        <!-- Botones PDF y Compartir -->
+        <div class="action-buttons">
+            <button class="glass-btn" onclick="descargarPDF()" type="button">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke="currentColor" stroke-width="2" d="M12 16v-8m0 8l-4-4m4 4l4-4M4 18h16"/>
+                </svg>
+                Descargar PDF
+            </button>
+            <button class="glass-btn" onclick="compartirWhatsApp(event)" type="button">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 32 32">
+                    <path d="M16 3C9.383 3 4 8.383 4 15c0 2.633.92 5.071 2.583 7.071L4 29l7.114-2.431C13.051 27.15 14.497 27.5 16 27.5c6.617 0 12-5.383 12-12S22.617 3 16 3zm0 22.5c-1.326 0-2.626-.252-3.838-.749l-.273-.111-4.224 1.447 1.396-4.124-.179-.29C6.488 19.012 5.5 17.058 5.5 15c0-5.799 4.701-10.5 10.5-10.5S26.5 9.201 26.5 15 21.799 25.5 16 25.5zm5.714-7.005c-.313-.156-1.846-.91-2.132-1.015-.287-.104-.496-.156-.705.156-.208.311-.807 1.015-.991 1.223-.183.208-.364.234-.677.078-.313-.156-1.324-.487-2.521-1.541-.931-.833-1.558-1.86-1.741-2.173-.182-.312-.019-.48.137-.636.141-.139.313-.364.469-.546.157-.183.209-.312.314-.52.104-.208.052-.39-.026-.546-.078-.156-.705-1.694-.965-2.32-.254-.613-.514-.531-.705-.541l-.6-.01c-.207 0-.546.078-.832.364-.286.286-1.086 1.062-1.086 2.59s1.112 3.017 1.267 3.23c.156.208 2.186 3.339 5.304 4.544.741.254 1.318.406 1.77.52.743.189 1.421.129 1.954.078.597-.059 1.846-.755 2.107-1.483.26-.729.26-1.355.182-1.484-.077-.129-.285-.208-.597-.364z"/>
+                </svg>
+                Compartir por WhatsApp
+            </button>
+        </div>
+        <!-- Logo y copyright debajo del resultado -->
+        <div class="result-footer">
+            <img src="Imagenes/css (1).png" alt="Logo">
+            <p>© Creado por Licdo. Carlos E. González</p>
+        </div>
     </div>
 
     <!-- Botón flotante modo oscuro -->
@@ -195,9 +274,9 @@ nav ul li a:hover {
         </span>
     </div>
 
-    <footer class="w-full bg-white/80 dark:bg-gray-900/80 backdrop-blur border-t border-blue-200 dark:border-gray-700 shadow-lg py-4 flex flex-col md:flex-row items-center justify-center gap-4 mt-auto">
+    <footer class="w-full bg-white/80 dark:bg-gray-900/80 backdrop-blur border-t border-blue-200 dark:border-gray-700 shadow-lg py-4 flex flex-col md:flex-row items-center justify-center gap-4 mt-auto text-center">
         <img src="Imagenes/css (1).png" alt="Logo" class="h-8 w-auto mx-2">
-        <p class="text-blue-900 dark:text-gray-300 text-sm md:text-base">© Creado por Licdo. Carlos E. Gonzalez C.</p>
+        <p class="text-blue-900 dark:text-gray-300 text-sm md:text-base text-center">© Creado por Licdo. Carlos E. Gonzalez C.</p>
     </footer>
 
     <script>
@@ -219,6 +298,71 @@ nav ul li a:hover {
                 <p><strong>Total a pagar:</strong> $${total.toFixed(2)}</p>
                 <p><strong>Descuento :</strong> $${deduccion.toFixed(2)}</p>
                 <p><strong>Total a pagar con descuento:</strong> $${totalConDeduccion.toFixed(2)}</p>`;
+        }
+
+        // Descargar PDF
+        function descargarPDF() {
+            const resultadoDiv = document.getElementById('resultado');
+            if (!resultadoDiv.innerHTML.trim()) {
+                alert("Calcula el resultado antes de descargar el PDF.");
+                return;
+            }
+            // Extrae los valores calculados
+            const total = parseFloat(document.getElementById('horas').value) * parseFloat(document.getElementById('tarifa').value) || 0;
+            const deduccion = total * 0.142465;
+            const totalConDeduccion = total - deduccion;
+
+            let doc = new jspdf.jsPDF();
+            let y = 20;
+            doc.setFont("Inter", "bold");
+            doc.setFontSize(18);
+            doc.text("Cálculo de Horas Extras", 105, y, {align: "center"}); y += 12;
+            doc.setFontSize(14);
+            doc.text("Total a pagar: $" + total.toFixed(2), 105, y, {align: "center"}); y += 8;
+            doc.text("Descuento: $" + deduccion.toFixed(2), 105, y, {align: "center"}); y += 8;
+            doc.text("Total a pagar con descuento: $" + totalConDeduccion.toFixed(2), 105, y, {align: "center"}); y += 18;
+
+            // Logo y copyright
+            let logo = new Image();
+            logo.src = "Imagenes/css (1).png";
+            logo.onload = function() {
+                doc.addImage(logo, 'PNG', 85, y, 40, 18); y += 22;
+                doc.setFontSize(11);
+                doc.setTextColor(40, 100, 200);
+                doc.text("© Creado por Licdo. Carlos E. González", 105, y, {align: "center"});
+                doc.save("horas_extras.pdf");
+            };
+            logo.onerror = function() {
+                doc.setFontSize(11);
+                doc.setTextColor(40, 100, 200);
+                doc.text("© Creado por Licdo. Carlos E. González", 105, y, {align: "center"});
+                doc.save("horas_extras.pdf");
+            };
+        }
+
+        // Compartir por WhatsApp
+        function compartirWhatsApp(event) {
+            event.preventDefault();
+            const resultadoDiv = document.getElementById('resultado');
+            if (!resultadoDiv.innerHTML.trim()) {
+                alert("Calcula el resultado antes de compartir.");
+                return;
+            }
+            const horas = parseFloat(document.getElementById('horas').value) || 0;
+            const tarifa = parseFloat(document.getElementById('tarifa').value) || 0;
+            const total = horas * tarifa;
+            const deduccion = total * 0.142465;
+            const totalConDeduccion = total - deduccion;
+
+            let texto = "Cálculo de Horas Extras:\n";
+            texto += "Total a pagar: $" + total.toFixed(2) + "\n";
+            texto += "Descuento: $" + deduccion.toFixed(2) + "\n";
+            texto += "Total a pagar con descuento: $" + totalConDeduccion.toFixed(2) + "\n";
+            texto += "\n© Creado por Licdo. Carlos E. González\n";
+            texto += "Calculadora: " + window.location.href;
+
+            const waUrl = "https://wa.me/?text=" + encodeURIComponent(texto);
+            window.open(waUrl, "_blank");
         }
 
         // Cambiar modo oscuro

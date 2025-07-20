@@ -122,7 +122,7 @@ h1 { color: #000; }
                 </div>
             </div>
             <p class="text-sm text-gray-500 dark:text-gray-400 mt-6 text-center">
-                *El cálculo es estimado. El décimo tercer mes corresponde a 1/3 del salario mensual. El CSS sobre décimo es 7.25%. El ISR se calcula sobre el ingreso anual (13 salarios) y el descuento mostrado es la mitad del ISR anual.
+                *El cálculo es estimado. El décimo tercer mes corresponde a 1/3 del salario mensual. El CSS sobre décimo es 7.25%. El ISR se calcula sobre el ingreso mensual y el descuento mostrado es la mitad del ISR mensual.
             </p>
         </div>
     </div>
@@ -190,17 +190,16 @@ h1 { color: #000; }
             // Seguro Social sobre décimo: 7.25%
             let css = decimo * 0.0725;
 
-            // ISR sobre décimo (según solicitud: 13 salarios, ISR anual, luego divide entre 2)
-            let ingresoAnual = salario * 13;
-            let isrAnual = 0;
-            if (ingresoAnual <= 11000) {
-                isrAnual = 0;
-            } else if (ingresoAnual <= 50000) {
-                isrAnual = (ingresoAnual - 11000) * 0.15;
+            // ISR sobre décimo: solo sobre el salario mensual, luego divide entre 2
+            let isrMensual = 0;
+            if (salario <= 11000/13) {
+                isrMensual = 0;
+            } else if (salario <= 50000/13) {
+                isrMensual = (salario * 13 - 11000) * 0.15 / 13;
             } else {
-                isrAnual = 5850 + (ingresoAnual - 50000) * 0.25;
+                isrMensual = (5850 + (salario * 13 - 50000) * 0.25) / 13;
             }
-            let isrDecimo = isrAnual / 2; // Solicitud: dividir el ISR anual entre 2
+            let isrDecimo = isrMensual / 2;
 
             let decimoNeto = decimo - css - isrDecimo;
 

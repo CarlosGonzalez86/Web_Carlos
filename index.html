@@ -1,233 +1,220 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="es">
 <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Web Carlos E. Gonzalez</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="shortcut icon" href="Imagenes/NuevoLogo.png" />
     <style>
-        /* General Styling */
-        body {
-            font-family: 'Poppins', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f5f5f5;
-            color: #333;
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        header {
-            background: linear-gradient(90deg, #007bff, #0056b3);
-            color: #fff;
-            text-align: center;
-            padding: 20px 0;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
-
-        header .logo {
-            width: 60px;
-            height: auto;
-            margin-bottom: 10px;
-        }
-
-        nav ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-        }
-
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            font-size: 1.1rem;
-            font-weight: 600;
-        }
-
-        nav a:hover {
-            text-decoration: underline;
-        }
-
-        .titulo-principal {
-            text-align: center;
-            font-size: 2rem;
-            margin-top: 20px;
-        }
-
-        .video {
-            display: flex;
-            justify-content: center;
-            margin: 20px 0;
-        }
-
-        iframe {
-            border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .principal,
-        .diferenciales {
-            padding: 20px;
-            margin: 20px auto;
-            max-width: 900px;
-            background: #fff;
-            border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .principal:hover,
-        .diferenciales:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .principal img {
-            width: 100%;
-            border-radius: 15px;
-            margin: 20px 0;
-        }
-
-        .diferenciales ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .diferenciales .items {
-            margin: 10px 0;
-            padding: 10px;
-            background: #f0f0f0;
-            border-radius: 10px;
-            transition: background-color 0.3s;
-        }
-
-        .diferenciales .items:hover {
-            background: #007bff;
-            color: #fff;
-        }
-
-        footer {
-            background: #333;
-            color: #fff;
-            text-align: center;
-            padding: 20px;
-            margin-top: 20px;
-        }
-
-        footer img {
-            width: 30px;
-            margin-bottom: 10px;
-        }
-
-        footer p {
-            margin: 0;
-        }
-
-        .modo-oscuro-btn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: linear-gradient(135deg, #007bff, #0056b3);
-            color: #fff;
-            border: none;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-            cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .modo-oscuro-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-        }
-
-        /* Dark Mode */
-        body.dark-mode {
-            background-color: #1c1c1c;
-            color: #e0e0e0;
-        }
-
-        body.dark-mode header {
-            background: linear-gradient(90deg, #333, #444);
-        }
-
-        body.dark-mode .principal,
-        body.dark-mode .diferenciales {
-            background: #2c2c2c;
-            color: #e0e0e0;
-        }
-
-        body.dark-mode .diferenciales .items {
-            background: #444;
-        }
-
-        body.dark-mode footer {
-            background: #333;
-        }
-
-        body.dark-mode .modo-oscuro-btn {
-            background: linear-gradient(135deg, #444, #555);
-        }
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #e0e7ff 0%, #f0f4f8 100%);
+    color: #111;
+    transition: background-color 0.3s, color 0.3s;
+}
+.dark body {
+    background: linear-gradient(135deg, #18181b 0%, #27272a 100%);
+    color: #f3f4f6;
+}
+h1 {
+    color: #2563eb;
+}
+.dark h1 {
+    color: #f3f4f6;
+}
+.glass {
+    background: rgba(255,255,255,0.85);
+    box-shadow: 0 8px 32px 0 rgba(31,38,135,0.15);
+    backdrop-filter: blur(5px);
+    border-radius: 1rem;
+    color: #111;
+    margin-bottom: 2rem;
+}
+.dark .glass {
+    background: rgba(36,37,46,0.93);
+    box-shadow: 0 8px 32px 0 rgba(20,20,30,0.35);
+    color: #f3f4f6;
+}
+header {
+    width: 100%;
+    background: rgba(255,255,255,0.90);
+    border-bottom: 1px solid #2563eb;
+    box-shadow: 0 4px 10px rgba(31,38,135,0.08);
+    backdrop-filter: blur(5px);
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+.dark header {
+    background: rgba(36,37,46,0.93);
+    border-bottom: 1px solid #93c5fd;
+}
+nav ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+nav ul li a {
+    color: #2563eb;
+    font-weight: bold;
+    font-size: 1.1rem;
+    text-decoration: none;
+    transition: color .2s;
+}
+nav ul li a:hover {
+    text-decoration: underline;
+    color: #1e40af;
+}
+.dark nav ul li a {
+    color: #93c5fd;
+}
+.titulo-principal {
+    text-align: center;
+    font-size: 2rem;
+    margin-top: 20px;
+    color: #2563eb;
+}
+.dark .titulo-principal {
+    color: #f3f4f6;
+}
+.video {
+    display: flex;
+    justify-content: center;
+    margin: 24px 0;
+}
+iframe {
+    border-radius: 1rem;
+    box-shadow: 0 4px 10px rgba(31,38,135,0.15);
+    border: none;
+}
+footer {
+    width: 100%;
+    background: rgba(255,255,255,0.90);
+    color: #2563eb;
+    border-top: 1px solid #2563eb;
+    box-shadow: 0 4px 10px rgba(31,38,135,0.07);
+    text-align: center;
+    padding: 1rem;
+    font-size: 1rem;
+    margin-top: 2rem;
+}
+footer img {
+    width: 36px;
+    margin-bottom: 8px;
+}
+footer p {
+    margin: 0;
+}
+.dark footer {
+    background: rgba(36,37,46,0.93);
+    color: #f3f4f6;
+    border-top: 1px solid #93c5fd;
+}
+.principal,
+.diferenciales {
+    max-width: 900px;
+    margin: 2rem auto;
+}
+.principal,
+.diferenciales {
+    padding: 1.5rem;
+}
+.principal img {
+    width: 100%;
+    border-radius: 1rem;
+    margin: 1rem 0;
+    box-shadow: 0 4px 10px rgba(31,38,135,0.10);
+}
+.diferenciales ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.diferenciales .items {
+    margin: 10px 0;
+    padding: 10px;
+    background: #e0e7ff;
+    border-radius: 10px;
+    color: #2563eb;
+    transition: background-color 0.3s, color 0.3s;
+    font-weight: 600;
+}
+.diferenciales .items:hover {
+    background: #2563eb;
+    color: #fff;
+}
+.dark .diferenciales .items {
+    background: #29314d;
+    color: #93c5fd;
+}
+.dark .diferenciales .items:hover {
+    background: #60a5fa;
+    color: #18181b;
+}
+#darkModeToggle {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 50;
+    width: 56px;
+    height: 56px;
+    background: rgba(255,255,255,0.9);
+    border-radius: 50%;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+#darkModeToggle:hover { background: #e0e7ff; }
+.dark #darkModeToggle { background: rgba(36,37,46,0.93); }
+.dark #darkModeToggle:hover { background: #18181b; }
+#darkModeIcon { transition: transform .3s; }
+#darkModeToggle:active #darkModeIcon { transform: rotate(40deg) scale(1.1);}
     </style>
     <script>
-        function cambiarModo() {
-            const body = document.body;
-            const icon = document.querySelector(".modo-oscuro-btn i");
-
-            // Toggle dark mode
-            body.classList.toggle("dark-mode");
-
-            // Save preference in localStorage
-            localStorage.setItem("modo-oscuro", body.classList.contains("dark-mode"));
-
-            // Change the icon
-            if (body.classList.contains("dark-mode")) {
-                icon.classList.remove("fa-moon");
-                icon.classList.add("fa-sun");
+        // Modo oscuro igual que calculadora de décimo
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark');
+            updateIcon();
+            localStorage.setItem("modo-oscuro", document.body.classList.contains("dark"));
+        }
+        function updateIcon() {
+            const isDark = document.body.classList.contains("dark");
+            const sun = document.querySelector('#iconSun');
+            const moon = document.querySelector('#iconMoon');
+            if (isDark) {
+                sun.style.display = 'none';
+                moon.style.display = 'block';
             } else {
-                icon.classList.remove("fa-sun");
-                icon.classList.add("fa-moon");
+                sun.style.display = 'block';
+                moon.style.display = 'none';
             }
         }
-
-        document.addEventListener("DOMContentLoaded", function () {
-            const body = document.body;
-            const icon = document.querySelector(".modo-oscuro-btn i");
-
-            // Restore dark mode if previously enabled
-            if (localStorage.getItem("modo-oscuro") === "true") {
-                body.classList.add("dark-mode");
-                icon.classList.remove("fa-moon");
-                icon.classList.add("fa-sun");
+        window.onload = () => {
+            if(localStorage.getItem("modo-oscuro") === "true") {
+                document.body.classList.add("dark");
             }
-        });
+            updateIcon();
+        }
     </script>
 </head>
-
 <body>
-    <header>
-        <h1><img class="logo" src="Imagenes/NuevoLogo.png" alt="Logo" style="display: block; margin: 0 auto;"> Página Web Carlos González</h1>
+    <header class="glass">
+        <div class="flex flex-col items-center mb-2">
+            <img class="logo" src="Imagenes/NuevoLogo.png" alt="Logo" style="width:60px; margin-bottom:10px;">
+            <h1 class="text-3xl font-bold tracking-tight drop-shadow">Página Web Carlos González</h1>
+        </div>
         <nav>
             <ul>
                 <li><a href="contacto.html">Salario</a></li>
                 <li><a href="CalculadoraExtras.html">Extras</a></li>
-                <li><a href="CalViatico.HTML">Decimo</a></li>
-          
+                <li><a href="CalViatico.HTML">Décimo</a></li>
                 <li><a href="Cal_Porcentaje.HTML">Juego</a></li>
             </ul>
         </nav>
@@ -239,7 +226,7 @@
     </div>
 
     <main>
-        <section class="principal">
+        <section class="glass principal">
             <h3 class="titulo-principal"><strong>Educación y Programación</strong></h3>
             <img src="Imagenes/Pc.jfif" alt="Ilustración">
             <p><strong>He creado esta página web para ti</strong>. Entra a la sección de contacto para resolver tus dudas e inquietudes.</p>
@@ -250,7 +237,7 @@
             <iframe width="560" height="315" src="https://www.youtube.com/embed/7vbi-OCFZEY" allowfullscreen></iframe>
         </div>
 
-        <section class="diferenciales">
+        <section class="glass diferenciales">
             <h3 class="titulo-principal">Características que Verás en esta Web</h3>
             <ul>
                 <li class="items">Programación</li>
@@ -261,12 +248,34 @@
         </section>
     </main>
 
-    <footer>
+    <footer class="glass">
         <img class="bandera" src="Imagenes/NuevoLogo.png" alt="Logo">
         <p>© Creado por Licdo. Carlos E. González.</p>
     </footer>
 
-    <button class="modo-oscuro-btn" onclick="cambiarModo()"><i class="fas fa-moon"></i></button>
+    <!-- Botón flotante modo oscuro -->
+    <div id="darkModeToggle" title="Cambiar modo claro/oscuro" onclick="toggleDarkMode()">
+        <span id="darkModeIcon">
+            <!-- Icono sol/luna SVG -->
+            <svg id="iconSunMoon" xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-yellow-400 dark:text-yellow-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <g id="iconSun">
+                    <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2" fill="currentColor"/>
+                    <g stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="2" x2="12" y2="4"/>
+                        <line x1="12" y1="20" x2="12" y2="22"/>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                        <line x1="2" y1="12" x2="4" y2="12"/>
+                        <line x1="20" y1="12" x2="22" y2="12"/>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                    </g>
+                </g>
+                <g id="iconMoon" style="display:none;">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" fill="currentColor"/>
+                </g>
+            </svg>
+        </span>
+    </div>
 </body>
-
 </html>

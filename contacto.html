@@ -6,8 +6,7 @@
     <title>Calculadora de Descuentos de Salario Funcionarios Públicos</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-
+    <style> 
 body {
     font-family: 'Inter', sans-serif;
     background: linear-gradient(135deg, #e0e7ff 0%, #f0f4f8 100%);
@@ -16,6 +15,13 @@ body {
 .dark body {
     background: linear-gradient(135deg, #18181b 0%, #27272a 100%);
     color: #f3f4f6; /* Letras claras en modo oscuro */
+}
+/* Título (h1) */
+h1 {
+    color: #111; /* Negro en modo claro */
+}
+.dark h1 {
+    color: #f3f4f6; /* Claro en modo oscuro */
 }
 .glass {
     background: rgba(255,255,255,0.85);
@@ -78,7 +84,6 @@ body {
 /* Animación icono */
 #darkModeIcon { transition: transform .3s; }
 #darkModeToggle:active #darkModeIcon { transform: rotate(40deg) scale(1.1);}
-
         
     </style>
 </head>

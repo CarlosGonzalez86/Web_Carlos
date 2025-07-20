@@ -16,11 +16,8 @@ body {
     background: linear-gradient(135deg, #18181b 0%, #27272a 100%);
     color: #f3f4f6;
 }
-h1 {
-    color: #000;
-}
-.dark h1 {
-    color: #f3f4f6;
+h1, h2, h3, p, label, .result-item, #result, .glass-btn, .result-footer {
+    text-align: center !important;
 }
 .glass {
     background: rgba(255,255,255,0.85);
@@ -45,6 +42,7 @@ h1 {
     font-weight: 600;
     font-size: 1rem;
     transition: all 0.2s;
+    text-align: left !important;
 }
 .floating-label input:focus + label,
 .floating-label input:not(:placeholder-shown) + label {
@@ -94,6 +92,8 @@ h1 {
     display: flex;
     align-items: center;
     gap: 0.6rem;
+    justify-content: center;
+    text-align: center;
 }
 .glass-btn:hover {
     background: #2563eb;
@@ -110,6 +110,7 @@ h1 {
     align-items: center;
     gap: 0.5rem;
     margin-top: 2rem;
+    text-align: center;
 }
 .result-footer img {
     height: 40px;
@@ -118,6 +119,7 @@ h1 {
 .result-footer p {
     font-size: 0.95rem;
     color: #2563eb;
+    text-align: center;
 }
 .dark .result-footer p {
     color: #93c5fd;
@@ -139,7 +141,7 @@ h1 {
 
         <div class="mb-8 p-6 bg-blue-50 dark:bg-gray-800 rounded-xl shadow-inner">
             <div class="mb-4">
-                <label class="block text-lg font-semibold text-blue-700 dark:text-blue-300 mb-3">Tipo de Salario:</label>
+                <label class="block text-lg font-semibold text-blue-700 dark:text-blue-300 mb-3 text-center">Tipo de Salario:</label>
                 <div class="flex space-x-6 justify-center">
                     <label class="inline-flex items-center cursor-pointer">
                         <input type="radio" name="salaryType" value="monthly" checked onchange="updateSalaryInputLabel()"
@@ -150,21 +152,21 @@ h1 {
             </div>
             <div class="floating-label mt-6">
                 <input type="number" id="salaryInput"
-                    class="w-full p-3 border border-blue-300 dark:border-gray-700 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 ease-in-out bg-white dark:bg-gray-900 text-gray-800 dark:text-white text-xl placeholder-transparent"
+                    class="w-full p-3 border border-blue-300 dark:border-gray-700 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 ease-in-out bg-white dark:bg-gray-900 text-gray-800 dark:text-white text-xl placeholder-transparent text-center"
                     placeholder=" " min="0" step="0.01" value="0">
-                <label for="salaryInput" id="salaryInputLabel">Salario Mensual:</label>
+                <label for="salaryInput" id="salaryInputLabel" class="text-left">Salario Mensual:</label>
             </div>
-            <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-2 text-center">
                 *El cálculo del Impuesto sobre la Renta se basa en un ingreso anual de 13 salarios mensuales.
             </p>
-            <div class="mt-4 flex items-center">
+            <div class="mt-4 flex items-center justify-center">
                 <input type="checkbox" id="isPublicServant" class="form-checkbox h-5 w-5 text-blue-600 accent-blue-600 rounded">
-                <label for="isPublicServant" class="ml-2 text-gray-700 dark:text-gray-200 font-medium">Soy Servidor Público (para incluir SIACAP)</label>
+                <label for="isPublicServant" class="ml-2 text-gray-700 dark:text-gray-200 font-medium text-center">Soy Servidor Público (para incluir SIACAP)</label>
             </div>
         </div>
 
         <button onclick="calculateCombinedDeductions()"
-            class="w-full bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white font-bold py-3 px-6 rounded-xl shadow-lg transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-green-300 text-xl tracking-wide">
+            class="w-full bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white font-bold py-3 px-6 rounded-xl shadow-lg transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-green-300 text-xl tracking-wide text-center">
             Calcular Descuentos
         </button>
 
@@ -207,39 +209,13 @@ h1 {
                 <div class="result-item font-bold text-lg text-green-800 dark:text-green-300 mt-4">
                     <span>Total Descuentos del Empleado (Mensual):</span>
                     <span id="totalEmployeeDeductions">B/. 0.00</span>
-                    <span class="block text-sm text-gray-500 dark:text-gray-400 mt-2">Lo divides entre (2) verás tus descuentos quincenal según la ley Panameña.</span>
+                    <span class="block text-sm text-gray-500 dark:text-gray-400 mt-2 text-center">Lo divides entre (2) verás tus descuentos quincenal según la ley Panameña.</span>
                 </div>
                 <div class="result-item font-extrabold text-2xl text-blue-900 dark:text-blue-300 mt-4 pt-4 border-t-2 border-blue-300 dark:border-blue-800">
                     <span>Salario Quincenal :</span>
                     <span id="netSalary">B/. 0.00</span>
                 </div>
             </div>
-
-            <!-- Empleador -->
-            <div class="result-section bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-900 rounded-xl p-6">
-                <h2 class="text-2xl font-semibold text-blue-800 dark:text-blue-300 mb-4 text-center">Contribuciones del Empleador (Mensual):</h2>
-                <div class="result-item">
-                    <span class="text-gray-700 dark:text-gray-200">Seguro Social (CSS 12.25%):</span>
-                    <span id="employerCss" class="font-semibold text-gray-800 dark:text-gray-100">B/. 0.00</span>
-                </div>
-                <div class="result-item">
-                    <span class="text-gray-700 dark:text-gray-200">Impuesto de Educación (1.50%):</span>
-                    <span id="employerEducation" class="font-semibold text-gray-800 dark:text-gray-100">B/. 0.00</span>
-                </div>
-                <div class="result-item" id="siacapStateRow">
-                    <span class="text-gray-700 dark:text-gray-200">SIACAP (Estado 0.3%):</span>
-                    <span id="stateSiacap" class="font-semibold text-gray-800 dark:text-gray-100">B/. 0.00</span>
-                </div>
-                <div class="result-item font-bold text-lg text-blue-800 dark:text-blue-300 mt-4">
-                    <span>Total Contribuciones del Empleador (Mensual):</span>
-                    <span id="totalEmployerContributions">B/. 0.00</span>
-                </div>
-            </div>
-
-            <p class="text-sm text-gray-500 dark:text-gray-400 mt-6 text-center">
-                *Este cálculo es una estimación basada en tasas actuales. Las contribuciones al Seguro Social pueden estar sujetas a un techo salarial máximo que se ajusta periódicamente. Las deducciones de ISR no consideran deducciones personales adicionales. Para información oficial, consulta la CSS, la DGI y la Secretaría Ejecutiva del SIACAP de Panamá.
-            </p>
-
             <!-- Logo y copyright debajo del resultado -->
             <div class="result-footer">
                 <img src="Imagenes/css (1).png" alt="Logo">
@@ -249,9 +225,9 @@ h1 {
     </div>
 
     <!-- Footer elegante y bien posicionado -->
-    <footer class="w-full bg-white/80 dark:bg-gray-900/80 backdrop-blur border-t border-blue-200 dark:border-gray-700 shadow-lg py-4 flex flex-col md:flex-row items-center justify-center gap-4 mt-auto">
+    <footer class="w-full bg-white/80 dark:bg-gray-900/80 backdrop-blur border-t border-blue-200 dark:border-gray-700 shadow-lg py-4 flex flex-col md:flex-row items-center justify-center gap-4 mt-auto text-center">
         <img src="Imagenes/css (1).png" alt="Logo" class="h-8 w-auto mx-2">
-        <p class="text-gray-700 dark:text-gray-300 text-sm md:text-base">© Creado por Licdo. Carlos E. Gonzalez C.</p>
+        <p class="text-gray-700 dark:text-gray-300 text-sm md:text-base text-center">© Creado por Licdo. Carlos E. Gonzalez C.</p>
     </footer>
 
     <!-- Botón flotante modo oscuro -->
@@ -303,18 +279,14 @@ h1 {
             document.getElementById('salaryInput').value = "0";
             document.getElementById('isPublicServant').checked = false;
             document.getElementById('siacapEmployeeRow').classList.add('hidden');
-            document.getElementById('siacapStateRow').classList.add('hidden');
+            document.getElementById('result').classList.add('hidden');
             updateIcon();
         };
 
         function updateSalaryInputLabel() {
             const salaryType = document.querySelector('input[name="salaryType"]:checked').value;
             const label = document.getElementById('salaryInputLabel');
-            if (salaryType === 'monthly') {
-                label.textContent = 'Ingresa tu Salario Mensual :';
-            } else {
-                label.textContent = 'Ingresa tu Salario Mensual :';
-            }
+            label.textContent = 'Ingresa tu Salario Mensual :';
             document.getElementById('salaryInput').value = "0";
             document.getElementById('result').classList.add('hidden');
         }
@@ -322,20 +294,14 @@ h1 {
         function calculateCombinedDeductions() {
             const salaryInput = document.getElementById('salaryInput');
             let inputSalary = parseFloat(salaryInput.value) || 0;
-            const salaryType = document.querySelector('input[name="salaryType"]:checked').value;
             const isPublicServant = document.getElementById('isPublicServant').checked;
 
-            let monthlySalary = salaryType === 'biweekly' ? inputSalary * 2 : inputSalary;
+            let monthlySalary = inputSalary;
 
             // Employee
             const employeeCssRate = 0.0975;
             const employeeEducationRate = 0.0125;
             const employeeSiacapRate = 0.02;
-
-            // Employer
-            const employerCssRate = 0.1225;
-            const employerEducationRate = 0.0150;
-            const stateSiacapRate = 0.003;
 
             let employeeCss = monthlySalary * employeeCssRate;
             let employeeEducation = monthlySalary * employeeEducationRate;
@@ -359,17 +325,6 @@ h1 {
             const netSalaryMonthly = monthlySalary - totalEmployeeDeductions;
             const netSalaryBiweekly = netSalaryMonthly / 2;
 
-            let employerCss = monthlySalary * employerCssRate;
-            let employerEducation = monthlySalary * employerEducationRate;
-            let stateSiacap = 0;
-            if (isPublicServant) {
-                stateSiacap = monthlySalary * stateSiacapRate;
-                document.getElementById('siacapStateRow').classList.remove('hidden');
-            } else {
-                document.getElementById('siacapStateRow').classList.add('hidden');
-            }
-            const totalEmployerContributions = employerCss + employerEducation + stateSiacap;
-
             document.getElementById('employeeCss').textContent = `B/. ${employeeCss.toFixed(2)}`;
             document.getElementById('employeeEducation').textContent = `B/. ${employeeEducation.toFixed(2)}`;
             document.getElementById('employeeIsr').textContent = `B/. ${employeeIsr.toFixed(2)}`;
@@ -377,15 +332,10 @@ h1 {
             document.getElementById('totalEmployeeDeductions').textContent = `B/. ${totalEmployeeDeductions.toFixed(2)}`;
             document.getElementById('netSalary').textContent = `B/. ${netSalaryBiweekly.toFixed(2)}`;
 
-            document.getElementById('employerCss').textContent = `B/. ${employerCss.toFixed(2)}`;
-            document.getElementById('employerEducation').textContent = `B/. ${employerEducation.toFixed(2)}`;
-            document.getElementById('stateSiacap').textContent = `B/. ${stateSiacap.toFixed(2)}`;
-            document.getElementById('totalEmployerContributions').textContent = `B/. ${totalEmployerContributions.toFixed(2)}`;
-
             document.getElementById('result').classList.remove('hidden');
         }
 
-        // Descargar PDF usando jsPDF, con logo y copyright
+        // Descargar PDF SOLO con descuentos del empleado, centrado y con logo+copyright
         function downloadPDF() {
             const resultDiv = document.getElementById('result');
             if (resultDiv.classList.contains('hidden')) {
@@ -393,54 +343,40 @@ h1 {
                 return;
             }
             let doc = new jspdf.jsPDF();
-            let y = 15;
+            let y = 20;
             doc.setFont("Inter", "bold");
             doc.setFontSize(18);
-            doc.text("Resumen de Deducciones Laborales", 15, y);
+            doc.text("Descuentos del Empleado (Mensual)", 105, y, {align: "center"});
             y += 10;
-            doc.setFontSize(12);
-
-            // Empleado
-            doc.text("Descuentos del Empleado (Mensual):", 15, y); y += 7;
-            doc.text(document.getElementById('employeeCss').previousElementSibling.textContent + " " + document.getElementById('employeeCss').textContent, 19, y); y += 7;
-            doc.text(document.getElementById('employeeEducation').previousElementSibling.textContent + " " + document.getElementById('employeeEducation').textContent, 19, y); y += 7;
-            doc.text(document.getElementById('employeeIsr').previousElementSibling.textContent + " " + document.getElementById('employeeIsr').textContent, 19, y); y += 7;
+            doc.setFontSize(13);
+            doc.text(document.getElementById('employeeCss').previousElementSibling.textContent + " " + document.getElementById('employeeCss').textContent, 105, y, {align: "center"}); y += 7;
+            doc.text(document.getElementById('employeeEducation').previousElementSibling.textContent + " " + document.getElementById('employeeEducation').textContent, 105, y, {align: "center"}); y += 7;
+            doc.text(document.getElementById('employeeIsr').previousElementSibling.textContent + " " + document.getElementById('employeeIsr').textContent, 105, y, {align: "center"}); y += 7;
             if (!document.getElementById('siacapEmployeeRow').classList.contains('hidden')) {
-                doc.text(document.getElementById('employeeSiacap').previousElementSibling.textContent + " " + document.getElementById('employeeSiacap').textContent, 19, y); y += 7;
+                doc.text(document.getElementById('employeeSiacap').previousElementSibling.textContent + " " + document.getElementById('employeeSiacap').textContent, 105, y, {align: "center"}); y += 7;
             }
-            doc.text("Total Descuentos: " + document.getElementById('totalEmployeeDeductions').textContent, 19, y); y += 7;
-            doc.text("Salario Quincenal: " + document.getElementById('netSalary').textContent, 19, y); y += 10;
-
-            // Empleador
-            doc.text("Contribuciones del Empleador (Mensual):", 15, y); y += 7;
-            doc.text(document.getElementById('employerCss').previousElementSibling.textContent + " " + document.getElementById('employerCss').textContent, 19, y); y += 7;
-            doc.text(document.getElementById('employerEducation').previousElementSibling.textContent + " " + document.getElementById('employerEducation').textContent, 19, y); y += 7;
-            if (!document.getElementById('siacapStateRow').classList.contains('hidden')) {
-                doc.text(document.getElementById('stateSiacap').previousElementSibling.textContent + " " + document.getElementById('stateSiacap').textContent, 19, y); y += 7;
-            }
-            doc.text("Total Contribuciones: " + document.getElementById('totalEmployerContributions').textContent, 19, y); y += 10;
+            doc.text("Total Descuentos: " + document.getElementById('totalEmployeeDeductions').textContent, 105, y, {align: "center"}); y += 10;
+            doc.text("Salario Quincenal: " + document.getElementById('netSalary').textContent, 105, y, {align: "center"}); y += 20;
 
             // Logo y copyright
-            // Cambia la ruta si tu logo está en otro directorio
             let logo = new Image();
             logo.src = "Imagenes/css (1).png";
             logo.onload = function() {
-                doc.addImage(logo, 'PNG', 80, y, 45, 20);
-                y += 22;
+                doc.addImage(logo, 'PNG', 85, y, 40, 18); y += 22;
                 doc.setFontSize(11);
                 doc.setTextColor(40, 100, 200);
-                doc.text("© Creado por Licdo. Carlos E. González", 15, y);
-                doc.save("deducciones_laborales.pdf");
+                doc.text("© Creado por Licdo. Carlos E. González", 105, y, {align: "center"});
+                doc.save("deducciones_empleado.pdf");
             };
             logo.onerror = function() {
                 doc.setFontSize(11);
                 doc.setTextColor(40, 100, 200);
-                doc.text("© Creado por Licdo. Carlos E. González", 15, y);
-                doc.save("deducciones_laborales.pdf");
+                doc.text("© Creado por Licdo. Carlos E. González", 105, y, {align: "center"});
+                doc.save("deducciones_empleado.pdf");
             };
         }
 
-        // Compartir resultado por WhatsApp
+        // Compartir resultado por WhatsApp SOLO descuentos del empleado
         function shareWhatsApp(event) {
             event.preventDefault();
             const resultDiv = document.getElementById('result');
@@ -448,8 +384,7 @@ h1 {
                 alert("Calcula los descuentos antes de compartir.");
                 return;
             }
-            let texto = "Resumen de Deducciones Laborales:\n";
-            texto += "Descuentos del Empleado (Mensual):\n";
+            let texto = "Descuentos del Empleado (Mensual):\n";
             texto += document.getElementById('employeeCss').previousElementSibling.textContent + " " + document.getElementById('employeeCss').textContent + "\n";
             texto += document.getElementById('employeeEducation').previousElementSibling.textContent + " " + document.getElementById('employeeEducation').textContent + "\n";
             texto += document.getElementById('employeeIsr').previousElementSibling.textContent + " " + document.getElementById('employeeIsr').textContent + "\n";
@@ -458,16 +393,8 @@ h1 {
             }
             texto += "Total Descuentos: " + document.getElementById('totalEmployeeDeductions').textContent + "\n";
             texto += "Salario Quincenal: " + document.getElementById('netSalary').textContent + "\n";
-            texto += "\nContribuciones del Empleador (Mensual):\n";
-            texto += document.getElementById('employerCss').previousElementSibling.textContent + " " + document.getElementById('employerCss').textContent + "\n";
-            texto += document.getElementById('employerEducation').previousElementSibling.textContent + " " + document.getElementById('employerEducation').textContent + "\n";
-            if (!document.getElementById('siacapStateRow').classList.contains('hidden')) {
-                texto += document.getElementById('stateSiacap').previousElementSibling.textContent + " " + document.getElementById('stateSiacap').textContent + "\n";
-            }
-            texto += "Total Contribuciones: " + document.getElementById('totalEmployerContributions').textContent + "\n";
             texto += "\n© Creado por Licdo. Carlos E. González\n";
-            texto += "\nCalculadora: " + window.location.href;
-
+            texto += "Calculadora: " + window.location.href;
             const waUrl = "https://wa.me/?text=" + encodeURIComponent(texto);
             window.open(waUrl, "_blank");
         }

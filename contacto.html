@@ -260,9 +260,9 @@ h1 {
             const salaryType = document.querySelector('input[name="salaryType"]:checked').value;
             const label = document.getElementById('salaryInputLabel');
             if (salaryType === 'monthly') {
-                label.textContent = 'Ingresa tu Salario Quincenal :';
+                label.textContent = 'Ingresa tu Salario Mensual :';
             } else {
-                label.textContent = 'Ingresa tu Salario Quincenal :';
+                label.textContent = 'Ingresa tu Salario Mensual :';
             }
             document.getElementById('salaryInput').value = "0";
             document.getElementById('result').classList.add('hidden');

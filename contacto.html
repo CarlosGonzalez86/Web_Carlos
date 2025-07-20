@@ -4,40 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <style> 
+    <style>
 body {
     font-family: 'Inter', sans-serif;
     background: linear-gradient(135deg, #e0e7ff 0%, #f0f4f8 100%);
-    color: #000000
- ; /* Letras negras en modo claro */
+    color: #000;
 }
 .dark body {
     background: linear-gradient(135deg, #18181b 0%, #27272a 100%);
-    color: #f3f4f6; /* Letras claras en modo oscuro */
+    color: #f3f4f6;
 }
-/* Título (h1) */
 h1 {
-    color: #000000
-; /* Negro en modo claro */
+    color: #000;
 }
 .dark h1 {
-    color: #f3f4f6; /* Claro en modo oscuro */
+    color: #f3f4f6;
 }
 .glass {
     background: rgba(255,255,255,0.85);
     box-shadow: 0 8px 32px 0 rgba(31,38,135,0.15);
     backdrop-filter: blur(5px);
     border-radius: 1rem;
-    color: #000000
-; /* Letras negras en modo claro dentro de glass */
+    color: #000;
 }
 .dark .glass {
     background: rgba(36,37,46,0.93);
     box-shadow: 0 8px 32px 0 rgba(20,20,30,0.35);
-    color: #f3f4f6; /* Letras claras en modo oscuro dentro de glass */
+    color: #f3f4f6;
 }
-/* El resto igual... */
 .floating-label { position:relative; }
 .floating-label input { padding-top: 1.25rem; }
 .floating-label label {
@@ -57,7 +53,6 @@ h1 {
     font-size: 0.85rem;
     color: #2563eb;
 }
-/* Icono flotante */
 #darkModeToggle {
     position: fixed;
     bottom: 2rem;
@@ -74,19 +69,59 @@ h1 {
     cursor: pointer;
     transition: background 0.3s;
 }
-#darkModeToggle:hover {
-    background: #e0e7ff;
-}
-.dark #darkModeToggle {
-    background: rgba(36,37,46,0.93);
-}
-.dark #darkModeToggle:hover {
-    background: #18181b;
-}
-/* Animación icono */
+#darkModeToggle:hover { background: #e0e7ff; }
+.dark #darkModeToggle { background: rgba(36,37,46,0.93); }
+.dark #darkModeToggle:hover { background: #18181b; }
 #darkModeIcon { transition: transform .3s; }
 #darkModeToggle:active #darkModeIcon { transform: rotate(40deg) scale(1.1);}
-        
+.action-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 1.5rem;
+}
+.glass-btn {
+    background: rgba(255,255,255,0.65);
+    border: 1px solid #2563eb;
+    color: #2563eb;
+    font-weight: bold;
+    padding: 0.7rem 1.6rem;
+    border-radius: 0.9rem;
+    box-shadow: 0 4px 20px 0 rgba(31,38,135,0.09);
+    cursor: pointer;
+    transition: background .18s, color .18s, border .18s;
+    font-size: 1.07rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+.glass-btn:hover {
+    background: #2563eb;
+    color: #fff;
+    border: 1px solid #1e40af;
+}
+@media (max-width: 520px) {
+    .action-buttons { gap: 0.5rem; flex-direction: column; }
+    .glass-btn { width: 100%; justify-content: center; }
+}
+.result-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+}
+.result-footer img {
+    height: 40px;
+    width: auto;
+}
+.result-footer p {
+    font-size: 0.95rem;
+    color: #2563eb;
+}
+.dark .result-footer p {
+    color: #93c5fd;
+}
     </style>
 </head>
 <body class="min-h-screen flex flex-col items-center justify-center p-4 transition-colors duration-300">
@@ -94,18 +129,17 @@ h1 {
     <!-- Calculadora principal -->
     <div class="glass w-full max-w-xl mx-auto p-8 mb-8">
         <h1 class="text-4xl font-extrabold text-center text-blue-900 dark:text-white drop-shadow mb-6 tracking-tight">
-<div class="flex justify-center items-center my-6">
-  <img src="Imagenes/css (1).png" alt="Logo" class="h-20 w-auto" />
-</div><p class="text-center text-gray-500 dark:text-gray-300 mb-8 text-lg"></h1>
+            <div class="flex justify-center items-center my-6">
+                <img src="Imagenes/css (1).png" alt="Logo" class="h-20 w-auto" />
+            </div>
+        </h1>
         <p class="text-center text-gray-500 dark:text-gray-300 mb-8 text-lg">
-            Estima tus deducciones mensuales por Seguro Social, Impuesto de Educación, Impuesto sobre la Renta y Siacap .
+            Estima tus deducciones mensuales por Seguro Social, Impuesto de Educación, Impuesto sobre la Renta y Siacap.
         </p>
 
         <div class="mb-8 p-6 bg-blue-50 dark:bg-gray-800 rounded-xl shadow-inner">
             <div class="mb-4">
-                <label class="block text-lg font-semibold text-blue-700 dark:text-blue-300 mb-3">
-                    Tipo de Salario:
-                </label>
+                <label class="block text-lg font-semibold text-blue-700 dark:text-blue-300 mb-3">Tipo de Salario:</label>
                 <div class="flex space-x-6 justify-center">
                     <label class="inline-flex items-center cursor-pointer">
                         <input type="radio" name="salaryType" value="monthly" checked onchange="updateSalaryInputLabel()"
@@ -114,7 +148,6 @@ h1 {
                     </label>
                 </div>
             </div>
-
             <div class="floating-label mt-6">
                 <input type="number" id="salaryInput"
                     class="w-full p-3 border border-blue-300 dark:border-gray-700 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 ease-in-out bg-white dark:bg-gray-900 text-gray-800 dark:text-white text-xl placeholder-transparent"
@@ -134,6 +167,22 @@ h1 {
             class="w-full bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white font-bold py-3 px-6 rounded-xl shadow-lg transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-green-300 text-xl tracking-wide">
             Calcular Descuentos
         </button>
+
+        <!-- Botones acción PDF y Compartir -->
+        <div class="action-buttons">
+            <button class="glass-btn" onclick="downloadPDF()" type="button">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke="currentColor" stroke-width="2" d="M12 16v-8m0 8l-4-4m4 4l4-4M4 18h16"/>
+                </svg>
+                Descargar PDF
+            </button>
+            <button class="glass-btn" onclick="shareWhatsApp(event)" type="button" id="shareWhatsappBtn">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 32 32">
+                    <path d="M16 3C9.383 3 4 8.383 4 15c0 2.633.92 5.071 2.583 7.071L4 29l7.114-2.431C13.051 27.15 14.497 27.5 16 27.5c6.617 0 12-5.383 12-12S22.617 3 16 3zm0 22.5c-1.326 0-2.626-.252-3.838-.749l-.273-.111-4.224 1.447 1.396-4.124-.179-.29C6.488 19.012 5.5 17.058 5.5 15c0-5.799 4.701-10.5 10.5-10.5S26.5 9.201 26.5 15 21.799 25.5 16 25.5zm5.714-7.005c-.313-.156-1.846-.91-2.132-1.015-.287-.104-.496-.156-.705.156-.208.311-.807 1.015-.991 1.223-.183.208-.364.234-.677.078-.313-.156-1.324-.487-2.521-1.541-.931-.833-1.558-1.86-1.741-2.173-.182-.312-.019-.48.137-.636.141-.139.313-.364.469-.546.157-.183.209-.312.314-.52.104-.208.052-.39-.026-.546-.078-.156-.705-1.694-.965-2.32-.254-.613-.514-.531-.705-.541l-.6-.01c-.207 0-.546.078-.832.364-.286.286-1.086 1.062-1.086 2.59s1.112 3.017 1.267 3.23c.156.208 2.186 3.339 5.304 4.544.741.254 1.318.406 1.77.52.743.189 1.421.129 1.954.078.597-.059 1.846-.755 2.107-1.483.26-.729.26-1.355.182-1.484-.077-.129-.285-.208-.597-.364z"/>
+                </svg>
+                Compartir por WhatsApp
+            </button>
+        </div>
 
         <div id="result" class="mt-8 hidden">
             <!-- Empleado -->
@@ -190,6 +239,12 @@ h1 {
             <p class="text-sm text-gray-500 dark:text-gray-400 mt-6 text-center">
                 *Este cálculo es una estimación basada en tasas actuales. Las contribuciones al Seguro Social pueden estar sujetas a un techo salarial máximo que se ajusta periódicamente. Las deducciones de ISR no consideran deducciones personales adicionales. Para información oficial, consulta la CSS, la DGI y la Secretaría Ejecutiva del SIACAP de Panamá.
             </p>
+
+            <!-- Logo y copyright debajo del resultado -->
+            <div class="result-footer">
+                <img src="Imagenes/css (1).png" alt="Logo">
+                <p>© Creado por Licdo. Carlos E. González</p>
+            </div>
         </div>
     </div>
 
@@ -231,8 +286,6 @@ h1 {
             body.classList.toggle('dark');
             updateIcon();
         }
-
-        // Actualiza el icono sol/luna
         function updateIcon() {
             const isDark = document.body.classList.contains('dark');
             const sun = document.querySelector('#iconSun');
@@ -245,8 +298,6 @@ h1 {
                 moon.style.display = 'none';
             }
         }
-
-        // Inicializar icono correcto en carga
         window.onload = () => {
             updateSalaryInputLabel();
             document.getElementById('salaryInput').value = "0";
@@ -332,6 +383,93 @@ h1 {
             document.getElementById('totalEmployerContributions').textContent = `B/. ${totalEmployerContributions.toFixed(2)}`;
 
             document.getElementById('result').classList.remove('hidden');
+        }
+
+        // Descargar PDF usando jsPDF, con logo y copyright
+        function downloadPDF() {
+            const resultDiv = document.getElementById('result');
+            if (resultDiv.classList.contains('hidden')) {
+                alert("Calcula los descuentos antes de descargar el PDF.");
+                return;
+            }
+            let doc = new jspdf.jsPDF();
+            let y = 15;
+            doc.setFont("Inter", "bold");
+            doc.setFontSize(18);
+            doc.text("Resumen de Deducciones Laborales", 15, y);
+            y += 10;
+            doc.setFontSize(12);
+
+            // Empleado
+            doc.text("Descuentos del Empleado (Mensual):", 15, y); y += 7;
+            doc.text(document.getElementById('employeeCss').previousElementSibling.textContent + " " + document.getElementById('employeeCss').textContent, 19, y); y += 7;
+            doc.text(document.getElementById('employeeEducation').previousElementSibling.textContent + " " + document.getElementById('employeeEducation').textContent, 19, y); y += 7;
+            doc.text(document.getElementById('employeeIsr').previousElementSibling.textContent + " " + document.getElementById('employeeIsr').textContent, 19, y); y += 7;
+            if (!document.getElementById('siacapEmployeeRow').classList.contains('hidden')) {
+                doc.text(document.getElementById('employeeSiacap').previousElementSibling.textContent + " " + document.getElementById('employeeSiacap').textContent, 19, y); y += 7;
+            }
+            doc.text("Total Descuentos: " + document.getElementById('totalEmployeeDeductions').textContent, 19, y); y += 7;
+            doc.text("Salario Quincenal: " + document.getElementById('netSalary').textContent, 19, y); y += 10;
+
+            // Empleador
+            doc.text("Contribuciones del Empleador (Mensual):", 15, y); y += 7;
+            doc.text(document.getElementById('employerCss').previousElementSibling.textContent + " " + document.getElementById('employerCss').textContent, 19, y); y += 7;
+            doc.text(document.getElementById('employerEducation').previousElementSibling.textContent + " " + document.getElementById('employerEducation').textContent, 19, y); y += 7;
+            if (!document.getElementById('siacapStateRow').classList.contains('hidden')) {
+                doc.text(document.getElementById('stateSiacap').previousElementSibling.textContent + " " + document.getElementById('stateSiacap').textContent, 19, y); y += 7;
+            }
+            doc.text("Total Contribuciones: " + document.getElementById('totalEmployerContributions').textContent, 19, y); y += 10;
+
+            // Logo y copyright
+            // Cambia la ruta si tu logo está en otro directorio
+            let logo = new Image();
+            logo.src = "Imagenes/css (1).png";
+            logo.onload = function() {
+                doc.addImage(logo, 'PNG', 80, y, 45, 20);
+                y += 22;
+                doc.setFontSize(11);
+                doc.setTextColor(40, 100, 200);
+                doc.text("© Creado por Licdo. Carlos E. González", 15, y);
+                doc.save("deducciones_laborales.pdf");
+            };
+            logo.onerror = function() {
+                doc.setFontSize(11);
+                doc.setTextColor(40, 100, 200);
+                doc.text("© Creado por Licdo. Carlos E. González", 15, y);
+                doc.save("deducciones_laborales.pdf");
+            };
+        }
+
+        // Compartir resultado por WhatsApp
+        function shareWhatsApp(event) {
+            event.preventDefault();
+            const resultDiv = document.getElementById('result');
+            if (resultDiv.classList.contains('hidden')) {
+                alert("Calcula los descuentos antes de compartir.");
+                return;
+            }
+            let texto = "Resumen de Deducciones Laborales:\n";
+            texto += "Descuentos del Empleado (Mensual):\n";
+            texto += document.getElementById('employeeCss').previousElementSibling.textContent + " " + document.getElementById('employeeCss').textContent + "\n";
+            texto += document.getElementById('employeeEducation').previousElementSibling.textContent + " " + document.getElementById('employeeEducation').textContent + "\n";
+            texto += document.getElementById('employeeIsr').previousElementSibling.textContent + " " + document.getElementById('employeeIsr').textContent + "\n";
+            if (!document.getElementById('siacapEmployeeRow').classList.contains('hidden')) {
+                texto += document.getElementById('employeeSiacap').previousElementSibling.textContent + " " + document.getElementById('employeeSiacap').textContent + "\n";
+            }
+            texto += "Total Descuentos: " + document.getElementById('totalEmployeeDeductions').textContent + "\n";
+            texto += "Salario Quincenal: " + document.getElementById('netSalary').textContent + "\n";
+            texto += "\nContribuciones del Empleador (Mensual):\n";
+            texto += document.getElementById('employerCss').previousElementSibling.textContent + " " + document.getElementById('employerCss').textContent + "\n";
+            texto += document.getElementById('employerEducation').previousElementSibling.textContent + " " + document.getElementById('employerEducation').textContent + "\n";
+            if (!document.getElementById('siacapStateRow').classList.contains('hidden')) {
+                texto += document.getElementById('stateSiacap').previousElementSibling.textContent + " " + document.getElementById('stateSiacap').textContent + "\n";
+            }
+            texto += "Total Contribuciones: " + document.getElementById('totalEmployerContributions').textContent + "\n";
+            texto += "\n© Creado por Licdo. Carlos E. González\n";
+            texto += "\nCalculadora: " + window.location.href;
+
+            const waUrl = "https://wa.me/?text=" + encodeURIComponent(texto);
+            window.open(waUrl, "_blank");
         }
     </script>
 </body>

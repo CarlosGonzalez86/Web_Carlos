@@ -3,168 +3,236 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="shortcut icon" href="Imagenes/NuevoLogo.png" />
   <title>Juega contra la AI - X y O</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="shortcut icon" href="Imagenes/NuevoLogo.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --bg-color: #0f172a;
-      --primary: #9333ea;
-      --primary-dark: #7e22ce;
-      --accent: #38bdf8;
-      --text-color: #ffffff;
-      --cell-bg: #1e293b;
-      --cell-hover: #334155;
-    }
-
-    .light-mode {
-      --bg-color: #f3f4f6;
-      --primary: #6366f1;
-      --primary-dark: #4f46e5;
-      --accent: #1d4ed8;
-      --text-color: #1e293b;
-      --cell-bg: #e2e8f0;
-      --cell-hover: #cbd5e1;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: var(--bg-color);
-      color: var(--text-color);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 30px 10px;
-      min-height: 100vh;
-      transition: background 0.5s, color 0.5s;
-    }
-
-    .logo {
-      width: 100px;
-      margin-bottom: 20px;
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-      100% { transform: scale(1); }
-    }
-
-    h1 {
-      font-size: 32px;
-      margin-bottom: 10px;
-      text-align: center;
-      text-shadow: 1px 1px rgba(0,0,0,0.3);
-    }
-
-    #score, #status {
-      font-size: 18px;
-      margin: 10px 0;
-      text-shadow: 1px 1px rgba(0,0,0,0.2);
-    }
-
-    #difficulty {
-      margin: 10px 0 20px;
-    }
-
-    #difficulty label {
-      margin: 0 15px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    #game-container {
-      background-color: rgba(15, 23, 42, 0.85);
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
-      text-align: center;
-      transition: background 0.5s;
-    }
-
-    .light-mode #game-container {
-      background-color: #ffffff;
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
-    }
-
-    #board {
-      display: grid;
-      grid-template-columns: repeat(3, 100px);
-      gap: 10px;
-      margin: 20px auto;
-    }
-
-    .cell {
-      width: 100px;
-      height: 100px;
-      background: var(--cell-bg);
-      border-radius: 12px;
-      font-size: 36px;
-      font-weight: bold;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: var(--accent);
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .cell:hover:not(.taken) {
-      background: var(--cell-hover);
-      transform: scale(1.05);
-    }
-
-    .taken {
-      pointer-events: none;
-    }
-
-    button {
-      background: var(--primary);
-      border: none;
-      padding: 10px 25px;
-      border-radius: 10px;
-      font-weight: bold;
-      color: white;
-      cursor: pointer;
-      font-size: 16px;
-      transition: background 0.3s, transform 0.2s;
-      margin: 10px;
-    }
-
-    button:hover {
-      background: var(--primary-dark);
-      transform: scale(1.05);
-    }
+body {
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, #e0e7ff 0%, #f0f4f8 100%);
+  color: #111;
+}
+.light-mode body {
+  background: linear-gradient(135deg, #f3f4f6 0%, #e0e7ff 100%);
+  color: #222;
+}
+h1, h2, h3, p, label, #score, #status, .glass-btn, .result-footer { text-align: center !important; }
+.glass {
+  background: rgba(255,255,255,0.85);
+  box-shadow: 0 8px 32px 0 rgba(31,38,135,0.15);
+  backdrop-filter: blur(5px);
+  border-radius: 1rem;
+  color: #111;
+  margin-bottom: 2rem;
+}
+.light-mode .glass {
+  background: rgba(255,255,255,0.96);
+  color: #222;
+}
+.logo {
+  width: 80px;
+  margin-bottom: 12px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+h1 {
+  font-size: 2.1rem;
+  margin-bottom: 10px;
+  color: #2563eb;
+  font-weight: 700;
+  text-shadow: 1px 1px 0 rgba(31,38,135,0.08);
+}
+#score {
+  margin: 10px 0;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+#game-container {
+  background-color: rgba(15, 23, 42, 0.08);
+  padding: 22px 16px 32px 16px;
+  border-radius: 20px;
+  box-shadow: 0 2px 32px rgba(31,38,135,0.11);
+  text-align: center;
+  max-width: 440px;
+  margin: 0 auto;
+  margin-bottom: 1.5rem;
+}
+.light-mode #game-container {
+  background: #fff;
+}
+#board {
+  display: grid;
+  grid-template-columns: repeat(3, 90px);
+  gap: 10px;
+  margin: 20px auto 0 auto;
+}
+.cell {
+  width: 90px;
+  height: 90px;
+  background: #e0e7ff;
+  border-radius: 15px;
+  font-size: 2.8rem;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #2563eb;
+  cursor: pointer;
+  transition: all 0.3s;
+  border: 1.5px solid #2563eb20;
+  box-shadow: 0 4px 18px 0 rgba(31,38,135,0.05);
+}
+.cell:hover:not(.taken) {
+  background: #c7d2fe;
+  transform: scale(1.07);
+}
+.taken { pointer-events: none; }
+.winner {
+  animation: winner-anim 0.7s cubic-bezier(.2,.8,.2,1) 0s 2 alternate;
+  background: linear-gradient(135deg, #facc15 60%, #34d399 100%);
+  color: #fff !important;
+  box-shadow: 0 0 22px 4px #facc1540, 0 0 0 0 #34d39980;
+  border: 2.5px solid #facc15 !important;
+}
+@keyframes winner-anim {
+  0% { filter: brightness(1) scale(1);}
+  70% { filter: brightness(1.5) scale(1.16);}
+  100% { filter: brightness(1.1) scale(1);}
+}
+.draw {
+  animation: draw-anim 1.2s cubic-bezier(.5,.2,.5,.8) 0s 2 alternate;
+  background: linear-gradient(135deg, #60a5fa 40%, #eab308 100%);
+  color: #fff !important;
+  border: 2.5px solid #3b82f6 !important;
+  box-shadow: 0 0 15px 2px #60a5fa30;
+}
+@keyframes draw-anim {
+  0% { filter: brightness(1) scale(1);}
+  40% { filter: brightness(1.5) scale(1.06);}
+  60% { filter: brightness(0.95) scale(1.14);}
+  100% { filter: brightness(1.1) scale(1);}
+}
+#difficulty {
+  margin: 8px 0 20px;
+}
+#difficulty label {
+  margin: 0 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+button, .glass-btn {
+  background: linear-gradient(90deg, #2563eb, #4f46e5);
+  border: none;
+  padding: 10px 25px;
+  border-radius: 12px;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  font-size: 1.07rem;
+  transition: background 0.3s, transform 0.2s;
+  margin: 10px 4px 0 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+button:hover, .glass-btn:hover {
+  background: linear-gradient(90deg, #2563eb, #1e40af);
+  transform: scale(1.05);
+}
+.action-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1.5rem;
+  margin-bottom: 1.2rem;
+}
+.result-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.6rem;
+  text-align: center;
+}
+.result-footer img {
+  height: 38px; width: auto;
+}
+.result-footer p {
+  font-size: 0.97rem;
+  color: #2563eb;
+  text-align: center;
+}
+footer {
+  background: #fff;
+  color: #2563eb;
+  border-top: 1px solid #2563eb;
+  box-shadow: 0 4px 10px rgba(31,38,135,0.07);
+  text-align: center;
+  margin-top: 2rem;
+}
+footer img {
+  width: 34px;
+  margin-bottom: 8px;
+}
+footer p {
+  margin: 0;
+  font-size: 0.94rem;
+  text-align: center;
+}
+.light-mode footer {
+  background: #f3f4f6;
+  color: #2563eb;
+}
+@media (max-width:500px){
+  #board{grid-template-columns: repeat(3, 1fr);}
+  .cell{width:60px;height:60px;font-size:2rem;}
+  #game-container{padding:12px 2px 20px 2px;}
+}
   </style>
 </head>
 <body>
   <img class="logo" src="Imagenes/NuevoLogo.png" alt="Logo" />
   <h1>Juega contra la AI - Batalla de X y O</h1>
-  
-  <div id="score">
-    Usuario (X): <span id="user-score">0</span> | IA (O): <span id="ai-score">0</span>
-  </div>
+  <div class="glass max-w-xl mx-auto p-4 mb-4">
+    <div id="score">
+      Usuario (X): <span id="user-score">0</span> | IA (O): <span id="ai-score">0</span>
+    </div>
 
-  <div id="difficulty">
-    <label><input type="radio" name="level" value="easy" checked /> Fácil</label>
-    <label><input type="radio" name="level" value="medium" /> Medio</label>
-    <label><input type="radio" name="level" value="hard" /> Difícil</label>
-  </div>
+    <div id="difficulty">
+      <label><input type="radio" name="level" value="easy" checked /> Fácil</label>
+      <label><input type="radio" name="level" value="medium" /> Medio</label>
+      <label><input type="radio" name="level" value="hard" /> Difícil</label>
+    </div>
 
-  <div id="game-container">
-    <div id="board"></div>
-    <div id="status">Turno de: <span id="current-player">X</span></div>
-    <button id="restart-btn">Reiniciar</button>
-    <button id="theme-toggle">Cambiar Modo</button>
-  </div>
+    <div id="game-container">
+      <div id="board"></div>
+      <div id="status">Turno de: <span id="current-player">X</span></div>
+      <button id="restart-btn">Reiniciar</button>
+      <button id="theme-toggle">Cambiar Modo</button>
+    </div>
 
+    <!-- Botón WhatsApp -->
+    <div class="action-buttons">
+      <button class="glass-btn" onclick="compartirWhatsApp(event)" type="button">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 32 32">
+          <path d="M16 3C9.383 3 4 8.383 4 15c0 2.633.92 5.071 2.583 7.071L4 29l7.114-2.431C13.051 27.15 14.497 27.5 16 27.5c6.617 0 12-5.383 12-12S22.617 3 16 3zm0 22.5c-1.326 0-2.626-.252-3.838-.749l-.273-.111-4.224 1.447 1.396-4.124-.179-.29C6.488 19.012 5.5 17.058 5.5 15c0-5.799 4.701-10.5 10.5-10.5S26.5 9.201 26.5 15 21.799 25.5 16 25.5zm5.714-7.005c-.313-.156-1.846-.91-2.132-1.015-.287-.104-.496-.156-.705.156-.208.311-.807 1.015-.991 1.223-.183.208-.364.234-.677.078-.313-.156-1.324-.487-2.521-1.541-.931-.833-1.558-1.86-1.741-2.173-.182-.312-.019-.48.137-.636.141-.139.313-.364.469-.546.157-.183.209-.312.314-.52.104-.208.052-.39-.026-.546-.078-.156-.705-1.694-.965-2.32-.254-.613-.514-.531-.705-.541l-.6-.01c-.207 0-.546.078-.832.364-.286.286-1.086 1.062-1.086 2.59s1.112 3.017 1.267 3.23c.156.208 2.186 3.339 5.304 4.544.741.254 1.318.406 1.77.52.743.189 1.421.129 1.954.078.597-.059 1.846-.755 2.107-1.483.26-.729.26-1.355.182-1.484-.077-.129-.285-.208-.597-.364z"/>
+        </svg>
+        Compartir por WhatsApp
+      </button>
+    </div>
+    <div class="result-footer">
+      <img src="Imagenes/NuevoLogo.png" alt="Logo">
+      <p>© Creado por Licdo. Carlos E. González</p>
+    </div>
+  </div>
+  <footer class="w-full bg-white/80 backdrop-blur border-t border-blue-200 shadow-lg py-4 flex flex-col md:flex-row items-center justify-center gap-4 mt-auto text-center">
+    <img src="Imagenes/NuevoLogo.png" alt="Logo" class="h-8 w-auto mx-2">
+    <p class="text-blue-900 text-sm md:text-base text-center">© Creado por Licdo. Carlos E. Gonzalez C.</p>
+  </footer>
   <script>
+    // Juego
     const board = document.getElementById('board');
     const status = document.getElementById('status');
     const currentPlayerSpan = document.getElementById('current-player');
@@ -199,7 +267,6 @@
       boardState = Array(9).fill(null);
       currentPlayer = 'X';
       updateStatus();
-
       for (let i = 0; i < 9; i++) {
         const cell = document.createElement('div');
         cell.classList.add('cell');
@@ -236,7 +303,7 @@
     }
 
     function checkWinner(player) {
-      return winningCombos.some(combo =>
+      return winningCombos.find(combo =>
         combo.every(index => boardState[index] === player)
       );
     }
@@ -246,8 +313,10 @@
     }
 
     function checkGameOver() {
-      if (checkWinner(currentPlayer)) {
+      const combo = checkWinner(currentPlayer);
+      if (combo) {
         updateStatus(`¡${currentPlayer} ha ganado!`);
+        combo.forEach(i => cells[i].classList.add('winner'));
         if (currentPlayer === 'X') {
           userScore++;
           userScoreSpan.textContent = userScore;
@@ -259,6 +328,8 @@
         return true;
       } else if (checkDraw()) {
         updateStatus('¡Empate!');
+        cells.forEach(cell => cell.classList.add('draw'));
+        disableBoard();
         return true;
       }
       currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
@@ -353,8 +424,31 @@
       document.body.classList.toggle('light-mode');
     });
 
-    restartBtn.addEventListener('click', createBoard);
+    restartBtn.addEventListener('click', () => {
+      createBoard();
+      // quitar animación a todas las celdas
+      document.querySelectorAll('.winner').forEach(cell => cell.classList.remove('winner'));
+      document.querySelectorAll('.draw').forEach(cell => cell.classList.remove('draw'));
+    });
+
     createBoard();
+
+    // Compartir WhatsApp
+    function compartirWhatsApp(event) {
+      event.preventDefault();
+      let userScore = document.getElementById("user-score").textContent;
+      let aiScore = document.getElementById("ai-score").textContent;
+      let statusText = document.getElementById("status").textContent;
+      let dificultad = getDifficulty();
+      let texto = "¡Juega contra la AI - Batalla de X y O!\n";
+      texto += `Usuario (X): ${userScore}  |  IA (O): ${aiScore}\n`;
+      texto += `Dificultad: ${dificultad.charAt(0).toUpperCase()+dificultad.slice(1)}\n`;
+      texto += `Estado actual: ${statusText}\n`;
+      texto += "\n© Creado por Licdo. Carlos E. González\n";
+      texto += "Juego: " + window.location.href;
+      const waUrl = "https://wa.me/?text=" + encodeURIComponent(texto);
+      window.open(waUrl, "_blank");
+    }
   </script>
 </body>
 </html>

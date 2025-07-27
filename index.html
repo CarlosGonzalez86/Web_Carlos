@@ -176,6 +176,55 @@ footer p {
 .dark #darkModeToggle:hover { background: #18181b; }
 #darkModeIcon { transition: transform .3s; }
 #darkModeToggle:active #darkModeIcon { transform: rotate(40deg) scale(1.1);}
+
+/* DONAR FLOAT BUTTON */
+.donar-float {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    z-index: 99;
+    display: flex;
+    align-items: center;
+    gap: 0.7em;
+    padding: 0.7em 1.3em;
+    background: linear-gradient(90deg,#f43f5e 60%,#2563eb 100%);
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.07rem;
+    border-radius: 2em;
+    box-shadow: 0 4px 20px rgba(244,63,94,0.19),0 1.5px 8px rgba(31,38,135,0.12);
+    text-decoration: none;
+    cursor: pointer;
+    transition: box-shadow 0.22s, transform 0.16s, background 0.3s;
+    animation: pulse-donar 2.6s infinite;
+}
+.donar-float:hover, .donar-float:focus {
+    background: linear-gradient(90deg,#2563eb 60%,#f43f5e 100%);
+    box-shadow: 0 8px 36px rgba(38,198,218,0.18), 0 2px 12px rgba(31,38,135,0.08);
+    transform: scale(1.07) translateY(-2px);
+}
+.donar-anim svg {
+    vertical-align: middle;
+    margin-right: 0.15em;
+    filter: drop-shadow(0 2px 4px #fff3);
+}
+.donar-text {
+    letter-spacing: 0.03em;
+    font-family: inherit;
+}
+@keyframes pulse-donar {
+    0% { box-shadow: 0 4px 20px rgba(244,63,94,0.19),0 1.5px 8px rgba(31,38,135,0.12);}
+    50% { box-shadow:0 8px 36px rgba(244,63,94,0.32),0 2px 12px rgba(31,38,135,0.18);}
+    100% { box-shadow: 0 4px 20px rgba(244,63,94,0.19),0 1.5px 8px rgba(31,38,135,0.12);}
+}
+.dark .donar-float {
+    background: linear-gradient(90deg,#f43f5e 60%,#3b82f6 100%);
+    color: #fff;
+    box-shadow: 0 8px 36px rgba(38,198,218,0.18), 0 2px 12px rgba(31,38,135,0.18);
+}
+.dark .donar-float:hover, .dark .donar-float:focus {
+    background: linear-gradient(90deg,#3b82f6 60%,#f43f5e 100%);
+}
     </style>
     <script>
         // Modo oscuro igual que calculadora de décimo
@@ -208,8 +257,7 @@ footer p {
     <header class="glass">
         <div class="flex flex-col items-center mb-2">
             <img class="logo" src="Imagenes/NuevoLogo.png" alt="Logo" style="width:60px; margin-bottom:10px;">
-
-<h1 class="text-3xl font-bold tracking-tight drop-shadow text-center">Web Carlos E. González</h1>
+            <h1 class="text-3xl font-bold tracking-tight drop-shadow text-center">Web Carlos E. González</h1>
         </div>
         <nav>
             <ul>
@@ -250,9 +298,23 @@ footer p {
     </main>
 
     <footer class="glass flex flex-col items-center justify-center text-center gap-2">
-    <img class="bandera" src="Imagenes/NuevoLogo.png" alt="Logo">
-    <p>© Creado por Licdo. Carlos E. González.</p>
-</footer>
+        <img class="bandera" src="Imagenes/NuevoLogo.png" alt="Logo">
+        <p>© Creado por Licdo. Carlos E. González.</p>
+    </footer>
+
+    <!-- Botón flotante DONAR -->
+    <a href="https://carlosgonzalez86.github.io/Proyectos_Carlos/" 
+       class="donar-float" 
+       target="_blank" 
+       title="¡Haz tu contribución voluntaria!">
+      <span class="donar-anim">
+        <svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M12 21C12 21 7 16.5 7 12a5 5 0 0110 0c0 4.5-5 9-5 9z" fill="#f43f5e" stroke="#f43f5e"/>
+          <path d="M12 8v4l3 2" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <span class="donar-text">DONAR</span>
+    </a>
 
     <!-- Botón flotante modo oscuro -->
     <div id="darkModeToggle" title="Cambiar modo claro/oscuro" onclick="toggleDarkMode()">

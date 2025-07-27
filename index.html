@@ -155,28 +155,6 @@ footer p {
     background: #60a5fa;
     color: #18181b;
 }
-#darkModeToggle {
-    position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-    z-index: 50;
-    width: 56px;
-    height: 56px;
-    background: rgba(255,255,255,0.9);
-    border-radius: 50%;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.18);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-#darkModeToggle:hover { background: #e0e7ff; }
-.dark #darkModeToggle { background: rgba(36,37,46,0.93); }
-.dark #darkModeToggle:hover { background: #18181b; }
-#darkModeIcon { transition: transform .3s; }
-#darkModeToggle:active #darkModeIcon { transform: rotate(40deg) scale(1.1);}
-
 /* DONAR FLOAT BUTTON */
 .donar-float {
     position: fixed;
@@ -225,6 +203,28 @@ footer p {
 .dark .donar-float:hover, .dark .donar-float:focus {
     background: linear-gradient(90deg,#3b82f6 60%,#f43f5e 100%);
 }
+/* DARK MODE BUTTON FLOAT */
+#darkModeToggle {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 7.2rem; /* Alejado del botón DONAR (ajusta si quieres más espacio) */
+    z-index: 100;
+    width: 56px;
+    height: 56px;
+    background: rgba(255,255,255,0.9);
+    border-radius: 50%;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+#darkModeToggle:hover { background: #e0e7ff; }
+.dark #darkModeToggle { background: rgba(36,37,46,0.93); }
+.dark #darkModeToggle:hover { background: #18181b; }
+#darkModeIcon { transition: transform .3s; }
+#darkModeToggle:active #darkModeIcon { transform: rotate(40deg) scale(1.1);}
     </style>
     <script>
         // Modo oscuro igual que calculadora de décimo

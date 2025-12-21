@@ -1,122 +1,1041 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Página Web - Proceso de Planilla</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(to bottom, #0d47a1, #64b5f6); /* azul a celeste */
-      color: white;
-      text-align: center;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      padding: 40px;
-    }
-    h1 {
-      margin: 0;
-      font-size: 2.5em;
-    }
-    h2 {
-      margin-top: 10px;
-      font-weight: normal;
-    }
-    .upload-section {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 30px;
-      margin: 40px auto;
-      width: 60%;
-      border-radius: 10px;
-    }
-    input[type="file"] {
-      margin: 20px 0;
-      padding: 10px;
-      border-radius: 5px;
-      border: none;
-    }
-    button {
-      background-color: #1976d2;
-      color: white;
-      border: none;
-      padding: 12px 20px;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 1em;
-    }
-    button:hover {
-      background-color: #0d47a1;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS - Gestión de Planillas de Horas Extras</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1e6bb8;
+            --secondary-color: #42a5f5;
+            --light-color: #e3f2fd;
+            --dark-color: #0d47a1;
+            --text-color: #333;
+            --light-text: #f5f5f5;
+            --card-bg: #ffffff;
+            --body-bg: #f8fbff;
+            --shadow: rgba(0, 0, 0, 0.1);
+            --border-color: #ddd;
+        }
+
+        .dark-mode {
+            --primary-color: #42a5f5;
+            --secondary-color: #90caf9;
+            --light-color: #0d1b2a;
+            --dark-color: #1e6bb8;
+            --text-color: #f0f0f0;
+            --light-text: #f5f5f5;
+            --card-bg: #1a2b3c;
+            --body-bg: #0d1825;
+            --shadow: rgba(0, 0, 0, 0.3);
+            --border-color: #2a3c4d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: var(--body-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1.5rem 0;
+            box-shadow: 0 4px 12px var(--shadow);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+        }
+
+        .title h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+
+        .title p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .theme-toggle {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Main Content */
+        main {
+            padding: 2rem 0;
+        }
+
+        .welcome-section {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            padding: 2rem;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+
+        .welcome-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .welcome-section p {
+            max-width: 800px;
+            margin: 0 auto 1rem;
+        }
+
+        .author {
+            font-style: italic;
+            color: var(--secondary-color);
+            font-weight: 600;
+        }
+
+        /* Upload Section */
+        .upload-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .upload-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .upload-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+
+        .upload-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .upload-card h3 i {
+            color: var(--secondary-color);
+        }
+
+        .upload-area {
+            border: 2px dashed var(--border-color);
+            border-radius: 8px;
+            padding: 3rem 1rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .upload-area:hover {
+            border-color: var(--secondary-color);
+            background-color: rgba(66, 165, 245, 0.05);
+        }
+
+        .upload-area i {
+            font-size: 3rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+
+        .upload-area p {
+            margin-bottom: 0.5rem;
+        }
+
+        .file-types {
+            font-size: 0.9rem;
+            color: var(--secondary-color);
+        }
+
+        .upload-btn {
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 12px 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 0 auto;
+            transition: all 0.3s ease;
+        }
+
+        .upload-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .upload-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .drive-section {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .drive-btn {
+            background-color: #4285F4;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 12px 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 0 auto;
+            transition: all 0.3s ease;
+        }
+
+        .drive-btn:hover {
+            background-color: #3367d6;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Admin Section */
+        .admin-section {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px var(--shadow);
+            margin-top: 2rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .admin-section h3 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .admin-section h3 i {
+            color: var(--secondary-color);
+        }
+
+        .admin-controls {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .admin-btn {
+            background: linear-gradient(to right, var(--dark-color), var(--primary-color));
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .admin-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px var(--shadow);
+        }
+
+        .admin-btn.delete {
+            background: linear-gradient(to right, #d32f2f, #f44336);
+        }
+
+        .documents-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .documents-table th,
+        .documents-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .documents-table th {
+            background-color: rgba(30, 107, 184, 0.1);
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .documents-table tr:hover {
+            background-color: rgba(66, 165, 245, 0.05);
+        }
+
+        .doc-type {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .doc-type.talonario {
+            background-color: rgba(76, 175, 80, 0.2);
+            color: #2e7d32;
+        }
+
+        .doc-type.cedula {
+            background-color: rgba(33, 150, 243, 0.2);
+            color: #1565c0;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--light-color);
+            color: var(--text-color);
+            padding: 1.5rem 0;
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        @media (max-width: 768px) {
+            .footer-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        .copyright {
+            font-size: 0.9rem;
+        }
+
+        .contact-info {
+            font-size: 0.9rem;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-header h3 {
+            color: var(--primary-color);
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-color);
+            cursor: pointer;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            background-color: var(--card-bg);
+            color: var(--text-color);
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 2rem;
+        }
+
+        /* Notifications */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            border-radius: 5px;
+            color: white;
+            font-weight: 600;
+            z-index: 1001;
+            animation: slideIn 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .notification.success {
+            background-color: #4caf50;
+        }
+
+        .notification.error {
+            background-color: #f44336;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <h1>Bienvenidos a la Página Web</h1>
-    <h2>Licdo. Carlos González</h2>
-    <p>Proceso de Planilla de Horas Extras</p>
-  </header>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo-section">
+                <div class="logo">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <div class="title">
+                    <h1>CAJA DE SEGURO SOCIAL</h1>
+                    <p>DEPARTAMENTO DE SEGURIDAD</p>
+                </div>
+            </div>
+            <button class="theme-toggle" id="themeToggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </header>
 
-  <section class="upload-section">
-    <p>Desde aquí podrás subir tus documentos para el proceso de planilla.</p>
-    <input type="file" id="fileInput" accept=".pdf,image/*" multiple>
-    <br>
-    <button onclick="uploadFile()">Subir a Google Drive</button>
-  </section>
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Welcome Section -->
+        <section class="welcome-section">
+            <h2>Bienvenido a la Web</h2>
+            <p>Esta plataforma está diseñada para facilitar la gestión de planillas de horas extras para los empleados de la Caja de Seguro Social, Departamento de Seguridad.</p>
+            <p class="author">Creada por el Licdo. Carlos González</p>
+        </section>
 
-  <script src="https://apis.google.com/js/api.js"></script>
-  <script>
-    // Configuración de la API de Google Drive
-    const CLIENT_ID = "TU_CLIENT_ID.apps.googleusercontent.com"; 
-    const API_KEY = "TU_API_KEY"; 
-    const SCOPES = "https://www.googleapis.com/auth/drive.file";
+        <!-- Upload Section -->
+        <section class="upload-section">
+            <!-- Talonario Upload -->
+            <div class="upload-card">
+                <h3><i class="fas fa-file-invoice-dollar"></i> Talonario de Horas Extras</h3>
+                <div class="upload-area" id="talonarioUploadArea">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <p>Arrastra y suelta tu talonario aquí</p>
+                    <p class="file-types">Formatos aceptados: JPG, PNG, PDF</p>
+                </div>
+                <input type="file" id="talonarioInput" accept=".jpg,.jpeg,.png,.pdf" hidden>
+                <button class="upload-btn" id="talonarioBtn">
+                    <i class="fas fa-upload"></i> Cargar Talonario
+                </button>
+                
+                <div class="drive-section">
+                    <p style="text-align: center; margin-bottom: 1rem;">O cargar desde Google Drive</p>
+                    <button class="drive-btn" id="talonarioDriveBtn">
+                        <i class="fab fa-google-drive"></i> Google Drive
+                    </button>
+                </div>
+            </div>
 
-    function authenticate() {
-      return gapi.auth2.getAuthInstance()
-        .signIn({scope: SCOPES})
-        .then(() => console.log("Autenticado correctamente"),
-              err => console.error("Error de autenticación", err));
-    }
+            <!-- Cédula Upload -->
+            <div class="upload-card">
+                <h3><i class="fas fa-id-card"></i> Cédula de Identidad</h3>
+                <div class="upload-area" id="cedulaUploadArea">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <p>Arrastra y suelta tu cédula aquí</p>
+                    <p class="file-types">Formatos aceptados: JPG, PNG, PDF</p>
+                </div>
+                <input type="file" id="cedulaInput" accept=".jpg,.jpeg,.png,.pdf" hidden>
+                <button class="upload-btn" id="cedulaBtn">
+                    <i class="fas fa-upload"></i> Cargar Cédula
+                </button>
+                
+                <div class="drive-section">
+                    <p style="text-align: center; margin-bottom: 1rem;">O cargar desde Google Drive</p>
+                    <button class="drive-btn" id="cedulaDriveBtn">
+                        <i class="fab fa-google-drive"></i> Google Drive
+                    </button>
+                </div>
+            </div>
+        </section>
 
-    function loadClient() {
-      gapi.client.setApiKey(API_KEY);
-      return gapi.client.load("https://www.googleapis.com/discovery/v1/apis/drive/v3/rest")
-        .then(() => console.log("Cliente cargado correctamente"),
-              err => console.error("Error al cargar cliente", err));
-    }
+        <!-- Admin Section -->
+        <section class="admin-section" id="adminSection">
+            <h3><i class="fas fa-user-shield"></i> Panel de Administración</h3>
+            <p>Desde aquí podrás gestionar los documentos cargados por los usuarios.</p>
+            
+            <div class="admin-controls">
+                <button class="admin-btn" id="viewDocumentsBtn">
+                    <i class="fas fa-eye"></i> Ver Documentos
+                </button>
+                <button class="admin-btn" id="downloadAllBtn">
+                    <i class="fas fa-download"></i> Descargar Todos
+                </button>
+                <button class="admin-btn delete" id="clearAllBtn">
+                    <i class="fas fa-trash"></i> Eliminar Todos
+                </button>
+            </div>
+            
+            <div id="documentsContainer" style="display: none;">
+                <h4 style="margin-bottom: 1rem; color: var(--secondary-color);">Documentos Cargados</h4>
+                <table class="documents-table">
+                    <thead>
+                        <tr>
+                            <th>Tipo</th>
+                            <th>Nombre del Archivo</th>
+                            <th>Fecha de Carga</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="documentsTableBody">
+                        <!-- Aquí se cargarán los documentos dinámicamente -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
 
-    gapi.load("client:auth2", () => {
-      gapi.auth2.init({client_id: CLIENT_ID});
-    });
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <div class="copyright">
+                <p>&copy; 2023 Caja de Seguro Social - Departamento de Seguridad. Todos los derechos reservados.</p>
+            </div>
+            <div class="contact-info">
+                <p>Contacto: lic.carlosgonzalez@css.gob.pa | Tel: (507) 123-4567</p>
+            </div>
+        </div>
+    </footer>
 
-    function uploadFile() {
-      const fileInput = document.getElementById("fileInput");
-      const file = fileInput.files[0];
-      if (!file) {
-        alert("Por favor selecciona un archivo");
-        return;
-      }
+    <!-- Admin Login Modal -->
+    <div class="modal" id="adminLoginModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Acceso de Administrador</h3>
+                <button class="close-modal" id="closeLoginModal">&times;</button>
+            </div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="adminUsername">Usuario</label>
+                    <input type="text" id="adminUsername" placeholder="Ingresa tu usuario" required>
+                </div>
+                <div class="form-group">
+                    <label for="adminPassword">Contraseña</label>
+                    <input type="password" id="adminPassword" placeholder="Ingresa tu contraseña" required>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="admin-btn delete" id="cancelLogin">Cancelar</button>
+                    <button type="submit" class="admin-btn">Ingresar</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
-      const metadata = {
-        name: file.name,
-        mimeType: file.type
-      };
+    <!-- Google Drive Modal -->
+    <div class="modal" id="driveModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Seleccionar desde Google Drive</h3>
+                <button class="close-modal" id="closeDriveModal">&times;</button>
+            </div>
+            <div style="text-align: center; padding: 2rem 0;">
+                <i class="fab fa-google-drive" style="font-size: 4rem; color: #4285F4; margin-bottom: 1rem;"></i>
+                <p>Conectando con Google Drive...</p>
+                <p style="font-size: 0.9rem; margin-top: 1rem;">Esta funcionalidad requeriría la implementación de la API de Google Drive para acceder a tus archivos.</p>
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="admin-btn delete" id="cancelDrive">Cancelar</button>
+                <button type="button" class="admin-btn" id="connectDrive">Conectar</button>
+            </div>
+        </div>
+    </div>
 
-      const accessToken = gapi.auth.getToken().access_token;
-      const form = new FormData();
-      form.append("metadata", new Blob([JSON.stringify(metadata)], {type: "application/json"}));
-      form.append("file", file);
+    <!-- Notification Area -->
+    <div id="notificationArea"></div>
 
-      fetch("https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart", {
-        method: "POST",
-        headers: new Headers({"Authorization": "Bearer " + accessToken}),
-        body: form
-      }).then(res => res.json())
-        .then(val => {
-          alert("Archivo subido correctamente a Google Drive");
-          console.log(val);
+    <script>
+        // Variables globales
+        let isDarkMode = false;
+        let documents = JSON.parse(localStorage.getItem('css_documents')) || [];
+        let currentUploadType = ''; // 'talonario' o 'cedula'
+
+        // DOM Elements
+        const themeToggle = document.getElementById('themeToggle');
+        const talonarioUploadArea = document.getElementById('talonarioUploadArea');
+        const cedulaUploadArea = document.getElementById('cedulaUploadArea');
+        const talonarioInput = document.getElementById('talonarioInput');
+        const cedulaInput = document.getElementById('cedulaInput');
+        const talonarioBtn = document.getElementById('talonarioBtn');
+        const cedulaBtn = document.getElementById('cedulaBtn');
+        const talonarioDriveBtn = document.getElementById('talonarioDriveBtn');
+        const cedulaDriveBtn = document.getElementById('cedulaDriveBtn');
+        const adminSection = document.getElementById('adminSection');
+        const viewDocumentsBtn = document.getElementById('viewDocumentsBtn');
+        const downloadAllBtn = document.getElementById('downloadAllBtn');
+        const clearAllBtn = document.getElementById('clearAllBtn');
+        const documentsContainer = document.getElementById('documentsContainer');
+        const documentsTableBody = document.getElementById('documentsTableBody');
+        const adminLoginModal = document.getElementById('adminLoginModal');
+        const driveModal = document.getElementById('driveModal');
+        const closeLoginModal = document.getElementById('closeLoginModal');
+        const closeDriveModal = document.getElementById('closeDriveModal');
+        const cancelLogin = document.getElementById('cancelLogin');
+        const cancelDrive = document.getElementById('cancelDrive');
+        const connectDrive = document.getElementById('connectDrive');
+        const loginForm = document.getElementById('loginForm');
+
+        // Theme Toggle
+        themeToggle.addEventListener('click', () => {
+            isDarkMode = !isDarkMode;
+            document.body.classList.toggle('dark-mode', isDarkMode);
+            themeToggle.innerHTML = isDarkMode ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+            localStorage.setItem('css_theme', isDarkMode ? 'dark' : 'light');
         });
-    }
-  </script>
+
+        // Cargar preferencia de tema
+        const savedTheme = localStorage.getItem('css_theme');
+        if (savedTheme === 'dark') {
+            isDarkMode = true;
+            document.body.classList.add('dark-mode');
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+
+        // Upload functionality
+        talonarioBtn.addEventListener('click', () => talonarioInput.click());
+        cedulaBtn.addEventListener('click', () => cedulaInput.click());
+
+        talonarioUploadArea.addEventListener('click', () => talonarioInput.click());
+        cedulaUploadArea.addEventListener('click', () => cedulaInput.click());
+
+        // Drag and drop functionality
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            talonarioUploadArea.addEventListener(eventName, preventDefaults, false);
+            cedulaUploadArea.addEventListener(eventName, preventDefaults, false);
+        });
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            talonarioUploadArea.addEventListener(eventName, highlightTalonario, false);
+            cedulaUploadArea.addEventListener(eventName, highlightCedula, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            talonarioUploadArea.addEventListener(eventName, unhighlightTalonario, false);
+            cedulaUploadArea.addEventListener(eventName, unhighlightCedula, false);
+        });
+
+        function highlightTalonario() {
+            talonarioUploadArea.style.borderColor = 'var(--secondary-color)';
+            talonarioUploadArea.style.backgroundColor = 'rgba(66, 165, 245, 0.1)';
+        }
+
+        function unhighlightTalonario() {
+            talonarioUploadArea.style.borderColor = 'var(--border-color)';
+            talonarioUploadArea.style.backgroundColor = '';
+        }
+
+        function highlightCedula() {
+            cedulaUploadArea.style.borderColor = 'var(--secondary-color)';
+            cedulaUploadArea.style.backgroundColor = 'rgba(66, 165, 245, 0.1)';
+        }
+
+        function unhighlightCedula() {
+            cedulaUploadArea.style.borderColor = 'var(--border-color)';
+            cedulaUploadArea.style.backgroundColor = '';
+        }
+
+        talonarioUploadArea.addEventListener('drop', handleDropTalonario, false);
+        cedulaUploadArea.addEventListener('drop', handleDropCedula, false);
+
+        function handleDropTalonario(e) {
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFileUpload(files[0], 'talonario');
+            }
+        }
+
+        function handleDropCedula(e) {
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFileUpload(files[0], 'cedula');
+            }
+        }
+
+        talonarioInput.addEventListener('change', () => {
+            if (talonarioInput.files.length > 0) {
+                handleFileUpload(talonarioInput.files[0], 'talonario');
+            }
+        });
+
+        cedulaInput.addEventListener('change', () => {
+            if (cedulaInput.files.length > 0) {
+                handleFileUpload(cedulaInput.files[0], 'cedula');
+            }
+        });
+
+        // Google Drive buttons
+        talonarioDriveBtn.addEventListener('click', () => {
+            currentUploadType = 'talonario';
+            showDriveModal();
+        });
+
+        cedulaDriveBtn.addEventListener('click', () => {
+            currentUploadType = 'cedula';
+            showDriveModal();
+        });
+
+        // Handle file upload
+        function handleFileUpload(file, type) {
+            // Validar tipo de archivo
+            const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'application/pdf'];
+            if (!validTypes.includes(file.type)) {
+                showNotification('Formato de archivo no válido. Use JPG, PNG o PDF.', 'error');
+                return;
+            }
+
+            // Validar tamaño (max 5MB)
+            if (file.size > 5 * 1024 * 1024) {
+                showNotification('El archivo es demasiado grande. Máximo 5MB.', 'error');
+                return;
+            }
+
+            // Crear objeto documento
+            const document = {
+                id: Date.now(),
+                type: type,
+                name: file.name,
+                size: formatFileSize(file.size),
+                uploadDate: new Date().toLocaleString(),
+                file: file
+            };
+
+            // Simular subida
+            showNotification(`Subiendo ${type === 'talonario' ? 'talonario' : 'cédula'}...`, 'success');
+            
+            setTimeout(() => {
+                // Agregar a la lista de documentos
+                documents.push(document);
+                localStorage.setItem('css_documents', JSON.stringify(documents));
+                
+                showNotification(`${type === 'talonario' ? 'Talonario' : 'Cédula'} cargado exitosamente.`, 'success');
+                
+                // Resetear input
+                if (type === 'talonario') {
+                    talonarioInput.value = '';
+                } else {
+                    cedulaInput.value = '';
+                }
+            }, 1500);
+        }
+
+        // Admin functionality
+        viewDocumentsBtn.addEventListener('click', () => {
+            // Mostrar modal de login si no está autenticado
+            const isAdminAuthenticated = localStorage.getItem('css_admin_auth') === 'true';
+            if (!isAdminAuthenticated) {
+                showLoginModal();
+            } else {
+                toggleDocumentsView();
+            }
+        });
+
+        downloadAllBtn.addEventListener('click', () => {
+            const isAdminAuthenticated = localStorage.getItem('css_admin_auth') === 'true';
+            if (!isAdminAuthenticated) {
+                showLoginModal();
+            } else {
+                downloadAllDocuments();
+            }
+        });
+
+        clearAllBtn.addEventListener('click', () => {
+            const isAdminAuthenticated = localStorage.getItem('css_admin_auth') === 'true';
+            if (!isAdminAuthenticated) {
+                showLoginModal();
+            } else {
+                clearAllDocuments();
+            }
+        });
+
+        // Modal functionality
+        function showLoginModal() {
+            adminLoginModal.style.display = 'flex';
+        }
+
+        function hideLoginModal() {
+            adminLoginModal.style.display = 'none';
+        }
+
+        function showDriveModal() {
+            driveModal.style.display = 'flex';
+        }
+
+        function hideDriveModal() {
+            driveModal.style.display = 'none';
+        }
+
+        closeLoginModal.addEventListener('click', hideLoginModal);
+        cancelLogin.addEventListener('click', hideLoginModal);
+        closeDriveModal.addEventListener('click', hideDriveModal);
+        cancelDrive.addEventListener('click', hideDriveModal);
+
+        // Login form submission
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const username = document.getElementById('adminUsername').value;
+            const password = document.getElementById('adminPassword').value;
+            
+            // Credenciales simples de demostración
+            if (username === 'admin' && password === 'css2023') {
+                localStorage.setItem('css_admin_auth', 'true');
+                showNotification('Acceso concedido como administrador', 'success');
+                hideLoginModal();
+                toggleDocumentsView();
+            } else {
+                showNotification('Credenciales incorrectas', 'error');
+            }
+        });
+
+        // Connect to Google Drive (simulado)
+        connectDrive.addEventListener('click', () => {
+            showNotification('Conectando con Google Drive...', 'success');
+            hideDriveModal();
+            
+            // Simular conexión con Google Drive
+            setTimeout(() => {
+                showNotification('Conexión con Google Drive exitosa. Esta funcionalidad requeriría implementar la API de Google Drive.', 'success');
+            }, 2000);
+        });
+
+        // Toggle documents view
+        function toggleDocumentsView() {
+            const isVisible = documentsContainer.style.display === 'block';
+            documentsContainer.style.display = isVisible ? 'none' : 'block';
+            
+            if (!isVisible) {
+                loadDocumentsTable();
+            }
+        }
+
+        // Load documents into table
+        function loadDocumentsTable() {
+            documentsTableBody.innerHTML = '';
+            
+            if (documents.length === 0) {
+                documentsTableBody.innerHTML = `
+                    <tr>
+                        <td colspan="4" style="text-align: center; padding: 2rem;">
+                            No hay documentos cargados.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            documents.forEach(doc => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><span class="doc-type ${doc.type}">${doc.type === 'talonario' ? 'Talonario' : 'Cédula'}</span></td>
+                    <td>${doc.name}</td>
+                    <td>${doc.uploadDate}</td>
+                    <td>
+                        <button class="admin-btn" onclick="downloadDocument(${doc.id})" style="padding: 5px 10px; font-size: 0.9rem;">
+                            <i class="fas fa-download"></i> Descargar
+                        </button>
+                        <button class="admin-btn delete" onclick="deleteDocument(${doc.id})" style="padding: 5px 10px; font-size: 0.9rem; margin-left: 5px;">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                `;
+                documentsTableBody.appendChild(row);
+            });
+        }
+
+        // Download all documents
+        function downloadAllDocuments() {
+            if (documents.length === 0) {
+                showNotification('No hay documentos para descargar.', 'error');
+                return;
+            }
+            
+            showNotification(`Descargando ${documents.length} documentos...`, 'success');
+            
+            // Simular descarga
+            setTimeout(() => {
+                showNotification('Descarga completada. En un entorno real, se descargarían los archivos.', 'success');
+            }, 2000);
+        }
+
+        // Clear all documents
+        function clearAllDocuments() {
+            if (confirm('¿Está seguro de que desea eliminar todos los documentos?')) {
+                documents = [];
+                localStorage.setItem('css_documents', JSON.stringify(documents));
+                loadDocumentsTable();
+                showNotification('Todos los documentos han sido eliminados.', 'success');
+            }
+        }
+
+        // Download a single document
+        window.downloadDocument = function(id) {
+            const doc = documents.find(d => d.id === id);
+            if (doc) {
+                showNotification(`Descargando ${doc.name}...`, 'success');
+                
+                // Simular descarga
+                setTimeout(() => {
+                    showNotification(`Documento ${doc.name} descargado exitosamente.`, 'success');
+                }, 1000);
+            }
+        }
+
+        // Delete a single document
+        window.deleteDocument = function(id) {
+            if (confirm('¿Está seguro de que desea eliminar este documento?')) {
+                documents = documents.filter(d => d.id !== id);
+                localStorage.setItem('css_documents', JSON.stringify(documents));
+                loadDocumentsTable();
+                showNotification('Documento eliminado.', 'success');
+            }
+        }
+
+        // Helper function to format file size
+        function formatFileSize(bytes) {
+            if (bytes < 1024) return bytes + ' bytes';
+            else if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+            else return (bytes / 1048576).toFixed(1) + ' MB';
+        }
+
+        // Show notification
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            
+            document.getElementById('notificationArea').appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideIn 0.3s ease reverse';
+                setTimeout(() => {
+                    notification.remove();
+                }, 300);
+            }, 3000);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            // Verificar si el administrador ya está autenticado
+            const isAdminAuthenticated = localStorage.getItem('css_admin_auth') === 'true';
+            if (isAdminAuthenticated) {
+                // Mostrar documentos si ya estaba viéndolos
+                if (localStorage.getItem('css_show_docs') === 'true') {
+                    toggleDocumentsView();
+                }
+            }
+        });
+    </script>
 </body>
 </html>

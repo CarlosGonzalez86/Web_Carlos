@@ -1,332 +1,276 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bienvenido a Página web </title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="shortcut icon" href="Imagenes/Screenshot_20260813_220411_com_microsoft_copilot_MainActivity.jpg" />
-    <style>
-body {
-    font-family: 'Inter', sans-serif;
-    background: linear-gradient(135deg, #e0e7ff 0%, #f0f4f8 100%);
-    color: #111;
-    transition: background-color 0.3s, color 0.3s;
-}
-.dark body {
-    background: linear-gradient(135deg, #18181b 0%, #27272a 100%);
-    color:#ffa500;
-}
-h1 {
-    color: #2563eb;
-}
-.dark h1 {
-    color: #f3f4f6;
-}
-.glass {
-    background: rgba(255,255,255,0.85);
-    box-shadow: 0 8px 32px 0 rgba(31,38,135,0.15);
-    backdrop-filter: blur(5px);
-    border-radius: 1rem;
-    color: #111;
-    margin-bottom: 2rem;
-}
-.dark .glass {
-    background: rgba(36,37,46,0.93);
-    box-shadow: 0 8px 32px 0 rgba(20,20,30,0.35);
-    color: #f3f4f6;
-}
-header {
-    width: 100%;
-    background: rgba(255,255,255,0.90);
-    border-bottom: 1px solid #2563eb;
-    box-shadow: 0 4px 10px rgba(31,38,135,0.08);
-    backdrop-filter: blur(5px);
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-}
-.dark header {
-    background: rgba(36,37,46,0.93);
-    border-bottom: 1px solid #93c5fd;
-}
-nav ul {
-    padding: 0;
-    margin: 0;
-    list-style: none;
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-}
-nav ul li a {
-    color: #2563eb;
-    font-weight: bold;
-    font-size: 1.1rem;
-    text-decoration: none;
-    transition: color .2s;
-}
-nav ul li a:hover {
-    text-decoration: underline;
-    color: #1e40af;
-}
-.dark nav ul li a {
-    color: #93c5fd;
-}
-.titulo-principal {
-    text-align: center;
-    font-size: 2rem;
-    margin-top: 20px;
-    color: #2563eb;
-}
-.dark .titulo-principal {
-    color: #ffa500;
-}
-.video {
-    display: flex;
-    justify-content: center;
-    margin: 24px 0;
-}
-iframe {
-    border-radius: 1rem;
-    box-shadow: 0 4px 10px rgba(31,38,135,0.15);
-    border: none;
-}
-footer {
-    width: 100%;
-    background: rgba(255,255,255,0.90);
-    color: #2563eb;
-    border-top: 1px solid #2563eb;
-    box-shadow: 0 4px 10px rgba(31,38,135,0.07);
-    text-align: center;
-    padding: 1rem;
-    font-size: 1rem;
-    margin-top: 2rem;
-}
-footer img {
-    width: 36px;
-    margin-bottom: 8px;
-}
-footer p {
-    margin: 0;
-}
-.dark footer {
-    background: rgba(36,37,46,0.93);
-    color: #f3f4f6;
-    border-top: 1px solid #93c5fd;
-}
-.principal,
-.diferenciales {
-    max-width: 900px;
-    margin: 2rem auto;
-}
-.principal,
-.diferenciales {
-    padding: 1.5rem;
-}
-.principal img {
-    width: 100%;
-    border-radius: 1rem;
-    margin: 1rem 0;
-    box-shadow: 0 4px 10px rgba(31,38,135,0.10);
-}
-.diferenciales ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-.diferenciales .items {
-    margin: 10px 0;
-    padding: 10px;
-    background: #e0e7ff;
-    border-radius: 10px;
-    color: #2563eb;
-    transition: background-color 0.3s, color 0.3s;
-    font-weight: 600;
-}
-.diferenciales .items:hover {
-    background: #2563eb;
-    color: #fff;
-}
-.dark .diferenciales .items {
-    background: #29314d;
-    color: #93c5fd;
-}
-.dark .diferenciales .items:hover {
-    background: #60a5fa;
-    color: #18181b;
-}
-/* DONAR FLOAT BUTTON */
-.donar-float {
-    position: fixed;
-    bottom: 1.5rem;
-    right: 1.5rem;
-    z-index: 99;
-    display: flex;
-    align-items: center;
-    gap: 0.7em;
-    padding: 0.7em 1.3em;
-    background: linear-gradient(90deg,#f43f5e 60%,#2563eb 100%);
-    color: #fff;
-    font-weight: bold;
-    font-size: 1.07rem;
-    border-radius: 2em;
-    box-shadow: 0 4px 20px rgba(244,63,94,0.19),0 1.5px 8px rgba(31,38,135,0.12);
-    text-decoration: none;
-    cursor: pointer;
-    transition: box-shadow 0.22s, transform 0.16s, background 0.3s;
-    animation: pulse-donar 2.6s infinite;
-}
-.donar-float:hover, .donar-float:focus {
-    background: linear-gradient(90deg,#2563eb 60%,#f43f5e 100%);
-    box-shadow: 0 8px 36px rgba(38,198,218,0.18), 0 2px 12px rgba(31,38,135,0.08);
-    transform: scale(1.07) translateY(-2px);
-}
-.donar-anim svg {
-    vertical-align: middle;
-    margin-right: 0.15em;
-    filter: drop-shadow(0 2px 4px #fff3);
-}
-.donar-text {
-    letter-spacing: 0.03em;
-    font-family: inherit;
-}
-@keyframes pulse-donar {
-    0% { box-shadow: 0 4px 20px rgba(244,63,94,0.19),0 1.5px 8px rgba(31,38,135,0.12);}
-    50% { box-shadow:0 8px 36px rgba(244,63,94,0.32),0 2px 12px rgba(31,38,135,0.18);}
-    100% { box-shadow: 0 4px 20px rgba(244,63,94,0.19),0 1.5px 8px rgba(31,38,135,0.12);}
-}
-.dark .donar-float {
-    background: linear-gradient(90deg,#f43f5e 60%,#3b82f6 100%);
-    color: #fff;
-    box-shadow: 0 8px 36px rgba(38,198,218,0.18), 0 2px 12px rgba(31,38,135,0.18);
-}
-.dark .donar-float:hover, .dark .donar-float:focus {
-    background: linear-gradient(90deg,#3b82f6 60%,#f43f5e 100%);
-}
-/* DARK MODE BUTTON FLOAT */
-#darkModeToggle {
-    position: fixed;
-    bottom: 1.5rem;
-    right: 7.2rem; /* Alejado del botón DONAR (ajusta si quieres más espacio) */
-    z-index: 100;
-    width: 56px;
-    height: 56px;
-    background: rgba(255,255,255,0.9);
-    border-radius: 50%;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.18);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-#darkModeToggle:hover { background: #e0e7ff; }
-.dark #darkModeToggle { background: rgba(36,37,46,0.93); }
-.dark #darkModeToggle:hover { background: #18181b; }
-#darkModeIcon { transition: transform .3s; }
-#darkModeToggle:active #darkModeIcon { transform: rotate(40deg) scale(1.1);}
-    </style>
-    <script>
-        // Modo oscuro igual que calculadora de décimo
-        function toggleDarkMode() {
-            document.body.classList.toggle('dark');
-            updateIcon();
-            localStorage.setItem("modo-oscuro", document.body.classList.contains("dark"));
-        }
-        function updateIcon() {
-            const isDark = document.body.classList.contains("dark");
-            const sun = document.querySelector('#iconSun');
-            const moon = document.querySelector('#iconMoon');
-            if (isDark) {
-                sun.style.display = 'none';
-                moon.style.display = 'block';
-            } else {
-                sun.style.display = 'block';
-                moon.style.display = 'none';
-            }
-        }
-        window.onload = () => {
-            if(localStorage.getItem("modo-oscuro") === "true") {
-                document.body.classList.add("dark");
-            }
-            updateIcon();
-        }
-    </script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bienvenido — Gestor Tecnológico C.G</title>
+  <meta name="description" content="Gestor Tecnológico C.G — herramientas y calculadoras para horas extras, décimo y planilla. Creado por Licdo. Carlos E. González." />
+  <link rel="icon" href="Imagenes/Screenshot_20260813_220411_com_microsoft_copilot_MainActivity.jpg" />
+
+  <!-- Tailwind CDN (fine for demo; use a built setup for production) -->
+  <script src="https://cdn.tailwindcss.com" defer></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #2563eb;
+      --muted-bg: #e0e7ff;
+      --glass-radius: 1rem;
+      --glass-shadow: 0 8px 32px rgba(31,38,135,0.15);
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* Base */
+    html, body {
+      height: 100%;
+      margin: 0;
+      color: #111;
+      background: linear-gradient(135deg,#e0e7ff 0%,#f0f4f8 100%);
+      transition: background-color .3s, color .3s;
+    }
+
+    body.dark {
+      background: linear-gradient(135deg,#18181b 0%,#27272a 100%);
+      color: #ffa500;
+    }
+
+    header {
+      width: 100%;
+      background: rgba(255,255,255,0.9);
+      border-bottom: 1px solid var(--primary);
+      box-shadow: 0 4px 10px rgba(31,38,135,0.08);
+      padding: 1rem 0;
+    }
+    body.dark header {
+      background: rgba(36,37,46,0.93);
+      border-bottom: 1px solid #93c5fd;
+    }
+
+    nav ul {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+    }
+    nav a {
+      color: var(--primary);
+      font-weight: 600;
+      text-decoration: none;
+    }
+    body.dark nav a { color: #93c5fd; }
+
+    .glass {
+      background: rgba(255,255,255,0.85);
+      box-shadow: var(--glass-shadow);
+      backdrop-filter: blur(5px);
+      border-radius: var(--glass-radius);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      color: inherit;
+      max-width: 900px;
+    }
+    body.dark .glass {
+      background: rgba(36,37,46,0.93);
+      box-shadow: 0 8px 32px rgba(20,20,30,0.35);
+      color: #f3f4f6;
+    }
+
+    .titulo-principal {
+      text-align: center;
+      font-size: 1.75rem;
+      margin: 20px 0;
+      color: var(--primary);
+    }
+    body.dark .titulo-principal { color: #ffa500; }
+
+    /* Responsive video wrapper (16:9) */
+    .video {
+      max-width: 900px;
+      margin: 1.5rem auto;
+      position: relative;
+      padding-top: 56.25%;
+    }
+    .video iframe {
+      position: absolute;
+      left: 0; top: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-radius: 1rem;
+      box-shadow: 0 4px 10px rgba(31,38,135,0.15);
+    }
+
+    .diferenciales .items {
+      margin: .5rem 0;
+      padding: .75rem 1rem;
+      background: var(--muted-bg);
+      border-radius: .6rem;
+      color: var(--primary);
+      font-weight: 600;
+    }
+    .diferenciales .items:hover {
+      background: var(--primary);
+      color: #fff;
+    }
+    body.dark .diferenciales .items {
+      background: #29314d;
+      color: #93c5fd;
+    }
+    body.dark .diferenciales .items:hover {
+      background: #60a5fa;
+      color: #18181b;
+    }
+
+    /* Floating donate button */
+    .donar-float {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      z-index: 99;
+      display: inline-flex;
+      align-items: center;
+      gap: .6rem;
+      padding: .7rem 1.2rem;
+      background: linear-gradient(90deg,#f43f5e 60%,#2563eb 100%);
+      color: #fff;
+      font-weight: 700;
+      border-radius: 2rem;
+      box-shadow: 0 4px 20px rgba(244,63,94,0.19);
+      text-decoration: none;
+    }
+    .donar-float:focus { outline: 3px solid rgba(37,99,235,0.25); }
+
+    /* Dark mode toggle button */
+    #darkModeToggle {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 7.2rem;
+      z-index: 100;
+      width: 56px;
+      height: 56px;
+      background: rgba(255,255,255,0.9);
+      border-radius: 50%;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+      border: none;
+    }
+    #darkModeToggle:focus { outline: 3px solid rgba(37,99,235,0.25); }
+    body.dark #darkModeToggle { background: rgba(36,37,46,0.93); }
+    #darkModeIcon { transition: transform .25s ease; }
+
+    /* Utility */
+    .logo { width: 60px; margin-bottom: 10px; }
+    footer { text-align:center; padding:1rem; margin-top:2rem; }
+    .sr-only { position: absolute; left:-10000px; top:auto; width:1px; height:1px; overflow:hidden; }
+  </style>
 </head>
 <body>
-    <header class="glass">
-        <div class="flex flex-col items-center mb-2">
-            <img class="logo" src="Imagenes/Screenshot_20260813_220411_com_microsoft_copilot_MainActivity.jpg" alt="Logo" style="width:60px; margin-bottom:10px;">
-            <h1 class="text-3xl font-bold tracking-tight drop-shadow text-center">Gestor Tecnológico C.G</h1>
-        </div>
-        <nav>
-            <ul>
-                <li><a href="contacto.html">Salario</a></li>
-                <li><a href="CalculadoraExtras.html">Extras</a></li>
-                <li><a href="CalViatico.HTML">Décimo</a></li>
-                <li><a href="https://carlosgonzalez86.github.io/css-horas-extras/">Planilla</a></li>
-            </ul>
-        </nav>
-    </header>
-    <h1 class="titulo-principal"><strong>"Piensa con claridad, actúa con propósito, aprende con pasión." </strong></h1>
+  <a class="sr-only" href="#main">Saltar al contenido principal</a>
+
+  <header class="glass" role="banner">
+    <div class="flex flex-col items-center">
+      <img class="logo" src="Imagenes/Screenshot_20260813_220411_com_microsoft_copilot_MainActivity.jpg" alt="Logo — Gestor Tecnológico C.G" width="60" height="60">
+      <h1 class="text-3xl font-bold tracking-tight">Gestor Tecnológico C.G</h1>
+    </div>
+
+    <nav role="navigation" aria-label="Menú principal">
+      <ul>
+        <li><a href="contacto.html">Salario</a></li>
+        <li><a href="CalculadoraExtras.html">Extras</a></li>
+        <li><a href="CalViatico.html">Décimo</a></li>
+        <li><a href="https://carlosgonzalez86.github.io/css-horas-extras/" target="_blank" rel="noopener noreferrer">Planilla</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main" class="px-4">
+    <h2 class="titulo-principal">"Piensa con claridad, actúa con propósito, aprende con pasión."</h2>
+
+    <div class="video" aria-hidden="false">
+      <iframe src="https://www.youtube.com/embed/4sRDSHhcqik" title="Video introductorio" loading="lazy" allowfullscreen></iframe>
+    </div>
+
+    <section class="glass principal" aria-labelledby="educacion-title">
+      <h3 id="educacion-title" class="titulo-principal">Educación y Programación</h3>
+      <img src="Imagenes/Pc.jfif" alt="Computadora — ilustración" style="width:100%;border-radius:1rem;">
+      <p><strong>He creado esta página web para ti.</strong> Visita las distintas secciones para resolver dudas, encontrar herramientas y ver ideas para gestionar tus necesidades.</p>
+      <p><em>Tengo certificaciones internacionales de Alura LATAM y Oracle (Río de Janeiro, Brasil).</em></p>
+    </section>
 
     <div class="video">
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/4sRDSHhcqik" allowfullscreen></iframe>
+      <iframe src="https://www.youtube.com/embed/7vbi-OCFZEY" title="Segundo video" loading="lazy" allowfullscreen></iframe>
     </div>
 
-    <main>
-        <section class="glass principal">
-            <h3 class="titulo-principal"><strong>Educación y Programación</strong></h3>
-            <img src="Imagenes/Pc.jfif" alt="Ilustración">
-            <p><strong>He creado esta página web para ti</strong>. Entra a las diferentes secciónes para resolver tus dudas e inquietudes también una sección de Ideas para Gestionar tus Necesidades Tecnológica Precios Acesible .</p>
-            <p><em>" QUIERES SABER MÁS DE MI TENGO UNA CERTIFICACIÓN INTERNACIONAL DE SISTEMAS DE ALURA LATAM Y ORACLE, RIO DE JANEIRO BRASIL. </em></p>
-        </section>
+    <section class="glass diferenciales" aria-labelledby="carac-title">
+      <h3 id="carac-title" class="titulo-principal">Características que Verás en esta Web</h3>
+      <ul>
+        <li class="items">Calcula tus horas extras</li>
+        <li class="items">Calcula tu décimo tercer mes</li>
+        <li class="items">Sección para calcular tu salario</li>
+        <li class="items">Sección de planilla</li>
+      </ul>
+    </section>
+  </main>
 
-        <div class="video">
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/7vbi-OCFZEY" allowfullscreen></iframe>
-        </div>
+  <footer class="glass" role="contentinfo">
+    <img src="Imagenes/Screenshot_20260813_220411_com_microsoft_copilot_MainActivity.jpg" alt="Bandera / Logo" width="36" height="36">
+    <p>© Creado por Licdo. Carlos E. González.</p>
+  </footer>
 
-        <section class="glass diferenciales">
-            <h3 class="titulo-principal">Características que Verás en esta Web</h3>
-            <ul>
-                <li class="items">Calcula Tus Horas Extras</li>
-                <li class="items">Calcula tu Décimo Tercer Mes</li>
-                <li class="items">Sección Calcula tu Salario </li>
-                <li class="items">Sección de Planilla </li>
-            </ul>
-        </section>
-    </main>
+  <!-- Donate link (add actual link target if you have one) -->
+  <a class="donar-float" href="#" title="Donar (próximamente)" aria-label="Donar (próximamente)">Donar</a>
 
-    <footer class="glass flex flex-col items-center justify-center text-center gap-2">
-        <img class="bandera" src="Imagenes/Screenshot_20260813_220411_com_microsoft_copilot_MainActivity.jpg" alt="Logo">
-        <p>© Creado por Licdo. Carlos E. González.</p>
-    </footer>
+  <!-- Dark mode toggle — button for accessibility -->
+  <button id="darkModeToggle" aria-pressed="false" aria-label="Cambiar modo claro/oscuro">
+    <span id="darkModeIcon" aria-hidden="true">
+      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="0">
+        <g id="iconSun">
+          <circle cx="12" cy="12" r="5"></circle>
+        </g>
+        <g id="iconMoon" style="display:none;">
+          <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+        </g>
+      </svg>
+    </span>
+  </button>
 
-  
+  <script>
+    (function () {
+      const toggle = document.getElementById('darkModeToggle');
+      const sun = document.getElementById('iconSun');
+      const moon = document.getElementById('iconMoon');
 
-    <!-- Botón flotante modo oscuro -->
-    <div id="darkModeToggle" title="Cambiar modo claro/oscuro" onclick="toggleDarkMode()">
-        <span id="darkModeIcon">
-            <!-- Icono sol/luna SVG -->
-            <svg id="iconSunMoon" xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-yellow-400 dark:text-yellow-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <g id="iconSun">
-                    <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2" fill="currentColor"/>
-                    <g stroke="currentColor" stroke-width="2">
-                        <line x1="12" y1="2" x2="12" y2="4"/>
-                        <line x1="12" y1="20" x2="12" y2="22"/>
-                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
-                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-                        <line x1="2" y1="12" x2="4" y2="12"/>
-                        <line x1="20" y1="12" x2="22" y2="12"/>
-                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
-                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-                    </g>
-                </g>
-                <g id="iconMoon" style="display:none;">
-                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" fill="currentColor"/>
-                </g>
-            </svg>
-        </span>
-    </div>
+      function setIcons(isDark) {
+        if (!sun || !moon) return;
+        sun.style.display = isDark ? 'none' : 'block';
+        moon.style.display = isDark ? 'block' : 'none';
+      }
+
+      function applyDark(isDark) {
+        document.body.classList.toggle('dark', isDark);
+        toggle.setAttribute('aria-pressed', String(isDark));
+        setIcons(isDark);
+      }
+
+      // Restore preference
+      document.addEventListener('DOMContentLoaded', () => {
+        const pref = localStorage.getItem('modo-oscuro');
+        applyDark(pref === 'true');
+      });
+
+      // Toggle action
+      toggle.addEventListener('click', () => {
+        const isDark = document.body.classList.toggle('dark');
+        localStorage.setItem('modo-oscuro', String(isDark));
+        toggle.setAttribute('aria-pressed', String(isDark));
+        setIcons(isDark);
+      });
+    })();
+  </script>
 </body>
 </html>

@@ -167,6 +167,42 @@
     .logo { width: 60px; margin-bottom: 10px; }
     footer { text-align:center; padding:1rem; margin-top:2rem; }
     .sr-only { position: absolute; left:-10000px; top:auto; width:1px; height:1px; overflow:hidden; }
+
+    /* Accesibilidad: prefer-reduced-motion y foco visible */
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; animation: none !important; }
+    }
+
+    /* Hacer el skip-link visible cuando se enfoca */
+    .sr-only:focus,
+    .sr-only:active {
+      position: static;
+      width: auto;
+      height: auto;
+      margin: 1rem;
+      clip: auto;
+      left: auto;
+      top: auto;
+      overflow: visible;
+      background: #fff;
+      color: #000;
+      padding: .5rem 1rem;
+      border-radius: .25rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    }
+
+    /* Foco accesible y consistente para elementos interactivos */
+    :focus {
+      outline: 3px solid rgba(37,99,235,0.35);
+      outline-offset: 3px;
+      border-radius: .25rem;
+    }
+
+    /* Asegura que enlaces naveguen bien en dark mode también */
+    a:focus { outline-offset: 3px; }
+
+    /* Mejora contraste de .glass en dark */
+    body.dark .glass { color: #f3f4f6; }
   </style>
 </head>
 <body>
@@ -174,7 +210,10 @@
 
   <header class="glass" role="banner">
     <div class="flex flex-col items-center">
-      <img class="logo" src="Imagenes/Screenshot_20260813_220411_com_microsoft_copilot_MainActivity.jpg" alt="Logo — Gestor Tecnológico C.G" width="60" height="60">
+      <img class="logo"
+           src="Imagenes/Screenshot_20260813_220411_com_microsoft_copilot_MainActivity.jpg"
+           alt="Logo — Gestor Tecnológico C.G"
+           width="60" height="60" loading="lazy">
       <h1 class="text-3xl font-bold tracking-tight">Gestor Tecnológico C.G</h1>
     </div>
 
@@ -192,18 +231,25 @@
     <h2 class="titulo-principal">"Piensa con claridad, actúa con propósito, aprende con pasión."</h2>
 
     <div class="video" aria-hidden="false">
-      <iframe src="https://www.youtube.com/embed/4sRDSHhcqik" title="Video introductorio" loading="lazy" allowfullscreen></iframe>
+      <iframe src="https://www.youtube.com/embed/4sRDSHhcqik"
+              title="Video introductorio — Gestor Tecnológico C.G"
+              loading="lazy" allowfullscreen tabindex="0"></iframe>
     </div>
 
     <section class="glass principal" aria-labelledby="educacion-title">
       <h3 id="educacion-title" class="titulo-principal">Educación y Programación</h3>
-      <img src="Imagenes/Pc.jfif" alt="Computadora — ilustración" style="width:100%;border-radius:1rem;">
+      <img src="Imagenes/Pc.jfif"
+           alt="Ilustración de una computadora"
+           style="width:100%;border-radius:1rem;"
+           width="1200" height="675" loading="lazy">
       <p><strong>He creado esta página web para ti.</strong> Visita las distintas secciones para resolver dudas, encontrar herramientas y ver ideas para gestionar tus necesidades.</p>
       <p><em>Tengo certificaciones internacionales de Alura LATAM y Oracle (Río de Janeiro, Brasil).</em></p>
     </section>
 
     <div class="video">
-      <iframe src="https://www.youtube.com/embed/7vbi-OCFZEY" title="Segundo video" loading="lazy" allowfullscreen></iframe>
+      <iframe src="https://www.youtube.com/embed/7vbi-OCFZEY"
+              title="Segundo video — Gestor Tecnológico C.G"
+              loading="lazy" allowfullscreen tabindex="0"></iframe>
     </div>
 
     <section class="glass diferenciales" aria-labelledby="carac-title">
@@ -218,17 +264,19 @@
   </main>
 
   <footer class="glass" role="contentinfo">
-    <img src="Imagenes/Screenshot_20260813_220411_com_microsoft_copilot_MainActivity.jpg" alt="Bandera / Logo" width="36" height="36">
+    <img src="Imagenes/Screenshot_20260813_220411_com_microsoft_copilot_MainActivity.jpg"
+         alt="Bandera / Logo"
+         width="36" height="36" loading="lazy">
     <p>© Creado por Licdo. Carlos E. González.</p>
   </footer>
 
   <!-- Donate link (add actual link target if you have one) -->
-  
+  <!-- Example: <a class="donar-float" href="https://www.paypal.me/tuusuario" aria-label="Donar a Gestor Tecnológico C.G">Donar</a> -->
 
   <!-- Dark mode toggle — button for accessibility -->
   <button id="darkModeToggle" aria-pressed="false" aria-label="Cambiar modo claro/oscuro">
     <span id="darkModeIcon" aria-hidden="true">
-      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="0">
+      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="0" aria-hidden="true" focusable="false">
         <g id="iconSun">
           <circle cx="12" cy="12" r="5"></circle>
         </g>
@@ -237,6 +285,7 @@
         </g>
       </svg>
     </span>
+    <span class="sr-only">Alternar modo claro/oscuro</span>
   </button>
 
   <script>
@@ -257,16 +306,24 @@
         setIcons(isDark);
       }
 
-      // Restore preference
+      // Restore preference: prefer saved choice, otherwise use system preference
       document.addEventListener('DOMContentLoaded', () => {
-        const pref = localStorage.getItem('modo-oscuro');
-        applyDark(pref === 'true');
+        try {
+          const stored = localStorage.getItem('modo-oscuro');
+          const hasStored = (stored === 'true' || stored === 'false');
+          const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          applyDark(hasStored ? (stored === 'true') : prefersDark);
+        } catch (e) {
+          // localStorage might be unavailable; fall back to system preference
+          const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          applyDark(prefersDark);
+        }
       });
 
-      // Toggle action
+      // Toggle action (click and keyboard activation provided by <button>)
       toggle.addEventListener('click', () => {
         const isDark = document.body.classList.toggle('dark');
-        localStorage.setItem('modo-oscuro', String(isDark));
+        try { localStorage.setItem('modo-oscuro', String(isDark)); } catch (e) {}
         toggle.setAttribute('aria-pressed', String(isDark));
         setIcons(isDark);
       });

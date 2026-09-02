@@ -7,397 +7,1018 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-body {
-    font-family: 'Inter', sans-serif;
-    background: linear-gradient(135deg, #e0e7ff 0%, #f0f4f8 100%);
-    color: #000;
-}
-.dark body {
-    background: linear-gradient(135deg, #18181b 0%, #27272a 100%);
-    color: #f3f4f6;
-}
-h1, h2, h3, p, label, .result-item, #result, .glass-btn, .result-footer {
-    text-align: center !important;
-}
-.glass {
-    background: rgba(255,255,255,0.85);
-    box-shadow: 0 8px 32px 0 rgba(31,38,135,0.15);
-    backdrop-filter: blur(5px);
-    border-radius: 1rem;
-    color: #000;
-}
-.dark .glass {
-    background: rgba(36,37,46,0.93);
-    box-shadow: 0 8px 32px 0 rgba(20,20,30,0.35);
-    color: #f3f4f6;
-}
-.floating-label { position:relative; }
-.floating-label input { padding-top: 1.25rem; }
-.floating-label label {
-    position: absolute;
-    top: 0.75rem;
-    left: 1rem;
-    pointer-events: none;
-    color: #3b82f6;
-    font-weight: 600;
-    font-size: 1rem;
-    transition: all 0.2s;
-    text-align: left !important;
-}
-.floating-label input:focus + label,
-.floating-label input:not(:placeholder-shown) + label {
-    top: 0.2rem;
-    left: 0.9rem;
-    font-size: 0.85rem;
-    color: #2563eb;
-}
-#darkModeToggle {
-    position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-    z-index: 50;
-    width: 56px;
-    height: 56px;
-    background: rgba(255,255,255,0.9);
-    border-radius: 50%;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.18);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-#darkModeToggle:hover { background: #e0e7ff; }
-.dark #darkModeToggle { background: rgba(36,37,46,0.93); }
-.dark #darkModeToggle:hover { background: #18181b; }
-#darkModeIcon { transition: transform .3s; }
-#darkModeToggle:active #darkModeIcon { transform: rotate(40deg) scale(1.1);}
-.action-buttons {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    margin-top: 1.5rem;
-}
-.glass-btn {
-    background: rgba(255,255,255,0.65);
-    border: 1px solid #2563eb;
-    color: #2563eb;
-    font-weight: bold;
-    padding: 0.7rem 1.6rem;
-    border-radius: 0.9rem;
-    box-shadow: 0 4px 20px 0 rgba(31,38,135,0.09);
-    cursor: pointer;
-    transition: background .18s, color .18s, border .18s;
-    font-size: 1.07rem;
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    justify-content: center;
-    text-align: center;
-}
-.glass-btn:hover {
-    background: #2563eb;
-    color: #fff;
-    border: 1px solid #1e40af;
-}
-@media (max-width: 520px) {
-    .action-buttons { gap: 0.5rem; flex-direction: column; }
-    .glass-btn { width: 100%; justify-content: center; }
-}
-.result-footer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-    margin-top: 2rem;
-    text-align: center;
-}
-.result-footer img {
-    height: 40px;
-    width: auto;
-}
-.result-footer p {
-    font-size: 0.95rem;
-    color: #2563eb;
-    text-align: center;
-}
-.dark .result-footer p {
-    color: #93c5fd;
-}
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --secondary: #10b981;
+            --danger: #ef4444;
+            --light-bg: #f0f4f8;
+            --light-border: #e5e7eb;
+            --dark-bg: #1f2937;
+            --dark-card: #374151;
+            --text-light: #374151;
+            --text-dark: #f3f4f6;
+            --glass-light: rgba(255, 255, 255, 0.85);
+            --glass-dark: rgba(55, 65, 81, 0.93);
+            --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.07);
+            --shadow-md: 0 8px 16px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #e0e7ff 0%, #f0f4f8 100%);
+            color: var(--text-light);
+            transition: background-color 0.3s ease, color 0.3s ease;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        body.dark {
+            background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
+            color: var(--text-dark);
+        }
+
+        /* Glass Morphism */
+        .glass {
+            background: var(--glass-light);
+            box-shadow: var(--shadow-lg);
+            backdrop-filter: blur(10px);
+            border-radius: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        body.dark .glass {
+            background: var(--glass-dark);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Tipografía */
+        h1 {
+            font-size: clamp(1.5rem, 5vw, 2.25rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-size: clamp(1.25rem, 4vw, 1.875rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        label {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        /* Contenedor principal */
+        .container-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            width: 100%;
+        }
+
+        .card-wrapper {
+            width: 100%;
+            max-width: 42rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Logo */
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .logo-container img {
+            height: 5rem;
+            width: auto;
+            object-fit: contain;
+            animation: fadeInScale 0.6s ease-out;
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Formulario */
+        .form-section {
+            padding: 1.5rem;
+            background: #f3f4f6;
+            border-radius: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        body.dark .form-section {
+            background: #1f2937;
+            border: 1px solid #374151;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .radio-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .radio-item:hover {
+            transform: translateX(2px);
+        }
+
+        .radio-item input[type="radio"] {
+            width: 1.25rem;
+            height: 1.25rem;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Input flotante */
+        .floating-label {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+
+        .floating-label input {
+            width: 100%;
+            padding: 0.875rem 1rem 0.5rem;
+            border: 2px solid var(--light-border);
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            font-family: inherit;
+            background: white;
+            transition: all 0.3s ease;
+        }
+
+        body.dark .floating-label input {
+            background: #111827;
+            border-color: #4b5563;
+            color: var(--text-dark);
+        }
+
+        .floating-label input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .floating-label input::placeholder {
+            color: transparent;
+        }
+
+        .floating-label label {
+            position: absolute;
+            top: 0.75rem;
+            left: 1rem;
+            color: var(--primary);
+            font-size: 0.95rem;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            background: white;
+            padding: 0 0.25rem;
+        }
+
+        body.dark .floating-label label {
+            background: #374151;
+        }
+
+        .floating-label input:focus + label,
+        .floating-label input:not(:placeholder-shown) + label {
+            top: -0.5rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+        }
+
+        /* Checkbox */
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-top: 1rem;
+            padding: 0.75rem;
+            background: rgba(37, 99, 235, 0.05);
+            border-radius: 0.75rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .checkbox-item:hover {
+            background: rgba(37, 99, 235, 0.1);
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: 1.25rem;
+            height: 1.25rem;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        /* Botones */
+        .btn {
+            padding: 0.875rem 1.5rem;
+            border: none;
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-family: inherit;
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn-primary {
+            width: 100%;
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+            color: white;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #059669 0%, #1d4ed8 100%);
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--glass-light);
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            flex: 1;
+            min-height: 2.75rem;
+        }
+
+        body.dark .btn-secondary {
+            background: var(--glass-dark);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 640px) {
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .btn-secondary {
+                flex: 1 1 100%;
+            }
+        }
+
+        /* Resultado */
+        .result-section {
+            border-radius: 1rem;
+            padding: 1.5rem;
+            background: #dcfce7;
+            border: 2px solid #86efac;
+            animation: slideInUp 0.5s ease-out;
+        }
+
+        body.dark .result-section {
+            background: #064e3b;
+            border-color: #059669;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.875rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            font-size: 0.95rem;
+        }
+
+        body.dark .result-item {
+            border-bottom-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .result-item:last-of-type {
+            border-bottom: none;
+        }
+
+        .result-item span:last-child {
+            font-weight: 700;
+            color: var(--danger);
+            min-width: 6rem;
+            text-align: right;
+        }
+
+        body.dark .result-item span:last-child {
+            color: #fca5a5;
+        }
+
+        .result-total {
+            margin-top: 1.25rem;
+            padding-top: 1.25rem;
+            border-top: 2px solid #10b981;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #065f46;
+        }
+
+        body.dark .result-total {
+            border-color: #059669;
+            color: #dcfce7;
+        }
+
+        .result-net {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(16, 185, 129, 0.1) 100%);
+            border-radius: 0.75rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #1e40af;
+        }
+
+        body.dark .result-net {
+            color: #93c5fd;
+        }
+
+        .result-note {
+            margin-top: 0.75rem;
+            font-size: 0.85rem;
+            color: #6b7280;
+            text-align: center;
+            font-style: italic;
+        }
+
+        body.dark .result-note {
+            color: #d1d5db;
+        }
+
+        .result-footer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        body.dark .result-footer {
+            border-top-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .result-footer img {
+            height: 2.5rem;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .result-footer p {
+            font-size: 0.9rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        body.dark .result-footer p {
+            color: #93c5fd;
+        }
+
+        /* Dark Mode Toggle */
+        #darkModeToggle {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 3.5rem;
+            height: 3.5rem;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 50%;
+            box-shadow: var(--shadow-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid var(--light-border);
+            z-index: 40;
+        }
+
+        #darkModeToggle:hover {
+            background: white;
+            box-shadow: var(--shadow-lg);
+            transform: scale(1.1);
+        }
+
+        body.dark #darkModeToggle {
+            background: rgba(55, 65, 81, 0.95);
+            border-color: #4b5563;
+        }
+
+        body.dark #darkModeToggle:hover {
+            background: #4b5563;
+        }
+
+        #darkModeIcon {
+            transition: transform 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #darkModeToggle:active #darkModeIcon {
+            transform: rotate(40deg) scale(1.1);
+        }
+
+        /* Footer */
+        footer {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid var(--light-border);
+            box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.05);
+            padding: 1rem;
+            text-align: center;
+            margin-top: auto;
+            transition: all 0.3s ease;
+        }
+
+        body.dark footer {
+            background: rgba(31, 41, 55, 0.8);
+            border-top-color: #4b5563;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            max-width: 100%;
+        }
+
+        .footer-content img {
+            height: 2rem;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .footer-content p {
+            font-size: 0.875rem;
+            color: var(--text-light);
+            margin: 0;
+        }
+
+        body.dark .footer-content p {
+            color: var(--text-dark);
+        }
+
+        /* Hidden */
+        .hidden {
+            display: none !important;
+        }
+
+        /* Utilidades */
+        .center-text {
+            text-align: center;
+        }
+
+        .description {
+            color: #6b7280;
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        body.dark .description {
+            color: #d1d5db;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container-main {
+                padding: 0.75rem;
+            }
+
+            .card-wrapper {
+                max-width: 100%;
+            }
+
+            .glass {
+                border-radius: 1rem;
+                padding: 1.25rem !important;
+            }
+
+            h1 {
+                font-size: 1.75rem;
+            }
+
+            h2 {
+                font-size: 1.25rem;
+            }
+
+            .result-item {
+                font-size: 0.9rem;
+            }
+
+            .result-total {
+                font-size: 1rem;
+            }
+
+            .result-net {
+                font-size: 1.1rem;
+            }
+        }
+
+        /* Loading state */
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* Animations suaves */
+        .fade-in {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center justify-center p-4 transition-colors duration-300">
+<body class="transition-colors duration-300">
 
-    <!-- Calculadora principal -->
-    <div class="glass w-full max-w-xl mx-auto p-8 mb-8">
-        <h1 class="text-4xl font-extrabold text-center text-blue-900 dark:text-white drop-shadow mb-6 tracking-tight">
-            <div class="flex justify-center items-center my-6">
-                <img src="Imagenes/Screenshot_20260813_220411_com_microsoft_copilot_MainActivity.jpg" alt="Logo" class="h-20 w-auto" />
+    <div class="container-main">
+        <!-- Calculadora principal -->
+        <div class="glass card-wrapper p-8">
+            <!-- Logo -->
+            <div class="logo-container">
+                <img src="Imagenes/Screenshot_20260813_220411_com_microsoft_copilot_MainActivity.jpg" alt="Logo Calculadora" />
             </div>
-        </h1>
-        <p class="text-center text-gray-500 dark:text-blue mb-8 text-lg">
-            Estima tus deducciones mensuales por Seguro Social, Impuesto de Educación, Impuesto sobre la Renta y Siacap.
-        </p>
 
-        <div class="mb-8 p-6 bg-blue-50 dark:bg-gray-800 rounded-xl shadow-inner">
-            <div class="mb-4">
-                <label class="block text-lg font-semibold text-blue-700 dark:text-blue-300 mb-3 text-center">Tipo de Salario:</label>
-                <div class="flex space-x-6 justify-center">
-                    <label class="inline-flex items-center cursor-pointer">
-                        <input type="radio" name="salaryType" value="monthly" checked onchange="updateSalaryInputLabel()"
-                               class="form-radio h-5 w-5 text-blue-600 accent-blue-600 transition">
-                        <span class="ml-2 text-gray-700 dark:text-gray-200 font-medium">Mensual</span>
-                    </label>
-                </div>
-            </div>
-            <div class="floating-label mt-6">
-                <input type="number" id="salaryInput"
-                    class="w-full p-3 border border-blue-300 dark:border-gray-700 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 ease-in-out bg-white dark:bg-gray-900 text-gray-800 dark:text-white text-xl placeholder-transparent text-center"
-                    placeholder=" " min="0" step="0.01" value="0">
-                <label for="salaryInput" id="salaryInputLabel" class="text-left">Salario Mensual:</label>
-            </div>
-            <p class="text-sm text-gray-500 dark:text-gray-400 mt-2 text-center">
-                *Los calculos mostrados se realizo bajo una extricta revisión según la ley Panameña.
+            <!-- Encabezado -->
+            <h1 class="center-text text-blue-900 dark:text-white drop-shadow">
+                Calculadora de Descuentos
+            </h1>
+            <p class="description">
+                Estima tus deducciones mensuales por Seguro Social, Impuesto de Educación, Impuesto sobre la Renta y Siacap.
             </p>
-            <div class="mt-4 flex items-center justify-center">
-                <input type="checkbox" id="isPublicServant" class="form-checkbox h-5 w-5 text-blue-600 accent-blue-600 rounded">
-                <label for="isPublicServant" class="ml-2 text-gray-700 dark:text-gray-200 font-medium text-center">Soy Servidor Público (para incluir SIACAP)</label>
+
+            <!-- Formulario -->
+            <div class="form-section">
+                <!-- Tipo de Salario -->
+                <div class="form-group">
+                    <label class="center-text block mb-3" style="color: var(--primary);">Tipo de Salario:</label>
+                    <div class="radio-group">
+                        <label class="radio-item">
+                            <input type="radio" name="salaryType" value="monthly" checked onchange="updateSalaryInputLabel()">
+                            <span>Mensual</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Input Salario -->
+                <div class="floating-label">
+                    <input 
+                        type="number" 
+                        id="salaryInput"
+                        placeholder=" " 
+                        min="0" 
+                        step="0.01" 
+                        value="0"
+                        onchange="validateInput(this)"
+                        oninput="validateInput(this)"
+                    >
+                    <label for="salaryInput" id="salaryInputLabel">Ingresa tu Salario Mensual:</label>
+                </div>
+
+                <p class="result-note">
+                    * Los cálculos mostrados se realizaron bajo una estricta revisión según la ley Panameña.
+                </p>
+
+                <!-- Checkbox Servidor Público -->
+                <label class="checkbox-item">
+                    <input type="checkbox" id="isPublicServant">
+                    <span>Soy Servidor Público (para incluir SIACAP)</span>
+                </label>
             </div>
-        </div>
 
-        <button onclick="calculateCombinedDeductions()"
-            class="w-full bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white font-bold py-3 px-6 rounded-xl shadow-lg transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-green-300 text-xl tracking-wide text-center">
-            Calcular Descuentos
-        </button>
-
-        <!-- Botones acción PDF y Compartir -->
-        <div class="action-buttons">
-            <button class="glass-btn" onclick="downloadPDF()" type="button">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke="currentColor" stroke-width="2" d="M12 16v-8m0 8l-4-4m4 4l4-4M4 18h16"/>
+            <!-- Botón Calcular -->
+            <button onclick="calculateCombinedDeductions()" class="btn btn-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3v3m-6-6v6a2 2 0 002 2h10a2 2 0 002-2v-6m-9-3V5a2 2 0 012-2h2a2 2 0 012 2v2m0 0V3m0 2V1m0 16h6m-6 0h-6" />
                 </svg>
-                Descargar PDF
+                Calcular Descuentos
             </button>
-            <button class="glass-btn" onclick="shareWhatsApp(event)" type="button" id="shareWhatsappBtn">
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 32 32">
-                    <path d="M16 3C9.383 3 4 8.383 4 15c0 2.633.92 5.071 2.583 7.071L4 29l7.114-2.431C13.051 27.15 14.497 27.5 16 27.5c6.617 0 12-5.383 12-12S22.617 3 16 3zm0 22.5c-1.326 0-2.626-.252-3.838-.749l-.273-.111-4.224 1.447 1.396-4.124-.179-.29C6.488 19.012 5.5 17.058 5.5 15c0-5.799 4.701-10.5 10.5-10.5S26.5 9.201 26.5 15 21.799 25.5 16 25.5zm5.714-7.005c-.313-.156-1.846-.91-2.132-1.015-.287-.104-.496-.156-.705.156-.208.311-.807 1.015-.991 1.223-.183.208-.364.234-.677.078-.313-.156-1.324-.487-2.521-1.541-.931-.833-1.558-1.86-1.741-2.173-.182-.312-.019-.48.137-.636.141-.139.313-.364.469-.546.157-.183.209-.312.314-.52.104-.208.052-.39-.026-.546-.078-.156-.705-1.694-.965-2.32-.254-.613-.514-.531-.705-.541l-.6-.01c-.207 0-.546.078-.832.364-.286.286-1.086 1.062-1.086 2.59s1.112 3.017 1.267 3.23c.156.208 2.186 3.339 5.304 4.544.741.254 1.318.406 1.77.52.743.189 1.421.129 1.954.078.597-.059 1.846-.755 2.107-1.483.26-.729.26-1.355.182-1.484-.077-.129-.285-.208-.597-.364z"/>
-                </svg>
-                Compartir por WhatsApp
-            </button>
-        </div>
 
-        <div id="result" class="mt-8 hidden">
-            <!-- Empleado -->
-            <div class="result-section bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-900 rounded-xl mb-4 p-6">
-                <h2 class="text-2xl font-semibold text-green-800 dark:text-green-300 mb-4 text-center">Descuentos del Empleado (Mensual):</h2>
-                <div class="result-item">
-                    <span class="text-gray-700 dark:text-gray-200">Seguro Social (CSS) :</span>
-                    <span id="employeeCss" class="font-semibold text-red-700 dark:text-red-400">B/. 0.00</span>
-                </div>
-                <div class="result-item">
-                    <span class="text-gray-700 dark:text-gray-200">Impuesto de Educación :</span>
-                    <span id="employeeEducation" class="font-semibold text-red-700 dark:text-red-400">B/. 0.00</span>
-                </div>
-                <div class="result-item">
-                    <span class="text-gray-700 dark:text-gray-200">Impuesto sobre la Renta (ISR):</span>
-                    <span id="employeeIsr" class="font-semibold text-red-700 dark:text-red-400">B/. 0.00</span>
-                </div>
-                <div class="result-item" id="siacapEmployeeRow">
-                    <span class="text-gray-700 dark:text-gray-200">SIACAP :</span>
-                    <span id="employeeSiacap" class="font-semibold text-red-700 dark:text-red-400">B/. 0.00</span>
-                </div>
-                <div class="result-item font-bold text-lg text-green-800 dark:text-green-300 mt-4">
-                    <span>Total Descuentos del Empleado (Mensual):</span>
-                    <span id="totalEmployeeDeductions">B/. 0.00</span>
-                    <span class="block text-sm text-gray-500 dark:text-gray-400 mt-2 text-center">Lo divides entre (2) verás tus descuentos quincenal según la ley Panameña.</span>
-                </div>
-                <div class="result-item font-extrabold text-2xl text-blue-900 dark:text-blue-300 mt-4 pt-4 border-t-2 border-blue-300 dark:border-blue-800">
-                    <span>Salario Quincenal :</span>
-                    <span id="netSalary">B/. 0.00</span>
-                </div>
+            <!-- Botones de Acción -->
+            <div class="action-buttons">
+                <button class="btn btn-secondary" onclick="downloadPDF()" type="button" title="Descargar resultado en PDF">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 16v-8m0 8l-4-4m4 4l4-4M4 18h16"/>
+                    </svg>
+                    Descargar PDF
+                </button>
+                <button class="btn btn-secondary" onclick="shareWhatsApp(event)" type="button" id="shareWhatsappBtn" title="Compartir por WhatsApp">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 32 32">
+                        <path d="M16 3C9.383 3 4 8.383 4 15c0 2.633.92 5.071 2.583 7.071L4 29l7.114-2.431C13.051 27.15 14.497 27.5 16 27.5c6.617 0 12-5.383 12-12S22.617 3 16 3zm0 22.5c-1.326 0-2.626-.252-3.852-.722l-.276-.103-2.873.979.979-2.873-.103-.276C5.25 19.626 5 18.326 5 17c0-5.514 4.486-10 10-10s10 4.486 10 10-4.486 10-10 10zm5.431-7.542c-.297-.15-1.758-.869-2.031-.968-.273-.099-.472-.15-.671.15-.199.299-.768.968-.942 1.167-.174.199-.347.224-.644.025-.297-.15-1.255-.462-2.391-1.475-.884-.788-1.48-1.761-1.654-2.059-.174-.298-.019-.459.131-.607.134-.134.298-.347.447-.521.149-.174.198-.298.298-.497.1-.199.05-.373-.025-.522-.075-.15-.671-1.617-.92-2.213-.241-.579-.486-.5-.671-.51-.174-.009-.373-.01-.572-.01-.199 0-.522.075-.795.373-.273.298-1.042 1.017-1.042 2.484 0 1.467 1.067 2.883 1.216 3.082.149.199 2.098 3.203 5.084 4.491.711.307 1.267.49 1.7.629.713.227 1.363.195 1.876.118.573-.085 1.758-.718 2.007-1.412.248-.695.248-1.289.174-1.412-.074-.123-.273-.199-.572-.348z"/>
+                    </svg>
+                    Compartir por WhatsApp
+                </button>
             </div>
-            <!-- Logo y copyright debajo del resultado -->
-            <div class="result-footer">
-                <img src="Imagenes/Screenshot_20260813_220411_com_microsoft_copilot_MainActivity.jpg" alt="Logo">
-                <p>© Creado por Licdo. Carlos E. González</p>
+
+            <!-- Resultado -->
+            <div id="result" class="hidden fade-in">
+                <div class="result-section">
+                    <h2 class="text-green-900 dark:text-green-100 center-text">Descuentos del Empleado (Mensual)</h2>
+
+                    <div class="result-item">
+                        <span>Seguro Social (CSS):</span>
+                        <span id="employeeCss">B/. 0.00</span>
+                    </div>
+
+                    <div class="result-item">
+                        <span>Impuesto de Educación:</span>
+                        <span id="employeeEducation">B/. 0.00</span>
+                    </div>
+
+                    <div class="result-item">
+                        <span>Impuesto sobre la Renta (ISR):</span>
+                        <span id="employeeIsr">B/. 0.00</span>
+                    </div>
+
+                    <div class="result-item hidden" id="siacapEmployeeRow">
+                        <span>SIACAP:</span>
+                        <span id="employeeSiacap">B/. 0.00</span>
+                    </div>
+
+                    <div class="result-total">
+                        <span>Total Descuentos (Mensual):</span>
+                        <span id="totalEmployeeDeductions">B/. 0.00</span>
+                    </div>
+
+                    <p class="result-note">
+                        Lo divides entre (2) verás tus descuentos quincenal según la ley Panameña.
+                    </p>
+
+                    <div class="result-net">
+                        <span>Salario Quincenal:</span>
+                        <span id="netSalary">B/. 0.00</span>
+                    </div>
+                </div>
+
+                <!-- Footer del Resultado -->
+                <div class="result-footer">
+                    <img src="Imagenes/Screenshot_20260813_220411_com_microsoft_copilot_MainActivity.jpg" alt="Logo">
+                    <p>© Creado por Licdo. Carlos E. González</p>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Footer elegante y bien posicionado -->
-    <footer class="w-full bg-white/80 dark:bg-gray-900/80 backdrop-blur border-t border-blue-200 dark:border-gray-700 shadow-lg py-4 flex flex-col md:flex-row items-center justify-center gap-4 mt-auto text-center">
-        <img src="Imagenes/Screenshot_20260813_220411_com_microsoft_copilot_MainActivity.jpg" alt="Logo" class="h-8 w-auto mx-2">
-        <p class="text-gray-700 dark:text-gray-300 text-sm md:text-base text-center">© Creado por Licdo. Carlos E. Gonzalez C.</p>
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <img src="Imagenes/Screenshot_20260813_220411_com_microsoft_copilot_MainActivity.jpg" alt="Logo" />
+            <p>© Creado por Licdo. Carlos E. González C.</p>
+        </div>
     </footer>
 
-    <!-- Botón flotante modo oscuro -->
+    <!-- Botón flotante Dark Mode -->
     <div id="darkModeToggle" title="Cambiar modo claro/oscuro" onclick="toggleDarkMode()">
         <span id="darkModeIcon">
-            <!-- Icono sol/luna SVG -->
-            <svg id="iconSunMoon" xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-yellow-400 dark:text-yellow-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <g id="iconSun">
-                    <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2" fill="currentColor"/>
-                    <g stroke="currentColor" stroke-width="2">
-                        <line x1="12" y1="2" x2="12" y2="4"/>
-                        <line x1="12" y1="20" x2="12" y2="22"/>
-                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
-                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-                        <line x1="2" y1="12" x2="4" y2="12"/>
-                        <line x1="20" y1="12" x2="22" y2="12"/>
-                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
-                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-                    </g>
+            <svg id="iconSun" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-yellow-400" fill="currentColor" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2" fill="none"/>
+                <g stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                    <line x1="12" y1="1" x2="12" y2="3"/>
+                    <line x1="12" y1="21" x2="12" y2="23"/>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                    <line x1="1" y1="12" x2="3" y2="12"/>
+                    <line x1="21" y1="12" x2="23" y2="12"/>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
                 </g>
-                <g id="iconMoon" style="display:none;">
-                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" fill="currentColor"/>
-                </g>
+            </svg>
+            <svg id="iconMoon" class="w-6 h-6 text-yellow-200 hidden" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
             </svg>
         </span>
     </div>
 
     <script>
-        // Modo oscuro
+        // ============== DARK MODE ==============
         function toggleDarkMode() {
-            const body = document.querySelector('body');
+            const body = document.body;
             body.classList.toggle('dark');
+            localStorage.setItem('darkMode', body.classList.contains('dark'));
             updateIcon();
         }
+
         function updateIcon() {
             const isDark = document.body.classList.contains('dark');
             const sun = document.querySelector('#iconSun');
             const moon = document.querySelector('#iconMoon');
-            if (isDark) {
-                sun.style.display = 'none';
-                moon.style.display = 'block';
-            } else {
-                sun.style.display = 'block';
-                moon.style.display = 'none';
-            }
+            
+            sun.classList.toggle('hidden', isDark);
+            moon.classList.toggle('hidden', !isDark);
         }
-        window.onload = () => {
-            updateSalaryInputLabel();
-            document.getElementById('salaryInput').value = "0";
-            document.getElementById('isPublicServant').checked = false;
-            document.getElementById('siacapEmployeeRow').classList.add('hidden');
-            document.getElementById('result').classList.add('hidden');
+
+        // Restaurar preferencia de dark mode
+        function restoreDarkMode() {
+            const isDark = localStorage.getItem('darkMode') === 'true';
+            if (isDark) {
+                document.body.classList.add('dark');
+            }
             updateIcon();
-        };
+        }
+
+        // ============== VALIDACIÓN ==============
+        function validateInput(input) {
+            const value = parseFloat(input.value) || 0;
+            if (value < 0) {
+                input.value = '0';
+            }
+            input.value = value.toFixed(2);
+        }
 
         function updateSalaryInputLabel() {
             const salaryType = document.querySelector('input[name="salaryType"]:checked').value;
             const label = document.getElementById('salaryInputLabel');
-            label.textContent = 'Ingresa tu Salario Mensual :';
-            document.getElementById('salaryInput').value = "0";
+            label.textContent = 'Ingresa tu Salario Mensual:';
+            document.getElementById('salaryInput').value = '0';
             document.getElementById('result').classList.add('hidden');
         }
 
+        // ============== CÁLCULOS ==============
         function calculateCombinedDeductions() {
             const salaryInput = document.getElementById('salaryInput');
-            let inputSalary = parseFloat(salaryInput.value) || 0;
+            let monthlySalary = parseFloat(salaryInput.value) || 0;
             const isPublicServant = document.getElementById('isPublicServant').checked;
 
-            let monthlySalary = inputSalary;
+            if (monthlySalary <= 0) {
+                alert('Por favor, ingresa un salario válido mayor a 0');
+                return;
+            }
 
-            // Employee
+            // Cálculos Employee
             const employeeCssRate = 0.0975;
             const employeeEducationRate = 0.0125;
             const employeeSiacapRate = 0.02;
 
             let employeeCss = monthlySalary * employeeCssRate;
             let employeeEducation = monthlySalary * employeeEducationRate;
-            let employeeIsr = 0;
-            let employeeSiacap = 0;
+            let employeeIsr = calculateISR(monthlySalary);
+            let employeeSiacap = isPublicServant ? monthlySalary * employeeSiacapRate : 0;
 
-            // ISR
-            const annualIncomeForISR = monthlySalary * 13;
-            if (annualIncomeForISR <= 11000) employeeIsr = 0;
-            else if (annualIncomeForISR <= 50000) employeeIsr = (annualIncomeForISR - 11000) * 0.15;
-            else employeeIsr = 5850 + (annualIncomeForISR - 50000) * 0.25;
-            employeeIsr = employeeIsr / 13;
-
+            // Mostrar/ocultar SIACAP
             if (isPublicServant) {
-                employeeSiacap = monthlySalary * employeeSiacapRate;
                 document.getElementById('siacapEmployeeRow').classList.remove('hidden');
             } else {
                 document.getElementById('siacapEmployeeRow').classList.add('hidden');
             }
+
             const totalEmployeeDeductions = employeeCss + employeeEducation + employeeIsr + employeeSiacap;
             const netSalaryMonthly = monthlySalary - totalEmployeeDeductions;
             const netSalaryBiweekly = netSalaryMonthly / 2;
 
-            document.getElementById('employeeCss').textContent = `B/. ${employeeCss.toFixed(2)}`;
-            document.getElementById('employeeEducation').textContent = `B/. ${employeeEducation.toFixed(2)}`;
-            document.getElementById('employeeIsr').textContent = `B/. ${employeeIsr.toFixed(2)}`;
-            document.getElementById('employeeSiacap').textContent = `B/. ${employeeSiacap.toFixed(2)}`;
-            document.getElementById('totalEmployeeDeductions').textContent = `B/. ${totalEmployeeDeductions.toFixed(2)}`;
-            document.getElementById('netSalary').textContent = `B/. ${netSalaryBiweekly.toFixed(2)}`;
+            // Actualizar UI
+            updateResultUI({
+                css: employeeCss,
+                education: employeeEducation,
+                isr: employeeIsr,
+                siacap: employeeSiacap,
+                total: totalEmployeeDeductions,
+                biweekly: netSalaryBiweekly
+            });
 
             document.getElementById('result').classList.remove('hidden');
+            document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
         }
 
-        // Descargar PDF SOLO con descuentos del empleado, centrado y con logo+copyright
+        function calculateISR(monthlySalary) {
+            const annualIncomeForISR = monthlySalary * 13;
+            let employeeIsr = 0;
+
+            if (annualIncomeForISR <= 11000) {
+                employeeIsr = 0;
+            } else if (annualIncomeForISR <= 50000) {
+                employeeIsr = (annualIncomeForISR - 11000) * 0.15;
+            } else {
+                employeeIsr = 5850 + (annualIncomeForISR - 50000) * 0.25;
+            }
+
+            return employeeIsr / 13;
+        }
+
+        function updateResultUI(data) {
+            document.getElementById('employeeCss').textContent = `B/. ${data.css.toFixed(2)}`;
+            document.getElementById('employeeEducation').textContent = `B/. ${data.education.toFixed(2)}`;
+            document.getElementById('employeeIsr').textContent = `B/. ${data.isr.toFixed(2)}`;
+            document.getElementById('employeeSiacap').textContent = `B/. ${data.siacap.toFixed(2)}`;
+            document.getElementById('totalEmployeeDeductions').textContent = `B/. ${data.total.toFixed(2)}`;
+            document.getElementById('netSalary').textContent = `B/. ${data.biweekly.toFixed(2)}`;
+        }
+
+        // ============== PDF ==============
         function downloadPDF() {
             const resultDiv = document.getElementById('result');
             if (resultDiv.classList.contains('hidden')) {
-                alert("Calcula los descuentos antes de descargar el PDF.");
+                alert('Calcula los descuentos antes de descargar el PDF.');
                 return;
             }
-            let doc = new jspdf.jsPDF();
+
+            const doc = new jspdf.jsPDF();
             let y = 20;
-            doc.setFont("Inter", "bold");
+
+            // Encabezado
+            doc.setFont('Inter', 'bold');
             doc.setFontSize(18);
-            doc.text("Descuentos del Empleado (Mensual)", 105, y, {align: "center"});
-            y += 10;
-            doc.setFontSize(13);
-            doc.text(document.getElementById('employeeCss').previousElementSibling.textContent + " " + document.getElementById('employeeCss').textContent, 105, y, {align: "center"}); y += 7;
-            doc.text(document.getElementById('employeeEducation').previousElementSibling.textContent + " " + document.getElementById('employeeEducation').textContent, 105, y, {align: "center"}); y += 7;
-            doc.text(document.getElementById('employeeIsr').previousElementSibling.textContent + " " + document.getElementById('employeeIsr').textContent, 105, y, {align: "center"}); y += 7;
+            doc.setTextColor(37, 99, 235);
+            doc.text('Descuentos del Empleado (Mensual)', 105, y, { align: 'center' });
+            y += 15;
+
+            // Línea separadora
+            doc.setDrawColor(37, 99, 235);
+            doc.line(20, y - 5, 190, y - 5);
+
+            doc.setFont('Inter', 'normal');
+            doc.setFontSize(12);
+            doc.setTextColor(0, 0, 0);
+
+            const items = [
+                { label: 'Seguro Social (CSS):', value: 'employeeCss' },
+                { label: 'Impuesto de Educación:', value: 'employeeEducation' },
+                { label: 'Impuesto sobre la Renta (ISR):', value: 'employeeIsr' }
+            ];
+
+            items.forEach(item => {
+                const value = document.getElementById(item.value).textContent;
+                doc.text(item.label, 20, y);
+                doc.setFont('Inter', 'bold');
+                doc.text(value, 190, y, { align: 'right' });
+                doc.setFont('Inter', 'normal');
+                y += 8;
+            });
+
             if (!document.getElementById('siacapEmployeeRow').classList.contains('hidden')) {
-                doc.text(document.getElementById('employeeSiacap').previousElementSibling.textContent + " " + document.getElementById('employeeSiacap').textContent, 105, y, {align: "center"}); y += 7;
+                const siacapValue = document.getElementById('employeeSiacap').textContent;
+                doc.text('SIACAP:', 20, y);
+                doc.setFont('Inter', 'bold');
+                doc.text(siacapValue, 190, y, { align: 'right' });
+                doc.setFont('Inter', 'normal');
+                y += 8;
             }
-            doc.text("Total Descuentos: " + document.getElementById('totalEmployeeDeductions').textContent, 105, y, {align: "center"}); y += 10;
-            doc.text("Salario Quincenal: " + document.getElementById('netSalary').textContent, 105, y, {align: "center"}); y += 20;
+
+            y += 5;
+            doc.setDrawColor(37, 99, 235);
+            doc.line(20, y, 190, y);
+            y += 10;
+
+            // Total y Salario Quincenal
+            doc.setFont('Inter', 'bold');
+            doc.setFontSize(13);
+            const totalDeductions = document.getElementById('totalEmployeeDeductions').textContent;
+            const netSalary = document.getElementById('netSalary').textContent;
+
+            doc.text('Total Descuentos (Mensual):', 20, y);
+            doc.setTextColor(239, 68, 68);
+            doc.text(totalDeductions, 190, y, { align: 'right' });
+            y += 10;
+
+            doc.setTextColor(37, 99, 235);
+            doc.text('Salario Quincenal:', 20, y);
+            doc.text(netSalary, 190, y, { align: 'right' });
+            y += 20;
 
             // Logo y copyright
-            let logo = new Image();
-            logo.src = "Imagenes/Screenshot_20260813_220411_com_microsoft_copilot_MainActivity.jpg";
-            logo.onload = function() {
-                doc.addImage(logo, 'PNG', 85, y, 40, 18); y += 22;
-                doc.setFontSize(11);
-                doc.setTextColor(40, 100, 200);
-                doc.text("© Creado por Licdo. Carlos E. González", 105, y, {align: "center"});
-                doc.save("deducciones_empleado.pdf");
-            };
-            logo.onerror = function() {
-                doc.setFontSize(11);
-                doc.setTextColor(40, 100, 200);
-                doc.text("© Creado por Licdo. Carlos E. González", 105, y, {align: "center"}); 
-                doc.save("deducciones_empleado.pdf");
-            };
+            const logoImg = 'Imagenes/Screenshot_20260813_220411_com_microsoft_copilot_MainActivity.jpg';
+            doc.addImage(logoImg, 'PNG', 85, y, 40, 18);
+            y += 25;
+
+            doc.setFont('Inter', 'normal');
+            doc.setFontSize(11);
+            doc.setTextColor(96, 125, 139);
+            doc.text('© Creado por Licdo. Carlos E. González', 105, y, { align: 'center' });
+
+            doc.save('deducciones_empleado.pdf');
         }
 
-        // Compartir resultado por WhatsApp SOLO descuentos del empleado
+        // ============== WHATSAPP ==============
         function shareWhatsApp(event) {
             event.preventDefault();
             const resultDiv = document.getElementById('result');
+
             if (resultDiv.classList.contains('hidden')) {
-                alert("Calcula los descuentos antes de compartir.");
+                alert('Calcula los descuentos antes de compartir.');
                 return;
             }
-            let texto = "Descuentos del Empleado (Mensual):\n";
-            texto += document.getElementById('employeeCss').previousElementSibling.textContent + " " + document.getElementById('employeeCss').textContent + "\n";
-            texto += document.getElementById('employeeEducation').previousElementSibling.textContent + " " + document.getElementById('employeeEducation').textContent + "\n";
-            texto += document.getElementById('employeeIsr').previousElementSibling.textContent + " " + document.getElementById('employeeIsr').textContent + "\n";
+
+            const css = document.getElementById('employeeCss').textContent;
+            const education = document.getElementById('employeeEducation').textContent;
+            const isr = document.getElementById('employeeIsr').textContent;
+            const total = document.getElementById('totalEmployeeDeductions').textContent;
+            const biweekly = document.getElementById('netSalary').textContent;
+
+            let texto = '📊 *Descuentos del Empleado (Mensual)*\n\n';
+            texto += '💼 *Desglose de Descuentos:*\n';
+            texto += `✓ Seguro Social (CSS): ${css}\n`;
+            texto += `✓ Impuesto de Educación: ${education}\n`;
+            texto += `✓ Impuesto sobre la Renta (ISR): ${isr}\n`;
+
             if (!document.getElementById('siacapEmployeeRow').classList.contains('hidden')) {
-                texto += document.getElementById('employeeSiacap').previousElementSibling.textContent + " " + document.getElementById('employeeSiacap').textContent + "\n";
+                const siacap = document.getElementById('employeeSiacap').textContent;
+                texto += `✓ SIACAP: ${siacap}\n`;
             }
-            texto += "Total Descuentos: " + document.getElementById('totalEmployeeDeductions').textContent + "\n";
-            texto += "Salario Quincenal: " + document.getElementById('netSalary').textContent + "\n";
-            texto += "\n© Creado por Licdo. Carlos E. González\n";
-            texto += "Calculadora: " + window.location.href;
-            const waUrl = "https://wa.me/?text=" + encodeURIComponent(texto);
-            window.open(waUrl, "_blank");
+
+            texto += `\n💰 *Total Descuentos (Mensual):* ${total}\n`;
+            texto += `\n🎯 *Salario Quincenal:* ${biweekly}\n`;
+            texto += `\n📝 _*Nota:* Cálculos según ley Panameña_\n`;
+            texto += `\n© Creado por Licdo. Carlos E. González\n`;
+            texto += `🔗 ${window.location.href}`;
+
+            const waUrl = `https://wa.me/?text=${encodeURIComponent(texto)}`;
+            window.open(waUrl, '_blank');
         }
+
+        // ============== INICIALIZACIÓN ==============
+        window.addEventListener('DOMContentLoaded', () => {
+            restoreDarkMode();
+            updateSalaryInputLabel();
+            document.getElementById('salaryInput').focus();
+        });
+
+        // Enter para calcular
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('salaryInput').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    calculateCombinedDeductions();
+                }
+            });
+        });
     </script>
 </body>
 </html>

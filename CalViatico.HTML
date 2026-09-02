@@ -3,271 +3,188 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora de Décimo con Descuentos en Panamá</title>
+    <title>Calculadora de Décimo con Descuentos - Mejorada</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-body {
-    font-family: 'Inter', sans-serif;
-    background: linear-gradient(135deg, #e0e7ff 0%, #f0f4f8 100%);
-    color: #87100 ;
-}
-.dark body {
-    background: linear-gradient(135deg, #18181b 0%, #27272a 100%);
-    color: #f3f4f6;
-}
-h1, h2, h3, p, label, #result, .glass-btn, .result-footer {
-    text-align: center !important;
-}
-h1 { color: #87100; }
-.dark h1 { color: #f3f4f6; }
-.glass {
-    background: rgba(255,255,255,0.85);
-    box-shadow: 0 8px 32px 0 rgba(31,38,135,0.15);
-    backdrop-filter: blur(5px);
-    border-radius: 1rem;
-    color: #000;
-}
-.dark .glass {
-    background: rgba(36,37,46,0.93);
-    box-shadow: 0 8px 32px 0 rgba(20,20,30,0.35);
-    color: #f3f4f6;
-}
-.floating-label { position:relative; }
-.floating-label input { padding-top: 1.25rem; }
-.floating-label label {
-    position: absolute;
-    top: 0.75rem;
-    left: 1rem;
-    pointer-events: none;
-    color: #3b82f6;
-    font-weight: 600;
-    font-size: 1rem;
-    transition: all 0.2s;
-}
-.floating-label input:focus + label,
-.floating-label input:not(:placeholder-shown) + label {
-    top: 0.2rem;
-    left: 0.9rem;
-    font-size: 0.85rem;
-    color: #2563eb;
-}
-#darkModeToggle {
-    position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-    z-index: 50;
-    width: 56px;
-    height: 56px;
-    background: rgba(255,255,255,0.9);
-    border-radius: 50%;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.18);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-#darkModeToggle:hover { background: #e0e7ff; }
-.dark #darkModeToggle { background: rgba(36,37,46,0.93); }
-.dark #darkModeToggle:hover { background: #18181b; }
-#darkModeIcon { transition: transform .3s; }
-#darkModeToggle:active #darkModeIcon { transform: rotate(40deg) scale(1.1);}
-.action-buttons {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    margin-top: 1.5rem;
-}
-.glass-btn {
-    background: rgba(255,255,255,0.65);
-    border: 1px solid #2563eb;
-    color: #2563eb;
-    font-weight: bold;
-    padding: 0.7rem 1.6rem;
-    border-radius: 0.9rem;
-    box-shadow: 0 4px 20px 0 rgba(31,38,135,0.09);
-    cursor: pointer;
-    transition: background .18s, color .18s, border .18s;
-    font-size: 1.07rem;
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    justify-content: center;
-    text-align: center;
-}
-.glass-btn:hover {
-    background: #2563eb;
-    color: #fff;
-    border: 1px solid #1e40af;
-}
-@media (max-width: 520px) {
-    .action-buttons { gap: 0.5rem; flex-direction: column; }
-    .glass-btn { width: 100%; justify-content: center; }
-}
-.result-footer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-    margin-top: 2rem;
-    text-align: center;
-}
-.result-footer img {
-    height: 40px;
-    width: auto;
-}
-.result-footer p {
-    font-size: 0.95rem;
-    color: #2563eb;
-    text-align: center;
-}
-.dark .result-footer p {
-    color: #93c5fd;
-}
+        :root{
+            --primary: #2563eb; /* azul */
+            --accent: #10b981;  /* verde */
+            --danger: #dc2626;  /* rojo */
+            --bg: #f8fafc;
+            --card: rgba(255,255,255,0.85);
+        }
+        html,body{height:100%;}
+        body{
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, "Helvetica Neue", Arial;
+            background: linear-gradient(135deg,#e6eefc 0%, #f8fafc 100%);
+            color: #0f172a;
+            -webkit-font-smoothing:antialiased;
+            -moz-osx-font-smoothing:grayscale;
+        }
+        .dark body{
+            background: linear-gradient(135deg,#0b1220 0%, #0f1724 100%);
+            color: #e6eef8;
+        }
+        .container{max-width:1100px}
+        .card{
+            background: var(--card);
+            border-radius: 1rem;
+            box-shadow: 0 8px 30px rgba(8,15,52,0.08);
+            padding: 1.5rem;
+            backdrop-filter: blur(6px);
+        }
+        .dark .card{
+            background: rgba(10,12,18,0.7);
+            box-shadow: 0 8px 30px rgba(2,6,23,0.6);
+        }
+        /* Floating label improved */
+        .floating-label{position:relative}
+        .floating-label input{padding:1.05rem 1rem .35rem 1rem}
+        .floating-label label{
+            position:absolute;left:0.95rem;top:0.9rem;color:var(--primary);font-weight:600;transition:all .15s;pointer-events:none;font-size:0.95rem
+        }
+        .floating-label input:focus + label, .floating-label input:not(:placeholder-shown) + label{top:.35rem;font-size:.78rem;color:var(--primary)}
+
+        /* Dark mode toggle */
+        #darkModeToggle{position:fixed;right:1.25rem;bottom:1.25rem;width:54px;height:54px;border-radius:9999px;background:linear-gradient(180deg,#fff,#f1f5f9);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(0,0,0,0.12);z-index:60}
+        .dark #darkModeToggle{background:linear-gradient(180deg,#0b1220,#071022)}
+        #darkModeToggle svg{width:22px;height:22px}
+
+        /* Responsive tweaks */
+        @media (max-width:640px){
+            h1{font-size:1.25rem}
+        }
+
+        /* Result box */
+        .result-box{border-radius:.75rem;padding:1rem}
+        .muted{color:#6b7280}
+        .val{font-weight:800}
+
+        footer{opacity:0.95}
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center justify-center p-4 transition-colors duration-300">
+<body class="min-h-screen flex flex-col items-center justify-center p-6 transition-colors duration-300">
 
-    <!-- Calculadora principal -->
-    <div class="glass w-full max-w-xl mx-auto p-8 mb-8">
-        <div class="flex justify-center items-center my-6">
-            <img src="Imagenes/Screenshot_20260813_220411_com_microsoft_copilot_MainActivity.jpg" alt="Logo" class="h-20 w-auto" />
-        </div>
-        <h1 class="text-4xl font-extrabold text-center text-blue-900 dark:text-black drop-shadow mb-6 tracking-tight">
-            Calculadora de Décimo y Descuentos
-        </h1>
-        <p class="text-center text-gray-500 dark:text-black mb-8 text-lg">
-            Ingresa tu salario mensual y obtén el monto de tu décimo tercer mes y sus descuentos por Seguro Social (CSS) y Impuestos Sobre la Renta (ISR) .
-        </p>
+    <main class="w-full container mx-auto">
+        <div class="card mx-4 md:mx-0 p-6 md:p-8 grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+            <div>
+                <div class="flex items-center gap-4 mb-4">
+                    <img src="Imagenes/Screenshot_20260813_220411_com_microsoft_copilot_MainActivity.jpg" alt="Logo" class="h-16 w-auto rounded-md shadow-sm">
+                    <div>
+                        <h1 class="text-2xl md:text-3xl font-extrabold">Calculadora de Décimo y Descuentos</h1>
+                        <p class="text-sm muted">Ingresa tu salario mensual. Cálculo estimado para Panamá. Mantengo la lógica original de deducciones (CSS 7.25% sobre décimo, ISR anual escalonado).</p>
+                    </div>
+                </div>
 
-        <div class="mb-8 p-6 bg-blue-50 dark:bg-gray-800 rounded-xl shadow-inner">
-            <div class="floating-label mt-6">
-                <input type="number" id="salaryInput"
-                    class="w-full p-3 border border-blue-300 dark:border-gray-700 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 ease-in-out bg-white dark:bg-gray-900 text-gray-800 dark:text-white text-xl placeholder-transparent text-center"
-                    placeholder=" " min="0" step="0.01" value="0">
-                <label for="salaryInput" id="salaryInputLabel">Salario Mensual:</label>
+                <form id="calcForm" class="space-y-4" onsubmit="return false;">
+                    <div class="floating-label">
+                        <input inputmode="decimal" type="number" min="0" step="0.01" id="salaryInput" placeholder=" " class="w-full bg-white/90 dark:bg-transparent border border-slate-200 dark:border-slate-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 p-3" aria-describedby="salaryHelp">
+                        <label for="salaryInput">Salario Mensual (B/.)</label>
+                        <p id="salaryHelp" class="text-xs muted mt-1">Introduce tu salario mensual. El décimo corresponde a 1/3 del salario mensual.</p>
+                    </div>
+
+                    <div class="flex gap-3 flex-col sm:flex-row">
+                        <button id="calculateBtn" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-r from-emerald-500 to-blue-600 hover:from-emerald-600 hover:to-blue-700 text-white font-semibold py-2 px-4 rounded-lg shadow">Calcular</button>
+                        <button id="downloadBtn" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white/80 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 py-2 px-4 rounded-lg shadow">Descargar PDF</button>
+                        <button id="shareBtn" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white/80 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 py-2 px-4 rounded-lg shadow">Compartir WhatsApp</button>
+                    </div>
+                </form>
+
+                <div class="mt-4 text-xs muted">
+                    <p>*Resultados estimados. Consulte con su departamento de recursos humanos para valores oficiales.</p>
+                </div>
+
             </div>
-            <p class="text-sm text-gray-500 dark:text-gray-400 mt-2 text-center">*El décimo se calcula como 1/3 de tu salario mensual.</p>
-        </div>
 
-        <button onclick="calculateDecimoAndDeductions()"
-            class="w-full bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white font-bold py-3 px-6 rounded-xl shadow-lg transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-green-300 text-xl tracking-wide text-center">
-            Calcular Décimo y Descuentos
-        </button>
+            <div>
+                <div id="result" class="result-box bg-emerald-50 dark:bg-emerald-900/30 border border-emerald-100 dark:border-emerald-800 hidden">
+                    <h2 class="text-lg font-semibold text-emerald-700 dark:text-emerald-300 text-center mb-2">Resultado</h2>
 
-        <!-- Botones PDF y Compartir -->
-        <div class="action-buttons">
-            <button class="glass-btn" onclick="descargarPDF()" type="button">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke="currentColor" stroke-width="2" d="M12 16v-8m0 8l-4-4m4 4l4-4M4 18h16"/>
-                </svg>
-                Descargar PDF
-            </button>
-            <button class="glass-btn" onclick="compartirWhatsApp(event)" type="button">
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 32 32">
-                    <path d="M16 3C9.383 3 4 8.383 4 15c0 2.633.92 5.071 2.583 7.071L4 29l7.114-2.431C13.051 27.15 14.497 27.5 16 27.5c6.617 0 12-5.383 12-12S22.617 3 16 3zm0 22.5c-1.326 0-2.626-.252-3.838-.749l-.273-.111-4.224 1.447 1.396-4.124-.179-.29C6.488 19.012 5.5 17.058 5.5 15c0-5.799 4.701-10.5 10.5-10.5S26.5 9.201 26.5 15 21.799 25.5 16 25.5zm5.714-7.005c-.313-.156-1.846-.91-2.132-1.015-.287-.104-.496-.156-.705.156-.208.311-.807 1.015-.991 1.223-.183.208-.364.234-.677.078-.313-.156-1.324-.487-2.521-1.541-.931-.833-1.558-1.86-1.741-2.173-.182-.312-.019-.48.137-.636.141-.139.313-.364.469-.546.157-.183.209-.312.314-.52.104-.208.052-.39-.026-.546-.078-.156-.705-1.694-.965-2.32-.254-.613-.514-.531-.705-.541l-.6-.01c-.207 0-.546.078-.832.364-.286.286-1.086 1.062-1.086 2.59s1.112 3.017 1.267 3.23c.156.208 2.186 3.339 5.304 4.544.741.254 1.318.406 1.77.52.743.189 1.421.129 1.954.078.597-.059 1.846-.755 2.107-1.483.26-.729.26-1.355.182-1.484-.077-.129-.285-.208-.597-.364z"/>
-                </svg>
-                Compartir por WhatsApp
-            </button>
-        </div>
+                    <div class="grid grid-cols-2 gap-2 items-center py-1">
+                        <div class="muted">Décimo Bruto</div>
+                        <div id="decimoResult" class="text-right val">B/. 0.00</div>
 
-        <div id="result" class="mt-8 hidden">
-            <div class="result-section bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-900 rounded-xl p-6">
-                <h2 class="text-2xl font-semibold text-green-800 dark:text-green-300 mb-4 text-center">Resultado:</h2>
-                <div class="result-item flex flex-col items-center py-2 text-lg">
-                    <span class="text-gray-700 dark:text-gray-200 font-semibold">Tu décimo tercer mes bruto:</span>
-                    <span id="decimoResult" class="font-extrabold text-green-700 dark:text-green-300">B/. 0.00</span>
+                        <div class="muted">Descuento CSS (7.25%)</div>
+                        <div id="cssResult" class="text-right val text-red-600">B/. 0.00</div>
+
+                        <div class="muted">Descuento ISR (parte del décimo)</div>
+                        <div id="isrResult" class="text-right val text-red-600">B/. 0.00</div>
+
+                        <div class="muted font-bold border-t pt-2">Décimo Neto Recibido</div>
+                        <div id="decimoNeto" class="text-right val text-sky-900 dark:text-sky-300 border-t pt-2">B/. 0.00</div>
+                    </div>
+
+                    <div class="mt-4 text-center text-xs muted">
+                        <p>© Creado por Licdo. Carlos E. González</p>
+                    </div>
                 </div>
-                <div class="result-item flex flex-col items-center py-2 text-lg">
-                    <span class="text-gray-700 dark:text-gray-200">Descuento Seguro Social :</span>
-                    <span id="cssResult" class="font-semibold text-red-700 dark:text-red-400">B/. 0.00</span>
-                </div>
-                <div class="result-item flex flex-col items-center py-2 text-lg">
-                    <span class="text-gray-700 dark:text-gray-200">Descuento Impuesto sobre la Renta (ISR):</span>
-                    <span id="isrResult" class="font-semibold text-red-700 dark:text-red-400">B/. 0.00</span>
-                </div>
-                <div class="result-item flex flex-col items-center py-2 text-lg font-bold border-t border-green-200 dark:border-green-800 mt-4 pt-4">
-                    <span class="text-green-800 dark:text-green-300">Décimo Neto Recibido:</span>
-                    <span id="decimoNeto" class="font-extrabold text-blue-900 dark:text-blue-300">B/. 0.00</span>
+
+                <div id="noResult" class="p-4 bg-white/60 dark:bg-transparent rounded-md border border-slate-100 dark:border-slate-800 text-center muted">
+                    <p>No hay resultados aún. Introduce un salario y pulsa "Calcular"</p>
                 </div>
             </div>
-            <p class="text-sm text-gray-500 dark:text-gray-400 mt-6 text-center">
-                *El cálculo es estimado. El décimo tercer mes corresponde a 1/3 del salario mensual. El descuento de CSS sobre décimo. El ISR mostrado es el impuesto sobre la renta para salarios desde los 923.
-            </p>
-            <!-- Logo y copyright debajo del resultado -->
-            <div class="result-footer">
-                <img src="Imagenes/Screenshot_20260813_220411_com_microsoft_copilot_MainActivity.jpg" alt="Logo">
-                <p>© Creado por Licdo. Carlos E. González</p>
-            </div>
         </div>
-    </div>
 
-    <!-- Footer elegante y bien posicionado -->
-    <footer class="w-full bg-white/80 dark:bg-gray-900/80 backdrop-blur border-t border-blue-200 dark:border-gray-700 shadow-lg py-4 flex flex-col md:flex-row items-center justify-center gap-4 mt-auto text-center">
-        <img src="Imagenes/Screenshot_20260813_220411_com_microsoft_copilot_MainActivity.jpg" alt="Logo" class="h-8 w-auto mx-2">
-        <p class="text-gray-700 dark:text-gray-300 text-sm md:text-base text-center">© Creado por Licdo. Carlos E. Gonzalez C.</p>
-    </footer>
+        <footer class="mt-6 flex items-center justify-center gap-3 text-sm muted">
+            <img src="Imagenes/Screenshot_20260813_220411_com_microsoft_copilot_MainActivity.jpg" alt="Logo" class="h-8 w-auto rounded">
+            <div>© Creado por Licdo. Carlos E. González C.</div>
+        </footer>
+    </main>
 
-    <!-- Botón flotante modo oscuro -->
-    <div id="darkModeToggle" title="Cambiar modo claro/oscuro" onclick="toggleDarkMode()">
-        <span id="darkModeIcon">
-            <!-- Icono sol/luna SVG -->
-            <svg id="iconSunMoon" xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-yellow-400 dark:text-yellow-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <g id="iconSun">
-                    <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2" fill="currentColor"/>
-                    <g stroke="currentColor" stroke-width="2">
-                        <line x1="12" y1="2" x2="12" y2="4"/>
-                        <line x1="12" y1="20" x2="12" y2="22"/>
-                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
-                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-                        <line x1="2" y1="12" x2="4" y2="12"/>
-                        <line x1="20" y1="12" x2="22" y2="12"/>
-                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
-                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-                    </g>
-                </g>
-                <g id="iconMoon" style="display:none;">
-                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" fill="currentColor"/>
-                </g>
-            </svg>
-        </span>
+    <!-- Dark mode toggle -->
+    <div id="darkModeToggle" title="Cambiar modo claro/oscuro" role="button" aria-pressed="false">
+        <svg id="iconSunMoon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="text-yellow-400">
+            <path id="sun" d="M12 4.5V3m0 18v-1.5M4.5 12H3m18 0h-1.5M6.34 6.34L5.22 5.22m13.56 13.56l-1.12-1.12M17.66 6.34l1.12-1.12M6.34 17.66L5.22 18.78" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle id="moon" cx="12" cy="12" r="5" fill="currentColor" style="display:none"></circle>
+        </svg>
     </div>
 
     <script>
-        // Modo oscuro
-        function toggleDarkMode() {
-            const body = document.querySelector('body');
-            body.classList.toggle('dark');
-            updateIcon();
-        }
-        function updateIcon() {
-            const isDark = document.body.classList.contains('dark');
-            const sun = document.querySelector('#iconSun');
-            const moon = document.querySelector('#iconMoon');
-            if (isDark) {
-                sun.style.display = 'none';
-                moon.style.display = 'block';
-            } else {
-                sun.style.display = 'block';
-                moon.style.display = 'none';
-            }
-        }
-        window.onload = () => {
-            document.getElementById('salaryInput').value = "0";
-            updateIcon();
+        // --- Utilidades ---
+        const $ = (id) => document.getElementById(id);
+        const formatMoney = (v) => {
+            return 'B/. ' + Number(v).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2});
         };
 
-        // Cálculo del décimo y descuentos
-        function calculateDecimoAndDeductions() {
-            let salario = parseFloat(document.getElementById('salaryInput').value) || 0;
+        // --- Dark mode persistente ---
+        const darkToggle = document.getElementById('darkModeToggle');
+        function setDarkMode(on){
+            document.documentElement.classList.toggle('dark', on);
+            document.body.classList.toggle('dark', on);
+            darkToggle.setAttribute('aria-pressed', on ? 'true' : 'false');
+            // swap icons
+            const sun = document.getElementById('sun');
+            const moon = document.getElementById('moon');
+            if(on){ sun.style.display='none'; moon.style.display='block'; }
+            else { sun.style.display='block'; moon.style.display='none'; }
+        }
+        darkToggle.addEventListener('click', ()=>{
+            const newVal = !document.documentElement.classList.contains('dark');
+            setDarkMode(newVal);
+            localStorage.setItem('prefersDark', newVal ? '1' : '0');
+        });
+        // Init
+        (function(){
+            const pref = localStorage.getItem('prefersDark');
+            const systemDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if(pref !== null) setDarkMode(pref === '1'); else setDarkMode(systemDark);
+        })();
+
+        // --- Cálculo (misma lógica original, mejor validación y UX) ---
+        function calculateDecimoAndDeductions(){
+            let salario = parseFloat($('salaryInput').value);
+            if(isNaN(salario) || salario <= 0){
+                alert('Introduce un salario mayor que 0.');
+                return;
+            }
+
+            // Lógica original conservada
             let decimo = salario / 3;
+            let css = decimo * 0.0725; // 7.25% sobre décimo
 
-            // Seguro Social sobre décimo: 7.25%
-            let css = decimo * 0.0725;
-
-            // ISR sobre décimo: solo sobre el salario mensual, luego divide entre 3
+            // ISR: calculado sobre salario anual (salario * 13) y distribuido mensualmente, luego el décimo recibe 1/3
             let isrMensual = 0;
             let salarioAnual = salario * 13;
             if (salarioAnual <= 11000) {
@@ -281,76 +198,100 @@ h1 { color: #87100; }
 
             let decimoNeto = decimo - css - isrDecimo;
 
-            document.getElementById('decimoResult').textContent = `B/. ${decimo.toFixed(2)}`;
-            document.getElementById('cssResult').textContent = `B/. ${css.toFixed(2)}`;
-            document.getElementById('isrResult').textContent = `B/. ${isrDecimo.toFixed(2)}`;
-            document.getElementById('decimoNeto').textContent = `B/. ${decimoNeto.toFixed(2)}`;
-            document.getElementById('result').classList.remove('hidden');
+            // Mostrar resultados
+            $('decimoResult').textContent = formatMoney(decimo);
+            $('cssResult').textContent = formatMoney(css);
+            $('isrResult').textContent = formatMoney(isrDecimo);
+            $('decimoNeto').textContent = formatMoney(decimoNeto);
+
+            $('result').classList.remove('hidden');
+            $('noResult').classList.add('hidden');
+
+            return { salario, decimo, css, isrDecimo, decimoNeto };
         }
 
-        // Descargar PDF
-        function descargarPDF() {
-            if (document.getElementById('result').classList.contains('hidden')) {
-                alert("Calcula el resultado antes de descargar el PDF.");
-                return;
-            }
-            let decimo = document.getElementById('decimoResult').textContent;
-            let css = document.getElementById('cssResult').textContent;
-            let isr = document.getElementById('isrResult').textContent;
-            let neto = document.getElementById('decimoNeto').textContent;
+        // --- Manejo de botones ---
+        document.getElementById('calculateBtn').addEventListener('click', calculateDecimoAndDeductions);
 
-            let doc = new jspdf.jsPDF();
+        // PDF (mejor manejo de fuente y fallback) 
+        async function descargarPDF(){
+            if($('result').classList.contains('hidden')){ alert('Calcula el resultado antes de descargar el PDF.'); return; }
+            const data = calculateDecimoAndDeductions();
+            if(!data) return;
+
+            const { decimo, css, isrDecimo, decimoNeto } = data;
+
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF({ unit: 'mm', format: 'a4' });
             let y = 20;
-            doc.setFont("Inter", "bold");
             doc.setFontSize(18);
-            doc.text("Cálculo de Décimo y Descuentos", 105, y, {align: "center"}); y += 12;
-            doc.setFontSize(14);
-            doc.text("Décimo Bruto: " + decimo, 105, y, {align: "center"}); y += 8;
-            doc.text("Descuento CSS: " + css, 105, y, {align: "center"}); y += 8;
-            doc.text("Descuento ISR: " + isr, 105, y, {align: "center"}); y += 8;
-            doc.text("Décimo Neto Recibido: " + neto, 105, y, {align: "center"}); y += 18;
+            doc.text('Cálculo de Décimo y Descuentos', 105, y, {align: 'center'}); y += 12;
+            doc.setFontSize(12);
+            doc.text('Salario Mensual: ' + formatMoney(data.salario), 20, y); y += 8;
+            doc.text('Décimo Bruto: ' + formatMoney(decimo), 20, y); y += 8;
+            doc.text('Descuento CSS: ' + formatMoney(css), 20, y); y += 8;
+            doc.text('Descuento ISR: ' + formatMoney(isrDecimo), 20, y); y += 8;
+            doc.text('Décimo Neto Recibido: ' + formatMoney(decimoNeto), 20, y); y += 12;
 
-            // Logo y copyright
-            let logo = new Image();
-            logo.src = "Imagenes/Screenshot_20260813_220411_com_microsoft_copilot_MainActivity.jpg";
-            logo.onload = function() {
-                doc.addImage(logo, 'PNG', 85, y, 40, 18); y += 22;
-                doc.setFontSize(11);
-                doc.setTextColor(40, 100, 200);
-                doc.text("© Creado por Licdo. Carlos E. González", 105, y, {align: "center"});
-                doc.save("decimo_descuentos.pdf");
+            // Añadir logo si carga
+            const logo = new Image();
+            logo.crossOrigin = 'anonymous';
+            logo.src = 'Imagenes/Screenshot_20260813_220411_com_microsoft_copilot_MainActivity.jpg';
+            logo.onload = function(){
+                try{
+                    // dibuja imagen centrada
+                    const maxW = 40; const x = (210 - maxW)/2;
+                    doc.addImage(logo, 'JPEG', x, y, maxW, 15);
+                }catch(e){ /* fallback */ }
+                doc.setFontSize(10);
+                doc.setTextColor(60, 90, 160);
+                doc.text('© Creado por Licdo. Carlos E. González', 105, 280, {align: 'center'});
+                doc.save('decimo_descuentos.pdf');
             };
-            logo.onerror = function() {
-                doc.setFontSize(11);
-                doc.setTextColor(40, 100, 200);
-                doc.text("© Creado por Licdo. Carlos E. González", 105, y, {align: "center"});
-                doc.save("decimo_descuentos.pdf");
+            logo.onerror = function(){
+                doc.setFontSize(10);
+                doc.setTextColor(60, 90, 160);
+                doc.text('© Creado por Licdo. Carlos E. González', 105, 280, {align: 'center'});
+                doc.save('decimo_descuentos.pdf');
             };
         }
+        document.getElementById('downloadBtn').addEventListener('click', descargarPDF);
 
         // Compartir por WhatsApp
-        function compartirWhatsApp(event) {
-            event.preventDefault();
-            if (document.getElementById('result').classList.contains('hidden')) {
-                alert("Calcula el resultado antes de compartir.");
-                return;
-            }
-            let decimo = document.getElementById('decimoResult').textContent;
-            let css = document.getElementById('cssResult').textContent;
-            let isr = document.getElementById('isrResult').textContent;
-            let neto = document.getElementById('decimoNeto').textContent;
+        function compartirWhatsApp(e){
+            e && e.preventDefault();
+            if($('result').classList.contains('hidden')){ alert('Calcula el resultado antes de compartir.'); return; }
+            const decimo = $('decimoResult').textContent;
+            const css = $('cssResult').textContent;
+            const isr = $('isrResult').textContent;
+            const neto = $('decimoNeto').textContent;
 
-            let texto = "Cálculo de Décimo y Descuentos:\n";
-            texto += "Décimo Bruto: " + decimo + "\n";
-            texto += "Descuento CSS: " + css + "\n";
-            texto += "Descuento ISR: " + isr + "\n";
-            texto += "Décimo Neto Recibido: " + neto + "\n";
-            texto += "\n© Creado por Licdo. Carlos E. González\n";
-            texto += "Calculadora: " + window.location.href;
+            let texto = `Cálculo de Décimo y Descuentos:%0A`;
+            texto += `Décimo Bruto: ${decimo}%0A`;
+            texto += `Descuento CSS: ${css}%0A`;
+            texto += `Descuento ISR: ${isr}%0A`;
+            texto += `Décimo Neto Recibido: ${neto}%0A`;
+            texto += `%0A© Creado por Licdo. Carlos E. González`;
 
-            const waUrl = "https://wa.me/?text=" + encodeURIComponent(texto);
-            window.open(waUrl, "_blank");
+            const waUrl = `https://wa.me/?text=${texto}`;
+            window.open(waUrl, '_blank');
         }
+        document.getElementById('shareBtn').addEventListener('click', compartirWhatsApp);
+
+        // Mejora UX: enter en input hace el cálculo
+        document.getElementById('salaryInput').addEventListener('keydown', function(e){
+            if(e.key === 'Enter'){
+                e.preventDefault();
+                calculateDecimoAndDeductions();
+            }
+        });
+
+        // Inicializar valor y acceso teclado
+        window.addEventListener('load', ()=>{
+            const input = $('salaryInput');
+            if(!input.value) input.value = '0';
+        });
+
     </script>
 </body>
 </html>

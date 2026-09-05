@@ -13,13 +13,6 @@
     box-sizing:border-box;
     font-family:'Segoe UI',sans-serif;
 }
-.logo-container img{
-
-width:60px;
-
-border-radius:50%;
-
-}
 
 body{
     min-height:100vh;
@@ -104,25 +97,128 @@ body::after{
 
 }
 
+/* ===== LOGO PREMIUM RGB ===== */
+
 .logo-container{
     display:flex;
     justify-content:center;
-    margin-bottom:20px;
+    align-items:center;
+    margin-bottom:25px;
 }
 
-.logo{
-    width:120px;
-    height:120px;
+.logo-ring{
+    position:relative;
+    width:140px;
+    height:140px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    transition:.5s;
+}
+
+/* ARO RGB GIRATORIO */
+
+.logo-ring::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:140px;
+    height:140px;
+
     border-radius:50%;
+
+    background:
+    conic-gradient(
+        #ff0000,
+        #ff7b00,
+        #ffff00,
+        #00ff00,
+        #00ffff,
+        #0066ff,
+        #8a2be2,
+        #ff1493,
+        #ff0000
+    );
+
+    animation:
+        girarLogo 4s linear infinite,
+        rainbow 8s linear infinite;
+
+    z-index:0;
+}
+
+/* FONDO OSCURO INTERIOR */
+
+.logo-ring::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:126px;
+    height:126px;
+
+    background:#0f172a;
+
+    border-radius:50%;
+
+    z-index:1;
+}
+
+/* IMAGEN */
+
+.logo-ring img{
+
+    position:relative;
+    z-index:2;
+
+    width:110px;
+    height:110px;
+
     object-fit:cover;
-    border:4px solid rgba(255,255,255,.25);
-    box-shadow:0 0 30px rgba(0,178,255,.5);
+
+    border-radius:50%;
+
+    border:3px solid rgba(255,255,255,.25);
+
     transition:.4s;
 }
 
-.logo:hover{
-    transform:scale(1.05);
+.logo-ring:hover img{
+    transform:scale(1.08);
 }
+
+@keyframes girarLogo{
+
+    from{
+        transform:rotate(0deg);
+    }
+
+    to{
+        transform:rotate(360deg);
+    }
+
+}
+
+@keyframes rainbow{
+
+    from{
+        filter:
+            hue-rotate(0deg)
+            blur(2px);
+    }
+
+    to{
+        filter:
+            hue-rotate(360deg)
+            blur(2px);
+    }
+}
+
 
 h1{
     color:white;
@@ -322,9 +418,12 @@ footer{
 </head>
 <body>
 
-<div class="container">
+<div class="logo-container">
+    <div class="logo-ring">
+        Imagenes/Screenshot_20260813_220411_com_microsoft_copilot_MainActivity.jpg
+    </div>
+</div>
 
-            <img src="Imagenes/Screenshot_20260813_220411_com_microsoft_copilot_MainActivity.jpg" alt="Logo">
 
 <h1>📅 Calculadora de Vacaciones Pro</h1>
 
@@ -554,6 +653,38 @@ function calcularVacaciones(){
     },200);
 
 }
+/* RESPLANDOR RGB AUTOMÁTICO */
+
+window.addEventListener("load", ()=>{
+
+    const colores = [
+        "#ff0000",
+        "#ff7b00",
+        "#ffff00",
+        "#00ff00",
+        "#00ffff",
+        "#0066ff",
+        "#8a2be2",
+        "#ff1493"
+    ];
+
+    setInterval(()=>{
+
+        const aro =
+        document.querySelector(".logo-ring");
+
+        const color =
+        colores[Math.floor(Math.random()*colores.length)];
+
+        aro.style.filter =
+        `drop-shadow(0 0 15px ${color})
+         drop-shadow(0 0 30px ${color})
+         drop-shadow(0 0 50px ${color})`;
+
+    },700);
+
+});
+
 
 </script>
 

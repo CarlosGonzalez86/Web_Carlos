@@ -3,9 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Calculadora de Vacaciones</title>
+<title>Calculadora de Vacaciones Pro</title>
 
 <style>
+
 *{
     margin:0;
     padding:0;
@@ -18,8 +19,16 @@ body{
     display:flex;
     justify-content:center;
     align-items:center;
-    background:linear-gradient(135deg,#003cff,#1f2937);
-    overflow:hidden;
+    padding:20px;
+
+    background:
+    linear-gradient(
+    135deg,
+    #001f54,
+    #0048ff,
+    #0f172a);
+
+    overflow-x:hidden;
 }
 
 body::before{
@@ -27,11 +36,11 @@ body::before{
     position:absolute;
     width:600px;
     height:600px;
-    background:rgba(255,255,255,0.05);
+    background:rgba(255,255,255,.04);
     border-radius:50%;
     top:-200px;
     right:-200px;
-    animation:float 8s ease-in-out infinite;
+    animation:flotar 8s infinite ease-in-out;
 }
 
 body::after{
@@ -39,124 +48,267 @@ body::after{
     position:absolute;
     width:400px;
     height:400px;
-    background:rgba(255,255,255,0.04);
+    background:rgba(255,255,255,.03);
     border-radius:50%;
     bottom:-150px;
     left:-100px;
-    animation:float 10s ease-in-out infinite;
+    animation:flotar 10s infinite ease-in-out;
 }
 
-@keyframes float{
+@keyframes flotar{
     50%{
         transform:translateY(30px);
     }
 }
 
 .container{
-    position:relative;
-    z-index:1;
-    width:95%;
-    max-width:650px;
+
+    width:100%;
+    max-width:700px;
+
     padding:35px;
+
     border-radius:25px;
+
+    background:rgba(255,255,255,.12);
+
     backdrop-filter:blur(18px);
-    background:rgba(255,255,255,0.12);
-    border:1px solid rgba(255,255,255,0.2);
+
+    border:1px solid rgba(255,255,255,.15);
+
     box-shadow:0 15px 30px rgba(0,0,0,.25);
+
+    z-index:1;
+
     animation:entrada .8s ease;
 }
 
 @keyframes entrada{
+
     from{
         opacity:0;
         transform:translateY(40px);
     }
+
     to{
         opacity:1;
         transform:translateY(0);
     }
+
+}
+
+.logo-container{
+    display:flex;
+    justify-content:center;
+    margin-bottom:20px;
+}
+
+.logo{
+    width:120px;
+    height:120px;
+    border-radius:50%;
+    object-fit:cover;
+    border:4px solid rgba(255,255,255,.25);
+    box-shadow:0 0 30px rgba(0,178,255,.5);
+    transition:.4s;
+}
+
+.logo:hover{
+    transform:scale(1.05);
 }
 
 h1{
-    color:#fff;
+    color:white;
     text-align:center;
+    margin-bottom:10px;
+}
+
+.subtitulo{
+    text-align:center;
+    color:#dbeafe;
     margin-bottom:25px;
 }
 
 label{
-    color:#fff;
     display:block;
-    margin-top:15px;
+    color:white;
     font-weight:600;
+    margin-top:15px;
 }
 
 input{
     width:100%;
     padding:14px;
+    margin-top:8px;
     border:none;
     border-radius:12px;
-    margin-top:8px;
     font-size:16px;
 }
 
-button{
-    width:100%;
-    margin-top:25px;
-    padding:15px;
+.acciones{
+
+    display:flex;
+    gap:10px;
+    margin-top:10px;
+}
+
+.mini-btn{
+
+    flex:1;
+
+    padding:10px;
+
     border:none;
-    border-radius:14px;
+
+    border-radius:10px;
+
+    color:white;
+
+    background:#1e40af;
+
     cursor:pointer;
-    font-size:17px;
-    font-weight:bold;
-    color:#fff;
-    background:linear-gradient(90deg,#00b2ff,#0066ff);
+
     transition:.3s;
 }
 
-button:hover{
-    transform:translateY(-3px);
-    box-shadow:0 10px 20px rgba(0,100,255,.4);
+.mini-btn:hover{
+    background:#2563eb;
+}
+
+.btn-principal{
+
+    width:100%;
+
+    margin-top:25px;
+
+    padding:15px;
+
+    border:none;
+
+    border-radius:12px;
+
+    color:white;
+
+    font-size:17px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    background:
+    linear-gradient(
+    90deg,
+    #00b2ff,
+    #005cff);
+
+    transition:.3s;
+}
+
+.btn-principal:hover{
+    transform:translateY(-2px);
 }
 
 .resultado{
-    margin-top:25px;
     display:none;
-    animation:fade .5s ease;
-}
-
-@keyframes fade{
-    from{
-        opacity:0;
-    }
-    to{
-        opacity:1;
-    }
+    margin-top:25px;
 }
 
 .card{
-    background:#f8fafc;
-    margin-top:12px;
-    padding:15px;
+
+    background:white;
+
+    border-left:5px solid #0057ff;
+
     border-radius:15px;
-    border-left:5px solid #0066ff;
+
+    padding:15px;
+
+    margin-bottom:12px;
 }
 
 .card h3{
-    color:#003cff;
+    color:#0057ff;
     margin-bottom:5px;
 }
 
 .card p{
-    font-size:18px;
+
     color:#374151;
+    font-size:18px;
     font-weight:bold;
+
+}
+
+.resumen{
+
+    background:
+    linear-gradient(
+    135deg,
+    #0057ff,
+    #00a2ff);
+
+    color:white;
+}
+
+.resumen h3{
+    color:white;
+}
+
+.stats{
+
+    display:flex;
+
+    justify-content:space-around;
+
+    margin-top:15px;
+
+    text-align:center;
+}
+
+.stats span{
+    display:block;
+    font-size:28px;
+    font-weight:bold;
+}
+
+.timeline{
+
+    width:100%;
+    height:18px;
+    border-radius:50px;
+    overflow:hidden;
+    background:#ced4da;
+    margin-top:20px;
+}
+
+.progress{
+
+    width:0%;
+    height:100%;
+
+    background:
+    linear-gradient(
+    90deg,
+    #00b2ff,
+    #004cff);
+
+    transition:2s;
 }
 
 footer{
     text-align:center;
     margin-top:20px;
-    color:#ddd;
+    color:#dbeafe;
     font-size:13px;
+}
+
+@media(max-width:600px){
+
+    .stats{
+        flex-direction:column;
+        gap:15px;
+    }
+
 }
 
 </style>
@@ -164,110 +316,238 @@ footer{
 <body>
 
 <div class="container">
-                <img src="Imagenes/Screenshot_20260813_220411_com_microsoft_copilot_MainActivity.jpg" alt="Logo Calculadora" />
 
-<h1>📅 Calculadora de Vacaciones</h1>
+<div class="logo-container">
+Imagenes/Screenshot_20260813_220411_com_microsoft_copilot_MainActivity.jpg
+</div>
+
+<h1>📅 Calculadora de Vacaciones Pro</h1>
+
+<p class="subtitulo">
+Calcula fechas de vacaciones por días calendario
+</p>
 
 <label>Fecha de inicio</label>
+
 <input type="date" id="fechaInicio">
 
-<label>Días de vacaciones otorgados</label>
-<input type="number" id="dias" min="1" placeholder="Ejemplo: 120">
+<div class="acciones">
 
-<button onclick="calcularVacaciones()">
-Calcular Vacaciones
+<button class="mini-btn" onclick="ponerHoy()">
+Hoy
+</button>
+
+<button class="mini-btn" onclick="ponerManana()">
+Mañana
+</button>
+
+<button class="mini-btn" onclick="limpiarFormulario()">
+Limpiar
+</button>
+
+</div>
+
+<label>Días de vacaciones otorgados</label>
+
+<input
+type="number"
+id="dias"
+min="1"
+placeholder="Ejemplo: 120">
+
+<button
+class="btn-principal"
+onclick="calcularVacaciones()">
+
+🚀 Calcular Vacaciones
+
 </button>
 
 <div class="resultado" id="resultado">
 
 <div class="card">
-<h3>Fecha de inicio</h3>
+<h3>📅 Fecha de Inicio</h3>
 <p id="inicio"></p>
 </div>
 
 <div class="card">
-<h3>Fecha final</h3>
+<h3>🏁 Fecha Final</h3>
 <p id="fin"></p>
 </div>
 
 <div class="card">
-<h3>Total de días calendario</h3>
+<h3>✅ Total de Días</h3>
 <p id="total"></p>
 </div>
 
 <div class="card">
-<h3>Año involucrado</h3>
+<h3>📆 Años Involucrados</h3>
 <p id="anio"></p>
+</div>
+
+<div class="card resumen">
+
+<h3>📊 Resumen Ejecutivo</h3>
+
+<div class="stats">
+
+<div>
+<span id="meses">0</span>
+<small>Meses</small>
+</div>
+
+<div>
+<span id="semanas">0</span>
+<small>Semanas</small>
+</div>
+
+<div>
+<span id="cruce">No</span>
+<small>Cruza Año</small>
+</div>
+
+</div>
+
+</div>
+
+<div class="timeline">
+<div class="progress" id="progress"></div>
 </div>
 
 </div>
 
 <footer>
-Sistema de cálculo por días calendario • Compatible con años bisiestos
+Sistema compatible con años bisiestos • Versión PRO
 </footer>
 
 </div>
 
 <script>
 
-// Coloca mañana por defecto
 window.onload = () => {
+
+    ponerManana();
+
+};
+
+function ponerHoy(){
+
+    let hoy = new Date();
+
+    document.getElementById("fechaInicio").value =
+    hoy.toISOString().split('T')[0];
+}
+
+function ponerManana(){
+
     let manana = new Date();
+
     manana.setDate(manana.getDate()+1);
 
     document.getElementById("fechaInicio").value =
-        manana.toISOString().split('T')[0];
-};
+    manana.toISOString().split('T')[0];
+}
+
+function limpiarFormulario(){
+
+    document.getElementById("dias").value="";
+
+    document.getElementById("resultado").style.display="none";
+
+    document.getElementById("progress").style.width="0%";
+
+}
 
 function formatearFecha(fecha){
-    return fecha.toLocaleDateString('es-ES',{
-        weekday:'long',
-        day:'numeric',
-        month:'long',
-        year:'numeric'
+
+    return fecha.toLocaleDateString("es-ES",{
+
+        weekday:"long",
+        day:"numeric",
+        month:"long",
+        year:"numeric"
+
     });
+
 }
 
 function calcularVacaciones(){
 
     const fechaInput =
-        document.getElementById("fechaInicio").value;
+    document.getElementById("fechaInicio").value;
 
     const dias =
-        parseInt(document.getElementById("dias").value);
+    parseInt(document.getElementById("dias").value);
 
-    if(!fechaInput || !dias || dias <= 0){
-        alert("Ingrese una fecha y cantidad de días válida.");
+    if(!fechaInput || !dias || dias<=0){
+
+        alert("Ingrese una fecha y una cantidad válida.");
+
         return;
     }
 
     let inicio = new Date(fechaInput);
 
     let fin = new Date(inicio);
-    fin.setDate(fin.getDate() + dias);
+
+    /* Cuenta correctamente el primer día */
+    fin.setDate(fin.getDate() + dias - 1);
 
     document.getElementById("inicio").textContent =
-        formatearFecha(inicio);
+    formatearFecha(inicio);
 
     document.getElementById("fin").textContent =
-        formatearFecha(fin);
+    formatearFecha(fin);
 
     document.getElementById("total").textContent =
-        dias + " días";
+    dias + " días calendario";
 
     let años = [];
 
-    for(let a=inicio.getFullYear();
-        a<=fin.getFullYear();
-        a++){
+    for(
+        let a = inicio.getFullYear();
+        a <= fin.getFullYear();
+        a++
+    ){
         años.push(a);
     }
 
     document.getElementById("anio").textContent =
-        años.join(" - ");
+    años.join(" - ");
+
+    let meses =
+    Math.floor(dias / 30);
+
+    let semanas =
+    Math.floor(dias / 7);
+
+    document.getElementById("meses").textContent =
+    meses;
+
+    document.getElementById("semanas").textContent =
+    semanas;
+
+    document.getElementById("cruce").textContent =
+
+    inicio.getFullYear() !== fin.getFullYear()
+
+    ? "Sí"
+
+    : "No";
 
     document.getElementById("resultado").style.display =
-        "block";
+    "block";
+
+    document.getElementById("progress").style.width =
+    "0%";
+
+    setTimeout(()=>{
+
+        document.getElementById("progress").style.width =
+        "100%";
+
+    },200);
+
 }
 
 </script>

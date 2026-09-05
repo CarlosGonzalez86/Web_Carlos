@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora de Vacaciones</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#003cff,#1f2937);
+    overflow:hidden;
+}
+
+body::before{
+    content:"";
+    position:absolute;
+    width:600px;
+    height:600px;
+    background:rgba(255,255,255,0.05);
+    border-radius:50%;
+    top:-200px;
+    right:-200px;
+    animation:float 8s ease-in-out infinite;
+}
+
+body::after{
+    content:"";
+    position:absolute;
+    width:400px;
+    height:400px;
+    background:rgba(255,255,255,0.04);
+    border-radius:50%;
+    bottom:-150px;
+    left:-100px;
+    animation:float 10s ease-in-out infinite;
+}
+
+@keyframes float{
+    50%{
+        transform:translateY(30px);
+    }
+}
+
+.container{
+    position:relative;
+    z-index:1;
+    width:95%;
+    max-width:650px;
+    padding:35px;
+    border-radius:25px;
+    backdrop-filter:blur(18px);
+    background:rgba(255,255,255,0.12);
+    border:1px solid rgba(255,255,255,0.2);
+    box-shadow:0 15px 30px rgba(0,0,0,.25);
+    animation:entrada .8s ease;
+}
+
+@keyframes entrada{
+    from{
+        opacity:0;
+        transform:translateY(40px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+h1{
+    color:#fff;
+    text-align:center;
+    margin-bottom:25px;
+}
+
+label{
+    color:#fff;
+    display:block;
+    margin-top:15px;
+    font-weight:600;
+}
+
+input{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:12px;
+    margin-top:8px;
+    font-size:16px;
+}
+
+button{
+    width:100%;
+    margin-top:25px;
+    padding:15px;
+    border:none;
+    border-radius:14px;
+    cursor:pointer;
+    font-size:17px;
+    font-weight:bold;
+    color:#fff;
+    background:linear-gradient(90deg,#00b2ff,#0066ff);
+    transition:.3s;
+}
+
+button:hover{
+    transform:translateY(-3px);
+    box-shadow:0 10px 20px rgba(0,100,255,.4);
+}
+
+.resultado{
+    margin-top:25px;
+    display:none;
+    animation:fade .5s ease;
+}
+
+@keyframes fade{
+    from{
+        opacity:0;
+    }
+    to{
+        opacity:1;
+    }
+}
+
+.card{
+    background:#f8fafc;
+    margin-top:12px;
+    padding:15px;
+    border-radius:15px;
+    border-left:5px solid #0066ff;
+}
+
+.card h3{
+    color:#003cff;
+    margin-bottom:5px;
+}
+
+.card p{
+    font-size:18px;
+    color:#374151;
+    font-weight:bold;
+}
+
+footer{
+    text-align:center;
+    margin-top:20px;
+    color:#ddd;
+    font-size:13px;
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<h1>📅 Calculadora de Vacaciones</h1>
+
+<label>Fecha de inicio</label>
+<input type="date" id="fechaInicio">
+
+<label>Días de vacaciones otorgados</label>
+<input type="number" id="dias" min="1" placeholder="Ejemplo: 120">
+
+<button onclick="calcularVacaciones()">
+Calcular Vacaciones
+</button>
+
+<div class="resultado" id="resultado">
+
+<div class="card">
+<h3>Fecha de inicio</h3>
+<p id="inicio"></p>
+</div>
+
+<div class="card">
+<h3>Fecha final</h3>
+<p id="fin"></p>
+</div>
+
+<div class="card">
+<h3>Total de días calendario</h3>
+<p id="total"></p>
+</div>
+
+<div class="card">
+<h3>Año involucrado</h3>
+<p id="anio"></p>
+</div>
+
+</div>
+
+<footer>
+Sistema de cálculo por días calendario • Compatible con años bisiestos
+</footer>
+
+</div>
+
+<script>
+
+// Coloca mañana por defecto
+window.onload = () => {
+    let manana = new Date();
+    manana.setDate(manana.getDate()+1);
+
+    document.getElementById("fechaInicio").value =
+        manana.toISOString().split('T')[0];
+};
+
+function formatearFecha(fecha){
+    return fecha.toLocaleDateString('es-ES',{
+        weekday:'long',
+        day:'numeric',
+        month:'long',
+        year:'numeric'
+    });
+}
+
+function calcularVacaciones(){
+
+    const fechaInput =
+        document.getElementById("fechaInicio").value;
+
+    const dias =
+        parseInt(document.getElementById("dias").value);
+
+    if(!fechaInput || !dias || dias <= 0){
+        alert("Ingrese una fecha y cantidad de días válida.");
+        return;
+    }
+
+    let inicio = new Date(fechaInput);
+
+    let fin = new Date(inicio);
+    fin.setDate(fin.getDate() + dias);
+
+    document.getElementById("inicio").textContent =
+        formatearFecha(inicio);
+
+    document.getElementById("fin").textContent =
+        formatearFecha(fin);
+
+    document.getElementById("total").textContent =
+        dias + " días";
+
+    let años = [];
+
+    for(let a=inicio.getFullYear();
+        a<=fin.getFullYear();
+        a++){
+        años.push(a);
+    }
+
+    document.getElementById("anio").textContent =
+        años.join(" - ");
+
+    document.getElementById("resultado").style.display =
+        "block";
+}
+
+</script>
+
+</body>
+</html>

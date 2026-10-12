@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Contador de Tiempo Compensatorios</title>
+    <style>
+        * { box-sizing: border-box; }
+        body { margin: 0; font-family: Arial, sans-serif; background: #07111f; color: #eef7ff; }
+        .wrap { max-width: 920px; margin: auto; padding: 32px 18px; }
+        h1 { font-size: clamp(28px, 5vw, 48px); margin: 0 0 8px; }
+        .sub { color: #9fb1c5; margin-bottom: 24px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+        .card { background: #101d2e; border: 1px solid #22354b; border-radius: 20px; padding: 22px; box-shadow: 0 12px 35px #0005; }
+        label { display: block; color: #c9d7e5; font-size: 14px; margin: 14px 0 7px; }
+        input { width: 100%; padding: 13px; border-radius: 11px; border: 1px solid #31465e; background: #0a1625; color: #fff; font-size: 16px; }
+        .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .days { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+        .day { border: 1px solid #31465e; background: #122237; color: #cfe1f3; border-radius: 11px; padding: 11px; cursor: pointer; }
+        .day.on { background: #38d9e6; color: #061219; border-color: #75f2fa; font-weight: bold; }
+        .actions { display: flex; gap: 9px; margin-top: 20px; }
+        button.main, .reset { padding: 13px; border: 0; border-radius: 11px; font-weight: bold; cursor: pointer; }
+        .main { flex: 1; background: #38d9e6; color: #061219; }
+        .reset { background: #26384d; color: #fff; }
+        .result { background: linear-gradient(135deg, #089bb6, #1556bf); }
+        .big { font-size: 40px; font-weight: 900; margin: 5px 0; }
+        .box { background: #ffffff20; border-radius: 15px; padding: 16px; margin: 12px 0; }
+        .small { font-size: 13px; color: #cceef5; }
+        .error { background: #782b42; padding: 14px; border-radius: 12px; }
+        .note { color: #71869d; font-size: 12px; margin-top: 14px; }
+        @media(max-width: 700px) {
+            .grid { grid-template-columns: 1fr; }
+            .days { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <h1>CONTADOR DE TIEMPO COMPENSATORIOS</h1>
+        <div class="sub">Calcula días laborables y horas según el horario elegido por el usuario.</div>
+        <div class="grid">
+            <section class="card">
+                <h2>Datos del cálculo</h2>
+                <label>Fecha de inicio</label>
+                <input id="start" type="date">
+                <div class="row">
+                    <div>
+                        <label>Días laborables a contar</label>
+                        <input id="count" type="number" min="1" value="1">
+                    </div>
+                    <div>
+                        <label>Horas por día</label>
+                        <input id="hours" type="number" min="0.25" step="0.25" value="8">
+                    </div>
+                </div>
+                <label>Días que trabajas</label>
+                <div class="days" id="days"></div>
+                <div class="actions">
+                    <button class="main" onclick="calc()">CALCULAR</button>
+                    <button class="reset" onclick="resetAll()">Restablecer</button>
+                </div>
+            </section>
+            <section class="card result">
+                <h2>Resultado</h2>
+                <div id="out" class="small">Completa los datos y pulsa CALCULAR.</div>
+            </section>
+        </div>
+        <div class="note">La fecha inicial cuenta si corresponde a un día laboral seleccionado. Los festivos no se descuentan automáticamente.</div>
+    </div>
+    <script>
+        const names = [[1, 'Lunes'], [2, 'Martes'], [3, 'Miércoles'], [4, 'Jueves'], [5, 'Viernes'], [6, 'Sábado'], [0, 'Domingo']];
+        let selected = new Set([1, 2, 3, 4, 5]);
+        const days = document.getElementById('days');
+
+        function render() {
+            days.innerHTML = '';
+            names.forEach(([n, s]) => {
+                let b = document.createElement('button');
+                b.type = 'button';
+                b.className = 'day ' + (selected.has(n) ? 'on' : '');
+                b.textContent = s;
+                b.onclick = () => {
+                    selected.has(n) ? selected.delete(n) : selected.add(n);
+                    render();
+                };
+                days.appendChild(b);
+            });
+        }
+        render();
+
+        function calc() {
+            let sv = document.getElementById('start').value,
+                c = Math.floor(+document.getElementById('count').value),
+                h = +document.getElementById('hours').value,
+                o = document.getElementById('out');
+
+            if (!sv || c < 1 || h <= 0 || !selected.size) {
+                o.innerHTML = '<div class="error">Completa la fecha, los días, las horas y selecciona al menos un día laboral.</div>';
+                return;
+            }
+
+            let [y, m, d] = sv.split('-').map(Number),
+                cur = new Date(y, m - 1, d),
+                first = null,
+                n = 0;
+
+            while (n < c) {
+                if (selected.has(cur.getDay())) {
+                    if (!first) first = new Date(cur);
+                    n++;
+                    if (n === c) break;
+                }
+                cur.setDate(cur.getDate() + 1);
+            }
+
+            let total = c * h,
+                natural = Math.round((cur - first) / 86400000) + 1,
+                fmt = new Intl.DateTimeFormat('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' });
+
+            o.innerHTML = `
+                <div class="box"><div class="small">Tiempo total</div><div class="big">${total.toLocaleString('es-ES')} horas</div></div>
+                <div class="row">
+                    <div class="box"><div class="small">Días de trabajo</div><div class="big">${c}</div></div>
+                    <div class="box"><div class="small">Días naturales</div><div class="big">${natural}</div></div>
+                </div>
+                <div class="box">Fecha final: <b>${fmt.format(cur)}</b><br><span class="small">${c} días × ${h.toLocaleString('es-ES')} horas = ${total.toLocaleString('es-ES')} horas</span></div>
+            `;
+        }
+
+        function resetAll() {
+            document.getElementById('start').value = '';
+            document.getElementById('count').value = 1;
+            document.getElementById('hours').value = 8;
+            selected = new Set([1, 2, 3, 4, 5]);
+            render();
+            document.getElementById('out').textContent = 'Completa los datos y pulsa CALCULAR.';
+        }
+    </script>
+</body>
+</html>

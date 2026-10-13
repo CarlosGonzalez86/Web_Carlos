@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light dark" />
+  <title>Contador de días de Panamá</title>
+  <style>
+    :root {
+      --bg: #f3f6fb;
+      --surface: rgba(255,255,255,.92);
+      --surface-2: #eef3f9;
+      --text: #172033;
+      --muted: #667085;
+      --primary: #123b67;
+      --primary-2: #1d5c94;
+      --accent: #d91f36;
+      --success: #12715b;
+      --warning: #a35b00;
+      --border: #d7dfeb;
+      --shadow: 0 18px 50px rgba(18,59,103,.12);
+      --radius: 24px;
+    }
+
+    body.dark {
+      --bg: #07111f;
+      --surface: rgba(14,27,45,.94);
+      --surface-2: #13243a;
+      --text: #edf4ff;
+      --muted: #a8b7ca;
+      --primary: #65aee8;
+      --primary-2: #8ac8f5;
+      --accent: #ff6374;
+      --success: #4fd1aa;
+      --warning: #ffbd66;
+      --border: #29405c;
+      --shadow: 0 20px 55px rgba(0,0,0,.28);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(29,92,148,.17), transparent 34%),
+        radial-gradient(circle at 100% 6%, rgba(217,31,54,.11), transparent 30%),
+        var(--bg);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      transition: background .25s, color .25s;
+    }
+
+    button, input, select { font: inherit; }
+    button { cursor: pointer; }
+
+    .shell { width: min(1180px, calc(100% - 32px)); margin: 0 auto; padding: 32px 0 54px; }
+    .topbar { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-bottom: 20px; }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .flagmark { width: 50px; height: 50px; border-radius: 16px; display: grid; grid-template-columns: 1fr 1fr; overflow: hidden; box-shadow: var(--shadow); border: 1px solid var(--border); }
+    .flagmark span:nth-child(1), .flagmark span:nth-child(4) { background: #fff; }
+    .flagmark span:nth-child(2) { background: #d91f36; }
+    .flagmark span:nth-child(3) { background: #174c85; }
+    .brand strong { display: block; font-size: 1.02rem; }
+    .brand small { color: var(--muted); }
+
+    .icon-btn { width: 44px; height: 44px; border-radius: 14px; border: 1px solid var(--border); color: var(--text); background: var(--surface); box-shadow: 0 8px 22px rgba(0,0,0,.07); }
+
+    .hero { padding: 30px; border-radius: var(--radius); color: #fff; background: linear-gradient(135deg, #0b2d50, #1a5d94 68%, #d91f36 150%); box-shadow: var(--shadow); position: relative; overflow: hidden; }
+    .hero::after { content: ""; position: absolute; width: 280px; height: 280px; right: -90px; top: -120px; border: 45px solid rgba(255,255,255,.07); border-radius: 50%; }
+    .eyebrow { margin: 0 0 8px; font-size: .78rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; opacity: .8; }
+    h1 { margin: 0; max-width: 760px; font-size: clamp(2rem, 5vw, 3.7rem); line-height: 1.04; letter-spacing: -.045em; }
+    .hero p:last-child { max-width: 720px; margin: 16px 0 0; line-height: 1.65; color: #dbeeff; }
+
+    .layout { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(330px, .95fr); gap: 22px; margin-top: 22px; align-items: start; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); padding: 24px; backdrop-filter: blur(12px); }
+    .card h2 { margin: 0 0 6px; font-size: 1.25rem; }
+    .sub { margin: 0 0 22px; color: var(--muted); line-height: 1.5; font-size: .93rem; }
+
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .field { display: grid; gap: 8px; }
+    .field.full { grid-column: 1 / -1; }
+    label { font-size: .84rem; font-weight: 750; }
+    input[type="date"], input[type="text"], select {
+      width: 100%; min-height: 48px; border: 1px solid var(--border); border-radius: 14px; padding: 0 14px; color: var(--text); background: var(--surface-2); outline: none; transition: .2s;
+    }
+    input:focus, select:focus { border-color: var(--primary-2); box-shadow: 0 0 0 4px rgba(29,92,148,.13); }
+
+    .switch-row { display: flex; justify-content: space-between; align-items: center; gap: 18px; padding: 15px 0; border-bottom: 1px solid var(--border); }
+    .switch-row:last-child { border-bottom: 0; }
+    .switch-copy strong { display: block; font-size: .9rem; }
+    .switch-copy small { display: block; color: var(--muted); margin-top: 3px; }
+    .switch { position: relative; width: 50px; height: 28px; flex: 0 0 auto; }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .slider { position: absolute; inset: 0; border-radius: 999px; background: #a9b4c2; transition: .25s; }
+    .slider::before { content: ""; position: absolute; width: 22px; height: 22px; left: 3px; top: 3px; border-radius: 50%; background: #fff; box-shadow: 0 2px 7px rgba(0,0,0,.2); transition: .25s; }
+    .switch input:checked + .slider { background: var(--primary-2); }
+    .switch input:checked + .slider::before { transform: translateX(22px); }
+
+    .actions { display: grid; grid-template-columns: 1fr auto; gap: 12px; margin-top: 20px; }
+    .btn { min-height: 50px; border: 0; border-radius: 15px; padding: 0 18px; font-weight: 800; }
+    .btn-primary { color: #fff; background: linear-gradient(135deg, #123b67, #1d6aa5); box-shadow: 0 10px 24px rgba(18,59,103,.25); }
+    .btn-secondary { color: var(--text); background: var(--surface-2); border: 1px solid var(--border); }
+    .btn:hover { transform: translateY(-1px); }
+
+    .notice { display: none; margin-top: 15px; border-radius: 14px; padding: 12px 14px; background: rgba(217,31,54,.1); color: var(--accent); font-weight: 700; font-size: .9rem; }
+    .notice.show { display: block; }
+
+    .results-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .period-pill { color: var(--primary); background: var(--surface-2); border: 1px solid var(--border); padding: 7px 10px; border-radius: 999px; font-size: .75rem; font-weight: 800; }
+    .metric-main { margin: 20px 0; border-radius: 20px; padding: 22px; color: #fff; background: linear-gradient(135deg, #123b67, #1b628f); }
+    .metric-main span { display: block; opacity: .8; font-size: .82rem; font-weight: 700; }
+    .metric-main strong { display: block; margin-top: 4px; font-size: 3.15rem; line-height: 1; }
+    .metric-main small { display: block; margin-top: 8px; color: #d9ecfc; }
+
+    .metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .metric { min-height: 105px; padding: 15px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 17px; }
+    .metric span { display: block; color: var(--muted); font-size: .76rem; font-weight: 750; }
+    .metric strong { display: block; margin-top: 9px; font-size: 1.75rem; }
+    .metric.business strong { color: var(--success); }
+    .metric.holiday strong { color: var(--accent); }
+    .metric.weekend strong { color: var(--warning); }
+
+    .holiday-box { margin-top: 18px; }
+    .holiday-box h3 { margin: 0 0 10px; font-size: .95rem; }
+    .holiday-list { display: grid; gap: 9px; max-height: 280px; overflow: auto; padding-right: 3px; }
+    .holiday-item { display: flex; gap: 12px; align-items: center; padding: 11px; border: 1px solid var(--border); border-radius: 14px; background: var(--surface-2); }
+    .date-badge { min-width: 52px; text-align: center; color: #fff; background: var(--accent); border-radius: 11px; padding: 7px 6px; font-size: .71rem; font-weight: 850; }
+    .holiday-item strong { display: block; font-size: .84rem; }
+    .holiday-item small { color: var(--muted); }
+    .empty { padding: 18px; text-align: center; color: var(--muted); border: 1px dashed var(--border); border-radius: 14px; }
+
+    .footnote { margin-top: 16px; color: var(--muted); line-height: 1.45; font-size: .75rem; }
+    .custom-panel { margin-top: 22px; }
+    .custom-add { display: grid; grid-template-columns: 160px 1fr auto; gap: 10px; }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .chip { display: inline-flex; gap: 8px; align-items: center; border: 1px solid var(--border); background: var(--surface-2); border-radius: 99px; padding: 7px 10px; font-size: .78rem; }
+    .chip button { border: 0; background: transparent; color: var(--accent); font-weight: 900; padding: 0; }
+
+    @media (max-width: 850px) {
+      .layout { grid-template-columns: 1fr; }
+      .results { order: -1; }
+    }
+    @media (max-width: 580px) {
+      .shell { width: min(100% - 20px, 1180px); padding-top: 18px; }
+      .hero, .card { padding: 20px; border-radius: 20px; }
+      .hero { padding: 25px 20px; }
+      .form-grid, .custom-add { grid-template-columns: 1fr; }
+      .field.full { grid-column: auto; }
+      .metrics { grid-template-columns: 1fr 1fr; }
+      .metric:first-child { grid-column: 1 / -1; }
+      .actions { grid-template-columns: 1fr; }
+      .btn-secondary { min-height: 46px; }
+      .topbar { align-items: flex-start; }
+      .brand small { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="flagmark" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+        <div><strong>Calendario laboral PTY</strong><small>Contador de días y feriados de Panamá</small></div>
+      </div>
+      <button class="icon-btn" id="themeButton" type="button" aria-label="Cambiar tema" title="Cambiar tema">☾</button>
+    </header>
+
+    <section class="hero">
+      <p class="eyebrow">Herramienta de planificación</p>
+      <h1>Calcula tu periodo con precisión.</h1>
+      <p>Consulta días calendario, días hábiles, fines de semana y feriados nacionales de Panamá incluidos dentro de cualquier intervalo.</p>
+    </section>
+
+    <section class="layout">
+      <div class="card calculator">
+        <h2>Configurar periodo</h2>
+        <p class="sub">Selecciona las fechas y adapta el cálculo a tu jornada.</p>
+
+        <div class="form-grid">
+          <div class="field">
+            <label for="startDate">Fecha inicial</label>
+            <input id="startDate" type="date" />
+          </div>
+          <div class="field">
+            <label for="endDate">Fecha final</label>
+            <input id="endDate" type="date" />
+          </div>
+          <div class="field full">
+            <label for="workweek">Jornada laboral</label>
+            <select id="workweek">
+              <option value="mon-fri">Lunes a viernes</option>
+              <option value="mon-sat">Lunes a sábado</option>
+              <option value="all">Todos los días</option>
+            </select>
+          </div>
+          <div class="field full">
+            <div class="switch-row">
+              <div class="switch-copy"><strong>Incluir fecha inicial</strong><small>Cuenta el primer día del periodo.</small></div>
+              <label class="switch"><input id="includeStart" type="checkbox" checked><span class="slider"></span></label>
+            </div>
+            <div class="switch-row">
+              <div class="switch-copy"><strong>Incluir fecha final</strong><small>Cuenta el último día del periodo.</small></div>
+              <label class="switch"><input id="includeEnd" type="checkbox" checked><span class="slider"></span></label>
+            </div>
+            <div class="switch-row">
+              <div class="switch-copy"><strong>Aplicar descansos trasladados</strong><small>Incluye reglas nacionales de traslado a lunes.</small></div>
+              <label class="switch"><input id="applyTransfers" type="checkbox" checked><span class="slider"></span></label>
+            </div>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="btn btn-primary" id="calculateButton" type="button">Calcular periodo</button>
+          <button class="btn btn-secondary" id="clearButton" type="button">Limpiar</button>
+        </div>
+        <div class="notice" id="notice" role="alert"></div>
+
+        <div class="custom-panel">
+          <h2>Feriados adicionales</h2>
+          <p class="sub">Agrega días de duelo, cierres institucionales o feriados locales.</p>
+          <div class="custom-add">
+            <input id="customDate" type="date" aria-label="Fecha adicional" />
+            <input id="customName" type="text" maxlength="60" placeholder="Nombre del día no laborable" aria-label="Nombre del día adicional" />
+            <button class="btn btn-secondary" id="addCustomButton" type="button">Añadir</button>
+          </div>
+          <div class="chips" id="customChips"></div>
+        </div>
+      </div>
+
+      <aside class="card results" aria-live="polite">
+        <div class="results-header">
+          <div><h2>Resultado</h2><p class="sub" style="margin:3px 0 0">Resumen del intervalo</p></div>
+          <span class="period-pill" id="periodPill">Sin calcular</span>
+        </div>
+
+        <div class="metric-main">
+          <span>Total de días calendario</span>
+          <strong id="calendarDays">0</strong>
+          <small id="dateSummary">Selecciona un periodo válido</small>
+        </div>
+
+        <div class="metrics">
+          <div class="metric business"><span>Días hábiles</span><strong id="businessDays">0</strong></div>
+          <div class="metric weekend"><span>Fin de semana</span><strong id="weekendDays">0</strong></div>
+          <div class="metric holiday"><span>Feriados no laborables</span><strong id="holidayDays">0</strong></div>
+        </div>
+
+        <div class="holiday-box">
+          <h3>Feriados encontrados en el periodo</h3>
+          <div class="holiday-list" id="holidayList"><div class="empty">No hay resultados todavía.</div></div>
+        </div>
+        <p class="footnote">El resultado es una referencia de planificación. Los feriados extraordinarios o locales deben agregarse manualmente. Un feriado que coincide con un fin de semana se clasifica una sola vez.</p>
+      </aside>
+    </section>
+  </main>
+
+  <script>
+    const $ = (selector) => document.querySelector(selector);
+    const MS_DAY = 86400000;
+    const customHolidays = [];
+
+    function parseISO(value) {
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return null;
+      const [year, month, day] = value.split('-').map(Number);
+      const date = new Date(Date.UTC(year, month - 1, day));
+      return date.getUTCFullYear() === year && date.getUTCMonth() === month - 1 && date.getUTCDate() === day ? date : null;
+    }
+
+    function iso(date) { return date.toISOString().slice(0, 10); }
+    function addDays(date, days) { return new Date(date.getTime() + days * MS_DAY); }
+    function sameOrBefore(a, b) { return a.getTime() <= b.getTime(); }
+    function pretty(date, options = {}) {
+      return new Intl.DateTimeFormat('es-PA', { timeZone: 'UTC', day: '2-digit', month: 'short', year: 'numeric', ...options }).format(date);
+    }
+
+    function easterSunday(year) {
+      const a = year % 19, b = Math.floor(year / 100), c = year % 100;
+      const d = Math.floor(b / 4), e = b % 4, f = Math.floor((b + 8) / 25);
+      const g = Math.floor((b - f + 1) / 3), h = (19 * a + b - d - g + 15) % 30;
+      const i = Math.floor(c / 4), k = c % 4, l = (32 + 2 * e + 2 * i - h - k) % 7;
+      const m = Math.floor((a + 11 * h + 22 * l) / 451);
+      const month = Math.floor((h + l - 7 * m + 114) / 31);
+      const day = ((h + l - 7 * m + 114) % 31) + 1;
+      return new Date(Date.UTC(year, month - 1, day));
+    }
+
+    function baseHolidays(year) {
+      const easter = easterSunday(year);
+      const carnivalTuesday = addDays(easter, -47);
+      const goodFriday = addDays(easter, -2);
+      const list = [
+        ['01-01', 'Año Nuevo'], ['01-09', 'Día de los Mártires'],
+        [iso(carnivalTuesday).slice(5), 'Martes de Carnaval'], [iso(goodFriday).slice(5), 'Viernes Santo'],
+        ['05-01', 'Día del Trabajo'], ['11-03', 'Separación de Panamá de Colombia'],
+        ['11-05', 'Consolidación de la Separación en Colón'], ['11-10', 'Primer Grito de Independencia de La Villa de Los Santos'],
+        ['11-28', 'Independencia de Panamá de España'], ['12-08', 'Día de la Madre'], ['12-25', 'Navidad']
+      ].map(([md, name]) => ({ date: parseISO(`${year}-${md}`), name, type: 'Feriado nacional' }));
+
+      // La toma de posesión presidencial se produce cada cinco años, el 1 de julio.
+      if (year >= 2024 && (year - 2024) % 5 === 0) {
+        list.push({ date: parseISO(`${year}-07-01`), name: 'Toma de posesión presidencial', type: 'Feriado nacional' });
+      }
+      return list;
+    }
+
+    function transferredHoliday(holiday) {
+      const key = iso(holiday.date).slice(5);
+      const dow = holiday.date.getUTCDay();
+      // Traslado automático previsto para 9 de enero y 28 de noviembre.
+      if (key === '01-09' || key === '11-28') {
+        if (dow === 2 || dow === 3) return addDays(holiday.date, -(dow - 1));
+        if (dow === 4 || dow === 5) return addDays(holiday.date, 8 - dow);
+      }
+      // Si un descanso obligatorio cae domingo, se refleja el lunes siguiente.
+      if (dow === 0) return addDays(holiday.date, 1);
+      return null;
+    }
+
+    function holidaysForYears(startYear, endYear, applyTransfers) {
+      const map = new Map();
+      for (let year = startYear; year <= endYear; year++) {
+        for (const holiday of baseHolidays(year)) {
+          map.set(iso(holiday.date), holiday);
+          if (applyTransfers) {
+            const moved = transferredHoliday(holiday);
+            if (moved) {
+              map.set(iso(moved), { date: moved, name: `Descanso trasladado: ${holiday.name}`, type: 'Traslado legal' });
+              // En 9 de enero y 28 de noviembre trasladados, la fecha original se trabaja.
+              const key = iso(holiday.date).slice(5);
+              if (key === '01-09' || key === '11-28') map.delete(iso(holiday.date));
+            }
+          }
+        }
+      }
+      for (const item of customHolidays) map.set(item.date, { date: parseISO(item.date), name: item.name, type: 'Adicional' });
+      return map;
+    }
+
+    function isScheduledWorkday(date, mode) {
+      const day = date.getUTCDay();
+      if (mode === 'all') return true;
+      if (mode === 'mon-sat') return day !== 0;
+      return day >= 1 && day <= 5;
+    }
+
+    function calculate() {
+      const notice = $('#notice');
+      notice.classList.remove('show');
+      const rawStart = parseISO($('#startDate').value);
+      const rawEnd = parseISO($('#endDate').value);
+      if (!rawStart || !rawEnd) return showError('Selecciona una fecha inicial y una fecha final.');
+      if (rawStart > rawEnd) return showError('La fecha inicial no puede ser posterior a la fecha final.');
+
+      let start = rawStart, end = rawEnd;
+      if (!$('#includeStart').checked) start = addDays(start, 1);
+      if (!$('#includeEnd').checked) end = addDays(end, -1);
+      if (start > end) return renderEmptyInterval(rawStart, rawEnd);
+
+      const holidayMap = holidaysForYears(start.getUTCFullYear(), end.getUTCFullYear(), $('#applyTransfers').checked);
+      let calendar = 0, business = 0, weekends = 0, holidays = 0;
+      const found = [];
+      for (let date = start; sameOrBefore(date, end); date = addDays(date, 1)) {
+        calendar++;
+        const key = iso(date);
+        const holiday = holidayMap.get(key);
+        const scheduled = isScheduledWorkday(date, $('#workweek').value);
+        if (holiday) {
+          holidays++;
+          found.push(holiday);
+        } else if (scheduled) {
+          business++;
+        } else {
+          weekends++;
+        }
+      }
+      render({ calendar, business, weekends, holidays, found, start, end });
+    }
+
+    function render(data) {
+      $('#calendarDays').textContent = data.calendar.toLocaleString('es-PA');
+      $('#businessDays').textContent = data.business.toLocaleString('es-PA');
+      $('#weekendDays').textContent = data.weekends.toLocaleString('es-PA');
+      $('#holidayDays').textContent = data.holidays.toLocaleString('es-PA');
+      $('#periodPill').textContent = `${data.calendar} día${data.calendar === 1 ? '' : 's'}`;
+      $('#dateSummary').textContent = `Del ${pretty(data.start)} al ${pretty(data.end)}`;
+      const list = $('#holidayList');
+      if (!data.found.length) {
+        list.innerHTML = '<div class="empty">No hay feriados dentro de este periodo.</div>';
+        return;
+      }
+      list.innerHTML = data.found.map(item => {
+        const day = new Intl.DateTimeFormat('es-PA', { timeZone: 'UTC', day: '2-digit', month: 'short' }).format(item.date).replace('.', '');
+        return `<div class="holiday-item"><div class="date-badge">${day}</div><div><strong>${escapeHTML(item.name)}</strong><small>${escapeHTML(item.type)} · ${pretty(item.date, { weekday: 'long' })}</small></div></div>`;
+      }).join('');
+    }
+
+    function renderEmptyInterval(rawStart, rawEnd) {
+      render({ calendar: 0, business: 0, weekends: 0, holidays: 0, found: [], start: rawStart, end: rawEnd });
+      $('#dateSummary').textContent = 'Las opciones excluyen todas las fechas del periodo.';
+    }
+
+    function showError(message) { const n = $('#notice'); n.textContent = message; n.classList.add('show'); }
+    function escapeHTML(text) { const div = document.createElement('div'); div.textContent = text; return div.innerHTML; }
+
+    function addCustom() {
+      const date = $('#customDate').value;
+      const name = $('#customName').value.trim();
+      if (!parseISO(date) || !name) return showError('Indica la fecha y el nombre del feriado adicional.');
+      const existing = customHolidays.findIndex(item => item.date === date);
+      if (existing >= 0) customHolidays.splice(existing, 1);
+      customHolidays.push({ date, name });
+      customHolidays.sort((a,b) => a.date.localeCompare(b.date));
+      $('#customDate').value = ''; $('#customName').value = '';
+      renderChips(); calculate();
+    }
+
+    function renderChips() {
+      $('#customChips').innerHTML = customHolidays.map((item, index) => `<span class="chip">${pretty(parseISO(item.date))} · ${escapeHTML(item.name)} <button type="button" data-index="${index}" aria-label="Eliminar">×</button></span>`).join('');
+    }
+
+    function clearAll() {
+      const now = new Date();
+      const today = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()));
+      $('#startDate').value = iso(today);
+      $('#endDate').value = iso(addDays(today, 30));
+      $('#includeStart').checked = true; $('#includeEnd').checked = true; $('#applyTransfers').checked = true;
+      $('#workweek').value = 'mon-fri'; $('#notice').classList.remove('show');
+      calculate();
+    }
+
+    $('#calculateButton').addEventListener('click', calculate);
+    $('#clearButton').addEventListener('click', clearAll);
+    $('#addCustomButton').addEventListener('click', addCustom);
+    $('#customChips').addEventListener('click', e => { if (e.target.matches('button[data-index]')) { customHolidays.splice(Number(e.target.dataset.index), 1); renderChips(); calculate(); } });
+    $('#themeButton').addEventListener('click', () => { document.body.classList.toggle('dark'); const dark = document.body.classList.contains('dark'); $('#themeButton').textContent = dark ? '☀' : '☾'; localStorage.setItem('calendar-theme', dark ? 'dark' : 'light'); });
+    ['startDate','endDate','workweek','includeStart','includeEnd','applyTransfers'].forEach(id => $(`#${id}`).addEventListener('change', calculate));
+
+    if (localStorage.getItem('calendar-theme') === 'dark') { document.body.classList.add('dark'); $('#themeButton').textContent = '☀'; }
+    clearAll();
+  </script>
+</body>
+</html>

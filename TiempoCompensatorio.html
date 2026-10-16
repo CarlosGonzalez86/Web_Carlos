@@ -3,361 +3,984 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <title>Contador de Tiempo Compensatorios</title>
+
   <style>
-    * { 
-      box-sizing: border-box; 
+    * {
+      box-sizing: border-box;
     }
-    body { 
-      margin: 0; 
-      font-family: Arial, sans-serif; 
-      background: #07111f; 
-      color: #eef7ff; 
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #07111f;
+      color: #eef7ff;
     }
-    .wrap { 
-      max-width: 920px; 
-      margin: auto; 
-      padding: 32px 18px; 
+
+    .wrap {
+      max-width: 920px;
+      margin: auto;
+      padding: 32px 18px;
     }
-    h1 { 
-      font-size: clamp(28px, 5vw, 48px); 
-      margin: 0 0 8px; 
+
+    /* =========================
+       ENCABEZADO Y LOGO
+       ========================= */
+
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 28px;
     }
-    h2 { 
-      margin-top: 0; 
+
+    .logo {
+      width: 85px;
+      height: 85px;
+      object-fit: contain;
+      flex-shrink: 0;
     }
-    .sub { 
-      color: #9fb1c5; 
-      margin-bottom: 24px; 
+
+    .header-text {
+      flex: 1;
     }
-    .section-title { 
-      margin: 28px 0 12px; 
-      color: #7cecf3; 
-      font-size: 15px; 
-      text-transform: uppercase; 
-      letter-spacing: 1px; 
+
+    h1 {
+      font-size: clamp(28px, 5vw, 48px);
+      margin: 0 0 8px;
+      line-height: 1.05;
     }
-    .grid { 
-      display: grid; 
-      grid-template-columns: 1fr 1fr; 
-      gap: 18px; 
+
+    .sub {
+      color: #9fb1c5;
+      margin: 0;
+      line-height: 1.5;
     }
-    .card { 
-      background: #101d2e; 
-      border: 1px solid #22354b; 
-      border-radius: 20px; 
-      padding: 22px; 
-      box-shadow: 0 12px 35px #0005; 
+
+    h2 {
+      margin-top: 0;
     }
-    label { 
-      display: block; 
-      color: #c9d7e5; 
-      font-size: 14px; 
-      margin: 14px 0 7px; 
+
+    .section-title {
+      margin: 28px 0 12px;
+      color: #7cecf3;
+      font-size: 15px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
-    input { 
-      width: 100%; 
-      padding: 13px; 
-      border-radius: 11px; 
-      border: 1px solid #31465e; 
-      background: #0a1625; 
-      color: #fff; 
-      font-size: 16px; 
-      outline: none; 
+
+    /* =========================
+       TARJETAS
+       ========================= */
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
     }
-    input:focus { 
-      border-color: #38d9e6; 
-      box-shadow: 0 0 0 3px #38d9e625; 
+
+    .card {
+      background: #101d2e;
+      border: 1px solid #22354b;
+      border-radius: 20px;
+      padding: 22px;
+      box-shadow: 0 12px 35px #0005;
     }
-    .row { 
-      display: grid; 
-      grid-template-columns: 1fr 1fr; 
-      gap: 12px; 
+
+    label {
+      display: block;
+      color: #c9d7e5;
+      font-size: 14px;
+      margin: 14px 0 7px;
     }
-    .days { 
-      display: grid; 
-      grid-template-columns: repeat(3, 1fr); 
-      gap: 8px; 
+
+    input {
+      width: 100%;
+      padding: 13px;
+      border-radius: 11px;
+      border: 1px solid #31465e;
+      background: #0a1625;
+      color: #fff;
+      font-size: 16px;
+      outline: none;
     }
-    .day { 
-      border: 1px solid #31465e; 
-      background: #122237; 
-      color: #cfe1f3; 
-      border-radius: 11px; 
-      padding: 11px; 
-      cursor: pointer; 
+
+    input:focus {
+      border-color: #38d9e6;
+      box-shadow: 0 0 0 3px #38d9e625;
     }
-    .day.on { 
-      background: #38d9e6; 
-      color: #061219; 
-      border-color: #75f2fa; 
-      font-weight: bold; 
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
     }
-    .actions { 
-      display: flex; 
-      gap: 9px; 
-      margin-top: 20px; 
+
+    /* =========================
+       DÍAS
+       ========================= */
+
+    .days {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
     }
-    button.main, .reset { 
-      padding: 13px; 
-      border: 0; 
-      border-radius: 11px; 
-      font-weight: bold; 
-      cursor: pointer; 
+
+    .day {
+      border: 1px solid #31465e;
+      background: #122237;
+      color: #cfe1f3;
+      border-radius: 11px;
+      padding: 11px;
+      cursor: pointer;
+      transition: 0.2s;
     }
-    .main { 
-      flex: 1; 
-      background: #38d9e6; 
-      color: #061219; 
+
+    .day:hover {
+      border-color: #38d9e6;
     }
-    .main:hover { 
-      background: #75f2fa; 
+
+    .day.on {
+      background: #38d9e6;
+      color: #061219;
+      border-color: #75f2fa;
+      font-weight: bold;
     }
-    .reset { 
-      background: #26384d; 
-      color: #fff; 
+
+    /* =========================
+       BOTONES
+       ========================= */
+
+    .actions {
+      display: flex;
+      gap: 9px;
+      margin-top: 20px;
     }
-    .result { 
-      background: linear-gradient(135deg, #089bb6, #1556bf); 
+
+    button.main,
+    .reset {
+      padding: 13px;
+      border: 0;
+      border-radius: 11px;
+      font-weight: bold;
+      cursor: pointer;
     }
-    .big { 
-      font-size: clamp(31px, 6vw, 40px); 
-      font-weight: 900; 
-      margin: 5px 0; 
+
+    .main {
+      flex: 1;
+      background: #38d9e6;
+      color: #061219;
     }
-    .box { 
-      background: #ffffff20; 
-      border-radius: 15px; 
-      padding: 16px; 
-      margin: 12px 0; 
+
+    .main:hover {
+      background: #75f2fa;
     }
-    .small { 
-      font-size: 13px; 
-      color: #cceef5; 
-      line-height: 1.5; 
+
+    .reset {
+      background: #26384d;
+      color: #fff;
     }
-    .error { 
-      background: #782b42; 
-      padding: 14px; 
-      border-radius: 12px; 
+
+    .reset:hover {
+      background: #344b65;
     }
-    .note { 
-      color: #71869d; 
-      font-size: 12px; 
-      margin-top: 14px; 
-      line-height: 1.5; 
+
+    /* =========================
+       RESULTADOS
+       ========================= */
+
+    .result {
+      background: linear-gradient(135deg, #089bb6, #1556bf);
     }
-    .converter-result { 
-      display: none; 
+
+    .big {
+      font-size: clamp(31px, 6vw, 40px);
+      font-weight: 900;
+      margin: 5px 0;
     }
+
+    .box {
+      background: #ffffff20;
+      border-radius: 15px;
+      padding: 16px;
+      margin: 12px 0;
+    }
+
+    .small {
+      font-size: 13px;
+      color: #cceef5;
+      line-height: 1.5;
+    }
+
+    .error {
+      background: #782b42;
+      padding: 14px;
+      border-radius: 12px;
+    }
+
+    .note {
+      color: #71869d;
+      font-size: 12px;
+      margin-top: 20px;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    .converter-result {
+      display: none;
+    }
+
+    /* =========================
+       RESPONSIVE
+       ========================= */
+
     @media(max-width: 700px) {
-      .grid, .row { 
-        grid-template-columns: 1fr; 
+
+      .grid,
+      .row {
+        grid-template-columns: 1fr;
       }
-      .days { 
-        grid-template-columns: repeat(2, 1fr); 
+
+      .days {
+        grid-template-columns: repeat(2, 1fr);
       }
-      .wrap { 
-        padding: 22px 14px; 
+
+      .wrap {
+        padding: 22px 14px;
+      }
+
+      .header {
+        gap: 12px;
+        align-items: center;
+        margin-bottom: 24px;
+      }
+
+      .logo {
+        width: 65px;
+        height: 65px;
+      }
+
+      .header-text h1 {
+        font-size: 24px;
+        line-height: 1.1;
+      }
+
+      .header-text .sub {
+        font-size: 13px;
       }
     }
+
+    @media(max-width: 450px) {
+
+      .logo {
+        width: 58px;
+        height: 58px;
+      }
+
+      .header {
+        gap: 10px;
+      }
+
+      .header-text h1 {
+        font-size: 20px;
+      }
+
+      .header-text .sub {
+        font-size: 12px;
+      }
+    }
+
   </style>
 </head>
+
 <body>
+
   <div class="wrap">
-                    <img src="Imagenes/copilot_image_1789468135631.png" alt="Logo" class="h-16 w-auto rounded-md shadow-sm">
-    <h1>CONTADOR DE TIEMPO COMPENSATORIOS</h1>
-    <div class="sub">Convierte horas acumuladas en días y calcula fechas según el horario laboral elegido.</div>
 
-    <div class="section-title">Primera parte</div>
+    <!-- =========================
+         ENCABEZADO
+         ========================= -->
+
+    <div class="header">
+
+      <img
+        src="Imagenes/copilot_image_1789468135631.png"
+        alt="Logo"
+        class="logo"
+      >
+
+      <div class="header-text">
+
+        <h1>CONTADOR DE TIEMPO COMPENSATORIOS</h1>
+
+        <div class="sub">
+          Convierte horas acumuladas en días y calcula fechas según el horario laboral elegido.
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- =========================
+         PRIMERA PARTE
+         ========================= -->
+
+    <div class="section-title">
+      Primera parte
+    </div>
+
     <div class="grid">
+
       <section class="card">
+
         <h2>Convertidor de horas a días</h2>
-        <div class="small">Introduce las horas acumuladas y la duración de tu jornada laboral.</div>
-        <label for="convertHours">Horas acumuladas</label>
-        <input id="convertHours" type="number" min="0" step="0.25" value="8">
-        
-        <label for="workdayHours">Horas de la jornada laboral</label>
-        <input id="workdayHours" type="number" min="0.25" step="0.25" value="8">
-        
-        <div class="actions">
-          <button class="main" onclick="convertTime()">CONVERTIR</button>
-          <button class="reset" onclick="resetConverter()">Restablecer</button>
+
+        <div class="small">
+          Introduce las horas acumuladas y la duración de tu jornada laboral.
         </div>
+
+        <label for="convertHours">
+          Horas acumuladas
+        </label>
+
+        <input
+          id="convertHours"
+          type="number"
+          min="0"
+          step="0.25"
+          value="8"
+        >
+
+        <label for="workdayHours">
+          Horas de la jornada laboral
+        </label>
+
+        <input
+          id="workdayHours"
+          type="number"
+          min="0.25"
+          step="0.25"
+          value="8"
+        >
+
+        <div class="actions">
+
+          <button
+            class="main"
+            onclick="convertTime()"
+          >
+            CONVERTIR
+          </button>
+
+          <button
+            class="reset"
+            onclick="resetConverter()"
+          >
+            Restablecer
+          </button>
+
+        </div>
+
       </section>
 
+
       <section class="card result">
+
         <h2>Conversión</h2>
-        <div id="converterWelcome" class="small">Introduce las horas y pulsa CONVERTIR.</div>
-        <div id="converterOut" class="converter-result"></div>
-      </section>
-    </div>
 
-    <div class="section-title">Segunda parte</div>
-    <div class="grid">
-      <section class="card">
-        <h2>Contador de días laborables</h2>
-        <label for="start">Fecha de inicio</label>
-        <input id="start" type="date">
-        
-        <div class="row">
-          <div>
-            <label for="count">Días laborables a contar</label>
-            <input id="count" type="number" min="1" value="1">
-          </div>
-          <div>
-            <label for="hours">Horas por día</label>
-            <input id="hours" type="number" min="0.25" step="0.25" value="8">
-          </div>
+        <div
+          id="converterWelcome"
+          class="small"
+        >
+          Introduce las horas y pulsa CONVERTIR.
         </div>
 
-        <label>Días que trabajas</label>
-        <div class="days" id="days"></div>
+        <div
+          id="converterOut"
+          class="converter-result"
+        ></div>
+
+      </section>
+
+    </div>
+
+
+    <!-- =========================
+         SEGUNDA PARTE
+         ========================= -->
+
+    <div class="section-title">
+      Segunda parte
+    </div>
+
+    <div class="grid">
+
+      <section class="card">
+
+        <h2>Contador de días laborables</h2>
+
+        <label for="start">
+          Fecha de inicio
+        </label>
+
+        <input
+          id="start"
+          type="date"
+        >
+
+        <div class="row">
+
+          <div>
+
+            <label for="count">
+              Días laborables a contar
+            </label>
+
+            <input
+              id="count"
+              type="number"
+              min="1"
+              value="1"
+            >
+
+          </div>
+
+          <div>
+
+            <label for="hours">
+              Horas por día
+            </label>
+
+            <input
+              id="hours"
+              type="number"
+              min="0.25"
+              step="0.25"
+              value="8"
+            >
+
+          </div>
+
+        </div>
+
+
+        <label>
+          Días que trabajas
+        </label>
+
+        <div
+          class="days"
+          id="days"
+        ></div>
+
 
         <div class="actions">
-          <button class="main" onclick="calc()">CALCULAR</button>
-          <button class="reset" onclick="resetAll()">Restablecer</button>
+
+          <button
+            class="main"
+            onclick="calc()"
+          >
+            CALCULAR
+          </button>
+
+          <button
+            class="reset"
+            onclick="resetAll()"
+          >
+            Restablecer
+          </button>
+
         </div>
+
       </section>
+
 
       <section class="card result">
+
         <h2>Resultado</h2>
-        <div id="out" class="small">Completa los datos y pulsa CALCULAR.</div>
+
+        <div
+          id="out"
+          class="small"
+        >
+          Completa los datos y pulsa CALCULAR.
+        </div>
+
       </section>
+
     </div>
 
-    <div class="note"> © 2026 | Licdo. Carlos E. González C.</div>
+
+    <!-- =========================
+         PIE DE PÁGINA
+         ========================= -->
+
+    <div class="note">
+      © 2026 | Licdo. Carlos E. González C.
+    </div>
+
   </div>
 
+
   <script>
-    const names = [[1, 'Lunes'], [2, 'Martes'], [3, 'Miércoles'], [4, 'Jueves'], [5, 'Viernes'], [6, 'Sábado'], [0, 'Domingo']];
+
+    /* =========================
+       DÍAS LABORABLES
+       ========================= */
+
+    const names = [
+      [1, 'Lunes'],
+      [2, 'Martes'],
+      [3, 'Miércoles'],
+      [4, 'Jueves'],
+      [5, 'Viernes'],
+      [6, 'Sábado'],
+      [0, 'Domingo']
+    ];
+
     let selected = new Set([1, 2, 3, 4, 5]);
+
     const days = document.getElementById('days');
 
+
+    /* =========================
+       FORMATO DE NÚMEROS
+       ========================= */
+
     function formatNumber(value, decimals = 2) {
-      return value.toLocaleString('es-ES', { maximumFractionDigits: decimals });
+
+      return value.toLocaleString(
+        'es-ES',
+        {
+          maximumFractionDigits: decimals
+        }
+      );
+
     }
+
+
+    /* =========================
+       CONVERTIDOR
+       ========================= */
 
     function convertTime() {
-      const totalHours = Number(document.getElementById('convertHours').value);
-      const hoursPerDay = Number(document.getElementById('workdayHours').value);
-      const welcome = document.getElementById('converterWelcome');
-      const output = document.getElementById('converterOut');
+
+      const totalHours =
+        Number(document.getElementById('convertHours').value);
+
+      const hoursPerDay =
+        Number(document.getElementById('workdayHours').value);
+
+      const welcome =
+        document.getElementById('converterWelcome');
+
+      const output =
+        document.getElementById('converterOut');
+
 
       welcome.style.display = 'none';
+
       output.style.display = 'block';
 
-      if (!Number.isFinite(totalHours) || totalHours < 0 || !Number.isFinite(hoursPerDay) || hoursPerDay <= 0) {
-        output.innerHTML = '<div class="error">Introduce una cantidad de horas válida y una jornada mayor que cero.</div>';
+
+      if (
+        !Number.isFinite(totalHours) ||
+        totalHours < 0 ||
+        !Number.isFinite(hoursPerDay) ||
+        hoursPerDay <= 0
+      ) {
+
+        output.innerHTML =
+          '<div class="error">Introduce una cantidad de horas válida y una jornada mayor que cero.</div>';
+
         return;
+
       }
 
-      const decimalDays = totalHours / hoursPerDay;
-      const completeDays = Math.floor(decimalDays);
-      const remainingHours = Number((totalHours - completeDays * hoursPerDay).toFixed(2));
-      const dayText = completeDays === 1 ? 'día laboral completo' : 'días laborales completos';
-      const hourText = remainingHours === 1 ? 'hora adicional' : 'horas adicionales';
+
+      const decimalDays =
+        totalHours / hoursPerDay;
+
+
+      const completeDays =
+        Math.floor(decimalDays);
+
+
+      const remainingHours =
+        Number(
+          (
+            totalHours -
+            completeDays * hoursPerDay
+          ).toFixed(2)
+        );
+
+
+      const dayText =
+        completeDays === 1
+          ? 'día laboral completo'
+          : 'días laborales completos';
+
+
+      const hourText =
+        remainingHours === 1
+          ? 'hora adicional'
+          : 'horas adicionales';
+
 
       output.innerHTML = `
+
         <div class="box">
-          <div class="small">Equivalencia decimal</div>
-          <div class="big">${formatNumber(decimalDays)} días</div>
+
+          <div class="small">
+            Equivalencia decimal
+          </div>
+
+          <div class="big">
+            ${formatNumber(decimalDays)} días
+          </div>
+
         </div>
+
+
         <div class="box">
-          <div class="small">Equivalencia detallada</div>
-          <div class="big">${completeDays} ${completeDays === 1 ? 'día' : 'días'}</div>
-          <div><b>${formatNumber(remainingHours)}</b> ${hourText}</div>
+
+          <div class="small">
+            Equivalencia detallada
+          </div>
+
+          <div class="big">
+            ${completeDays}
+            ${completeDays === 1 ? 'día' : 'días'}
+          </div>
+
+          <div>
+            <b>${formatNumber(remainingHours)}</b>
+            ${hourText}
+          </div>
+
         </div>
+
+
         <div class="box small">
-          ${formatNumber(totalHours)} horas ÷ ${formatNumber(hoursPerDay)} horas por jornada = ${formatNumber(decimalDays)} días.<br>
-          Resultado: <b>${completeDays} ${dayText}</b>${remainingHours > 0 ? ` y <b>${formatNumber(remainingHours)}${hourText}</b>` : ''}.
+
+          ${formatNumber(totalHours)} horas
+          ÷
+          ${formatNumber(hoursPerDay)} horas por jornada
+          =
+          ${formatNumber(decimalDays)} días.
+
+          <br>
+
+          Resultado:
+
+          <b>
+            ${completeDays} ${dayText}
+          </b>
+
+          ${
+            remainingHours > 0
+              ? ` y <b>${formatNumber(remainingHours)} ${hourText}</b>`
+              : ''
+          }.
+
         </div>
+
       `;
+
     }
+
+
+    /* =========================
+       RESTABLECER CONVERTIDOR
+       ========================= */
 
     function resetConverter() {
+
       document.getElementById('convertHours').value = 8;
+
       document.getElementById('workdayHours').value = 8;
+
       document.getElementById('converterWelcome').style.display = 'block';
+
       document.getElementById('converterOut').style.display = 'none';
+
       document.getElementById('converterOut').innerHTML = '';
+
     }
+
+
+    /* =========================
+       RENDERIZAR DÍAS
+       ========================= */
 
     function render() {
+
       days.innerHTML = '';
+
+
       names.forEach(([n, s]) => {
-        const button = document.createElement('button');
+
+        const button =
+          document.createElement('button');
+
+
         button.type = 'button';
-        button.className = 'day ' + (selected.has(n) ? 'on' : '');
+
+
+        button.className =
+          'day ' +
+          (selected.has(n) ? 'on' : '');
+
+
         button.textContent = s;
+
+
         button.onclick = () => {
-          selected.has(n) ? selected.delete(n) : selected.add(n);
+
+          if (selected.has(n)) {
+
+            selected.delete(n);
+
+          } else {
+
+            selected.add(n);
+
+          }
+
           render();
+
         };
+
+
         days.appendChild(button);
+
       });
+
     }
+
+
     render();
 
-    function calc() {
-      const startValue = document.getElementById('start').value;
-      const count = Math.floor(Number(document.getElementById('count').value));
-      const hours = Number(document.getElementById('hours').value);
-      const output = document.getElementById('out');
 
-      if (!startValue || count < 1 || hours <= 0 || !selected.size) {
-        output.innerHTML = '<div class="error">Completa la fecha, los días, las horas y selecciona al menos un día laboral.</div>';
+    /* =========================
+       CALCULAR DÍAS
+       ========================= */
+
+    function calc() {
+
+      const startValue =
+        document.getElementById('start').value;
+
+
+      const count =
+        Math.floor(
+          Number(
+            document.getElementById('count').value
+          )
+        );
+
+
+      const hours =
+        Number(
+          document.getElementById('hours').value
+        );
+
+
+      const output =
+        document.getElementById('out');
+
+
+      if (
+        !startValue ||
+        count < 1 ||
+        hours <= 0 ||
+        !selected.size
+      ) {
+
+        output.innerHTML =
+          '<div class="error">Completa la fecha, los días, las horas y selecciona al menos un día laboral.</div>';
+
         return;
+
       }
 
-      const [year, month, day] = startValue.split('-').map(Number);
-      const current = new Date(year, month - 1, day);
+
+      const [year, month, day] =
+        startValue
+          .split('-')
+          .map(Number);
+
+
+      const current =
+        new Date(
+          year,
+          month - 1,
+          day
+        );
+
+
       let firstWorkday = null;
+
       let counted = 0;
 
+
       while (counted < count) {
-        if (selected.has(current.getDay())) {
-          if (!firstWorkday) firstWorkday = new Date(current);
+
+        if (
+          selected.has(
+            current.getDay()
+          )
+        ) {
+
+          if (!firstWorkday) {
+
+            firstWorkday =
+              new Date(current);
+
+          }
+
+
           counted++;
-          if (counted === count) break;
+
+
+          if (counted === count) {
+
+            break;
+
+          }
+
         }
-        current.setDate(current.getDate() + 1);
+
+
+        current.setDate(
+          current.getDate() + 1
+        );
+
       }
 
-      const total = count * hours;
-      const naturalDays = Math.round((current - firstWorkday) / 86400000) + 1;
-      const dateFormat = new Intl.DateTimeFormat('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' });
+
+      const total =
+        count * hours;
+
+
+      const naturalDays =
+        Math.round(
+          (current - firstWorkday) /
+          86400000
+        ) + 1;
+
+
+      const dateFormat =
+        new Intl.DateTimeFormat(
+          'es-ES',
+          {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric'
+          }
+        );
+
 
       output.innerHTML = `
+
         <div class="box">
-          <div class="small">Tiempo total</div>
-          <div class="big">${formatNumber(total)} horas</div>
+
+          <div class="small">
+            Tiempo total
+          </div>
+
+          <div class="big">
+            ${formatNumber(total)} horas
+          </div>
+
         </div>
+
+
         <div class="row">
+
           <div class="box">
-            <div class="small">Días de trabajo</div>
-            <div class="big">${count}</div>
+
+            <div class="small">
+              Días de trabajo
+            </div>
+
+            <div class="big">
+              ${count}
+            </div>
+
           </div>
+
+
           <div class="box">
-            <div class="small">Días naturales</div>
-            <div class="big">${naturalDays}</div>
+
+            <div class="small">
+              Días naturales
+            </div>
+
+            <div class="big">
+              ${naturalDays}
+            </div>
+
           </div>
+
         </div>
+
+
         <div class="box">
-          Fecha final: <b>${dateFormat.format(current)}</b><br>
-          <span class="small">${count} días × ${formatNumber(hours)} horas = ${formatNumber(total)} horas</span>
+
+          Fecha final:
+
+          <b>
+            ${dateFormat.format(current)}
+          </b>
+
+          <br>
+
+          <span class="small">
+
+            ${count} días
+            ×
+            ${formatNumber(hours)} horas
+            =
+            ${formatNumber(total)} horas
+
+          </span>
+
         </div>
+
       `;
+
     }
 
+
+    /* =========================
+       RESTABLECER
+       ========================= */
+
     function resetAll() {
+
       document.getElementById('start').value = '';
+
       document.getElementById('count').value = 1;
+
       document.getElementById('hours').value = 8;
-      selected = new Set([1, 2, 3, 4, 5]);
+
+
+      selected =
+        new Set([1, 2, 3, 4, 5]);
+
+
       render();
-      document.getElementById('out').textContent = 'Completa los datos y pulsa CALCULAR.';
+
+
+      document.getElementById('out').textContent =
+        'Completa los datos y pulsa CALCULAR.';
+
     }
+
   </script>
+
 </body>
 </html>

@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Apoya Gestor Tecnológico C.G.</title>
+
+<style>
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --azul-oscuro: #06182c;
+    --azul: #003f73;
+    --azul-yappy: #13abe0;
+    --azul-claro: #e9f8ff;
+    --blanco: #ffffff;
+    --gris: #667788;
+    --verde: #18a267;
+}
+
+body {
+    min-height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+
+    background:
+        radial-gradient(circle at 10% 10%, rgba(19,171,224,.18), transparent 30%),
+        radial-gradient(circle at 90% 90%, rgba(0,63,115,.20), transparent 35%),
+        linear-gradient(135deg, #06182c, #0b2743);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 30px 15px;
+}
+
+/* ================================
+   CONTENEDOR
+================================ */
+
+.contenedor {
+    width: 100%;
+    max-width: 620px;
+}
+
+.tarjeta {
+    position: relative;
+    overflow: hidden;
+
+    background: rgba(255,255,255,.98);
+
+    border-radius: 30px;
+
+    padding: 0 32px 35px;
+
+    text-align: center;
+
+    box-shadow:
+        0 30px 70px rgba(0,0,0,.35),
+        0 0 0 1px rgba(255,255,255,.08);
+}
+
+/* Línea decorativa superior */
+
+.tarjeta::before {
+    content: "";
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 6px;
+
+    background: linear-gradient(
+        90deg,
+        #003f73,
+        #13abe0,
+        #ff9e44
+    );
+}
+
+/* ================================
+   ENCABEZADO
+================================ */
+
+.encabezado {
+    margin: 0 -32px 30px;
+
+    padding: 38px 25px 80px;
+
+    background:
+        radial-gradient(circle at top right, rgba(19,171,224,.28), transparent 45%),
+        linear-gradient(135deg, #06182c, #0a3156);
+
+    color: white;
+
+    position: relative;
+}
+
+.encabezado h2 {
+    font-size: 20px;
+    letter-spacing: .5px;
+}
+
+.encabezado p {
+    margin-top: 6px;
+
+    color: #a9dff4;
+
+    font-size: 13px;
+}
+
+/* ================================
+   LOGO
+================================ */
+
+.logo-contenedor {
+    width: 130px;
+    height: 130px;
+
+    margin: -95px auto 20px;
+
+    position: relative;
+    z-index: 5;
+
+    border-radius: 30px;
+
+    padding: 7px;
+
+    background: linear-gradient(
+        135deg,
+        #13abe0,
+        #ffffff,
+        #ff9e44
+    );
+
+    box-shadow:
+        0 12px 30px rgba(0,0,0,.25),
+        0 0 25px rgba(19,171,224,.25);
+}
+
+.logo-contenedor img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    border-radius: 24px;
+
+    background: #111;
+}
+
+/* ================================
+   TITULOS
+================================ */
+
+h1 {
+    color: var(--azul-oscuro);
+
+    font-size: 30px;
+
+    margin-bottom: 8px;
+}
+
+.subtitulo {
+    color: var(--azul-yappy);
+
+    font-size: 18px;
+    font-weight: bold;
+
+    margin-bottom: 18px;
+}
+
+.descripcion {
+    color: #566575;
+
+    font-size: 16px;
+
+    line-height: 1.7;
+
+    max-width: 500px;
+
+    margin: auto;
+}
+
+/* ================================
+   MENSAJE VOLUNTARIO
+================================ */
+
+.voluntaria {
+    margin: 22px auto;
+
+    padding: 16px;
+
+    border-radius: 14px;
+
+    background: #eefaff;
+
+    border-left: 4px solid var(--azul-yappy);
+
+    color: #405667;
+
+    font-size: 14px;
+
+    line-height: 1.6;
+}
+
+/* ================================
+   YAPPY
+================================ */
+
+.yappy-titulo {
+    margin-top: 28px;
+
+    font-size: 13px;
+
+    color: #7b8995;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+}
+
+.yappy {
+    font-size: 38px;
+
+    color: #00528c;
+
+    font-weight: 900;
+
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+/* ================================
+   QR
+================================ */
+
+.qr-contenedor {
+    width: 100%;
+
+    max-width: 390px;
+
+    margin: 15px auto;
+
+    padding: 12px;
+
+    background: white;
+
+    border-radius: 22px;
+
+    border: 1px solid #dfedf4;
+
+    box-shadow:
+        0 12px 35px rgba(0,70,110,.15);
+}
+
+.qr-contenedor img {
+    width: 100%;
+
+    display: block;
+
+    border-radius: 16px;
+}
+
+.escanear {
+    margin: 16px auto 5px;
+
+    max-width: 400px;
+
+    color: #687887;
+
+    font-size: 14px;
+
+    line-height: 1.6;
+}
+
+/* ================================
+   NUMERO
+================================ */
+
+.numero-box {
+    margin: 25px 0 0;
+
+    padding: 20px;
+
+    border-radius: 18px;
+
+    background:
+        linear-gradient(135deg,#edfaff,#dff5ff);
+
+    border: 1px solid #cbeafa;
+}
+
+.numero-box small {
+    display: block;
+
+    color: #657789;
+
+    margin-bottom: 7px;
+}
+
+.numero {
+    color: #00487d;
+
+    font-size: 30px;
+
+    font-weight: 900;
+
+    letter-spacing: 2px;
+}
+
+/* ================================
+   BOTONES
+================================ */
+
+.botones {
+    margin-top: 20px;
+
+    display: grid;
+
+    gap: 12px;
+}
+
+button {
+    width: 100%;
+
+    padding: 16px 20px;
+
+    border: 0;
+
+    border-radius: 14px;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition:
+        transform .2s,
+        box-shadow .2s,
+        background .2s;
+}
+
+button:active {
+    transform: scale(.98);
+}
+
+.btn-copiar {
+    background:
+        linear-gradient(135deg,#15b9e7,#0073b8);
+
+    color: white;
+
+    box-shadow:
+        0 8px 22px rgba(0,132,194,.27);
+}
+
+.btn-copiar:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 12px 28px rgba(0,132,194,.35);
+}
+
+.btn-compartir {
+    background: #eaf8ff;
+
+    color: #006da8;
+
+    border: 1px solid #c6eafa;
+}
+
+.btn-compartir:hover {
+    background: #d9f3ff;
+
+    transform: translateY(-2px);
+}
+
+/* ================================
+   MENSAJE COPIADO
+================================ */
+
+.mensaje {
+    padding: 0;
+
+    margin-top: 0;
+
+    height: 0;
+
+    overflow: hidden;
+
+    opacity: 0;
+
+    color: var(--verde);
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    transition: .3s;
+}
+
+.mensaje.mostrar {
+    height: auto;
+
+    margin-top: 15px;
+
+    opacity: 1;
+}
+
+/* ================================
+   AGRADECIMIENTO
+================================ */
+
+.agradecimiento {
+    margin-top: 30px;
+
+    padding-top: 25px;
+
+    border-top: 1px solid #e4edf2;
+}
+
+.corazon {
+    font-size: 32px;
+
+    animation: latido 1.5s infinite;
+}
+
+.agradecimiento h3 {
+    color: #073d65;
+
+    margin-top: 8px;
+
+    margin-bottom: 5px;
+}
+
+.agradecimiento p {
+    color: #7b8792;
+
+    font-size: 13px;
+
+    line-height: 1.6;
+}
+
+/* ================================
+   PIE
+================================ */
+
+.footer {
+    margin-top: 25px;
+
+    color: #98a3ad;
+
+    font-size: 11px;
+}
+
+/* ================================
+   ANIMACION
+================================ */
+
+@keyframes latido {
+
+    0%, 100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.16);
+    }
+}
+
+/* ================================
+   MOVIL
+================================ */
+
+@media(max-width:600px) {
+
+    body {
+        padding: 15px 10px;
+        align-items: flex-start;
+    }
+
+    .tarjeta {
+        padding:
+            0 18px 28px;
+
+        border-radius: 24px;
+    }
+
+    .encabezado {
+        margin:
+            0 -18px 30px;
+
+        padding:
+            32px 15px 75px;
+    }
+
+    .logo-contenedor {
+        width: 115px;
+        height: 115px;
+
+        margin-top: -85px;
+    }
+
+    h1 {
+        font-size: 25px;
+    }
+
+    .subtitulo {
+        font-size: 16px;
+    }
+
+    .descripcion {
+        font-size: 15px;
+    }
+
+    .numero {
+        font-size: 26px;
+    }
+
+    .qr-contenedor {
+        padding: 8px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<main class="contenedor">
+
+<section class="tarjeta">
+
+    <!-- =========================
+         ENCABEZADO
+    ========================== -->
+
+    <div class="encabezado">
+
+        <h2>GESTOR TECNOLÓGICO C.G.</h2>
+
+        <p>Tecnología • Desarrollo • Innovación</p>
+
+    </div>
+
+
+    <!-- =========================
+         TU LOGO
+    ========================== -->
+
+    <div class="logo-contenedor">
+
+        <img
+            src="logo.png"
+            alt="Logo Gestor Tecnológico C.G."
+        >
+
+    </div>
+
+
+    <!-- =========================
+         CONTENIDO
+    ========================== -->
+
+    <h1>💙 Apoya este proyecto</h1>
+
+    <div class="subtitulo">
+        Tu aporte hace la diferencia
+    </div>
+
+    <p class="descripcion">
+
+        Tu contribución ayudará al mantenimiento
+        y mejora de esta página web.
+
+    </p>
+
+
+    <div class="voluntaria">
+
+        🤝 Esta contribución es
+        <strong>completamente voluntaria</strong>.
+
+        <br><br>
+
+        No existe ningún monto mínimo.
+        Cada aporte es recibido con mucho agradecimiento.
+
+    </div>
+
+
+    <!-- =========================
+         YAPPY
+    ========================== -->
+
+    <div class="yappy-titulo">
+        Contribuye mediante
+    </div>
+
+    <div class="yappy">
+        yappy
+    </div>
+
+
+    <!-- =========================
+         TU QR
+    ========================== -->
+
+    <div class="qr-contenedor">
+
+        <img
+            src="yappy-qr.jpg"
+            alt="QR para contribución mediante Yappy"
+        >
+
+    </div>
+
+
+    <div class="escanear">
+
+        📱 Escanea el código QR con la cámara de
+        tu dispositivo para realizar una
+        contribución mediante Yappy.
+
+    </div>
+
+
+    <!-- =========================
+         NUMERO YAPPY
+    ========================== -->
+
+    <div class="numero-box">
+
+        <small>
+            También puedes utilizar el número:
+        </small>
+
+        <div class="numero">
+            6970-0906
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         BOTONES
+    ========================== -->
+
+    <div class="botones">
+
+        <button
+            class="btn-copiar"
+            onclick="copiarYappy()"
+        >
+            📋 Copiar número de Yappy
+        </button>
+
+
+        <button
+            class="btn-compartir"
+            onclick="compartirPagina()"
+        >
+            📤 Compartir esta página
+        </button>
+
+    </div>
+
+
+    <!-- Mensaje al copiar -->
+
+    <div
+        id="mensaje"
+        class="mensaje"
+    >
+        ✓ Número 6970-0906 copiado correctamente
+    </div>
+
+
+    <!-- =========================
+         AGRADECIMIENTO
+    ========================== -->
+
+    <div class="agradecimiento">
+
+        <div class="corazon">
+            💙
+        </div>
+
+        <h3>
+            ¡Gracias por apoyar este proyecto!
+        </h3>
+
+        <p>
+            Tu apoyo contribuye al mantenimiento
+            y mejora de Gestor Tecnológico C.G.
+        </p>
+
+    </div>
+
+
+    <div class="footer">
+        © Gestor Tecnológico C.G.
+    </div>
+
+</section>
+
+</main>
+
+
+<script>
+
+/* ==================================
+   NÚMERO YAPPY
+================================== */
+
+const numeroYappy = "69700906";
+
+
+/* ==================================
+   COPIAR NÚMERO
+================================== */
+
+async function copiarYappy() {
+
+    const mensaje =
+        document.getElementById("mensaje");
+
+    try {
+
+        await navigator.clipboard.writeText(
+            numeroYappy
+        );
+
+        mostrarMensaje();
+
+    }
+
+    catch(error) {
+
+        /* Método alternativo */
+
+        const campo =
+            document.createElement("textarea");
+
+        campo.value = numeroYappy;
+
+        campo.style.position = "fixed";
+
+        campo.style.opacity = "0";
+
+        document.body.appendChild(campo);
+
+        campo.select();
+
+        document.execCommand("copy");
+
+        document.body.removeChild(campo);
+
+        mostrarMensaje();
+
+    }
+
+}
+
+
+/* ==================================
+   MOSTRAR CONFIRMACIÓN
+================================== */
+
+function mostrarMensaje() {
+
+    const mensaje =
+        document.getElementById("mensaje");
+
+    mensaje.classList.add("mostrar");
+
+    setTimeout(function() {
+
+        mensaje.classList.remove("mostrar");
+
+    }, 3000);
+
+}
+
+
+/* ==================================
+   COMPARTIR PÁGINA
+================================== */
+
+async function compartirPagina() {
+
+    const datos = {
+
+        title:
+            "Apoya Gestor Tecnológico C.G.",
+
+        text:
+            "Tu contribución ayudará al mantenimiento y mejora de esta página web. La contribución es voluntaria.",
+
+        url:
+            window.location.href
+
+    };
+
+
+    if (navigator.share) {
+
+        try {
+
+            await navigator.share(datos);
+
+        }
+
+        catch(error) {
+
+            console.log(
+                "El usuario canceló la acción."
+            );
+
+        }
+
+    }
+
+    else {
+
+        copiarEnlace();
+
+    }
+
+}
+
+
+/* ==================================
+   COPIAR ENLACE
+================================== */
+
+async function copiarEnlace() {
+
+    try {
+
+        await navigator.clipboard.writeText(
+            window.location.href
+        );
+
+        alert(
+            "Enlace de la página copiado."
+        );
+
+    }
+
+    catch(error) {
+
+        alert(
+            "No fue posible copiar el enlace."
+        );
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>

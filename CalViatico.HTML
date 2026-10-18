@@ -22,6 +22,7 @@
             color: #0f172a;
             -webkit-font-smoothing:antialiased;
             -moz-osx-font-smoothing:grayscale;
+            padding-top: 1rem;
         }
         .dark body{
             background: linear-gradient(135deg,#0b1220 0%, #0f1724 100%);
@@ -39,25 +40,33 @@
             background: rgba(10,12,18,0.7);
             box-shadow: 0 8px 30px rgba(2,6,23,0.6);
         }
-        /* Floating label improved */
+
         .floating-label{position:relative}
         .floating-label input{padding:1.05rem 1rem .35rem 1rem}
         .floating-label label{
             position:absolute;left:0.95rem;top:0.9rem;color:var(--primary);font-weight:600;transition:all .15s;pointer-events:none;font-size:0.95rem
         }
-        .floating-label input:focus + label, .floating-label input:not(:placeholder-shown) + label{top:.35rem;font-size:.78rem;color:var(--primary)}
-
-        /* Dark mode toggle */
-        #darkModeToggle{position:fixed;right:1.25rem;bottom:1.25rem;width:54px;height:54px;border-radius:9999px;background:linear-gradient(180deg,#fff,#f1f5f9);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(0,0,0,0.12);z-index:60}
-        .dark #darkModeToggle{background:linear-gradient(180deg,#0b1220,#071022)}
-        #darkModeToggle svg{width:22px;height:22px}
-
-        /* Responsive tweaks */
-        @media (max-width:640px){
-            h1{font-size:1.25rem}
+        .floating-label input:focus + label, .floating-label input:not(:placeholder-shown) + label{
+            top:.35rem;font-size:.78rem;color:var(--primary)
         }
 
-        /* Result box */
+        #darkModeToggle{
+            position:fixed;right:1.25rem;bottom:1.25rem;width:54px;height:54px;border-radius:9999px;
+            background:linear-gradient(180deg,#fff,#f1f5f9);display:flex;align-items:center;justify-content:center;
+            box-shadow:0 10px 24px rgba(15,23,42,0.18);z-index:50;cursor:pointer;transition:transform .15s ease
+        }
+        #darkModeToggle:hover{transform:scale(1.04)}
+        .dark #darkModeToggle{background:linear-gradient(180deg,#0b1220,#071022)}
+        #darkModeToggle svg{width:22px;height:22px}
+        .dark #darkModeToggle svg{color:#facc15}
+
+        @media (max-width:640px){
+            h1{
+                font-size:1.35rem;
+                line-height:1.25;
+            }
+        }
+
         .result-box{border-radius:.75rem;padding:1rem}
         .muted{color:#6b7280}
         .val{font-weight:800}
@@ -65,33 +74,41 @@
         footer{opacity:0.95}
     </style>
 </head>
-<nav class="flex justify-center">
-            <ul>
-                <li><a >Bienvenido</a></li>
-<body class="min-h-screen flex flex-col items-center justify-center p-6 transition-colors duration-300">
+<body class="min-h-screen flex flex-col items-center justify-center p-6 pt-10 transition-colors duration-300">
+    <nav class="w-full flex justify-center mb-5">
+        <div class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/70 px-5 py-2 shadow-sm backdrop-blur-sm">
+            <span class="text-sm font-semibold text-slate-700">Bienvenido</span>
+        </div>
+    </nav>
 
-    <main class="w-full container mx-auto">
+    <main class="w-full container mx-auto mt-2">
         <div class="card mx-4 md:mx-0 p-6 md:p-8 grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
             <div>
                 <div class="flex items-center gap-4 mb-4">
                     <img src="Imagenes/GestorLogo.png" alt="Logo" class="h-16 w-auto rounded-md shadow-sm">
                     <div>
-                        <h1 class="text-2xl md:text-3xl font-extrabold">Calculadora de Décimo y Descuentos</h1>
-                        <p class="text-sm muted">Ingresa tu salario mensual. Cálculo estimado para Panamá. Mantengo la lógica original de deducciones (CSS 7.25% sobre décimo, ISR anual escalonado).</p>
+                        <h1 class="text-2xl md:text-3xl font-extrabold leading-tight">Calculadora de Décimo y Descuentos</h1>
+                        <p class="text-sm muted mt-2">Ingresa tu salario mensual. Cálculo estimado para Panamá. Mantengo la lógica original de deducciones (CSS 7.25% sobre décimo, ISR anual escalonado y cálculo del décimo neto).</p>
                     </div>
                 </div>
 
                 <form id="calcForm" class="space-y-4" onsubmit="return false;">
                     <div class="floating-label">
-                        <input inputmode="decimal" type="number" min="0" step="0.01" id="salaryInput" placeholder=" " class="w-full bg-white/90 dark:bg-transparent border border-slate-200 dark:border-slate-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 p-3" aria-describedby="salaryHelp">
+                        <input inputmode="decimal" type="number" min="0" step="0.01" id="salaryInput" placeholder=" " class="w-full bg-white/90 dark:bg-transparent border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-slate-900 dark:text-slate-100">
                         <label for="salaryInput">Salario Mensual (B/.)</label>
                         <p id="salaryHelp" class="text-xs muted mt-1">Introduce tu salario mensual. El décimo corresponde a 1/3 del salario mensual.</p>
                     </div>
 
                     <div class="flex gap-3 flex-col sm:flex-row">
-                        <button id="calculateBtn" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-r from-emerald-500 to-blue-600 hover:from-emerald-600 hover:to-blue-700 text-white font-semibold py-2 px-4 rounded-lg shadow">Calcular</button>
-                        <button id="downloadBtn" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white/80 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 py-2 px-4 rounded-lg shadow">Descargar PDF</button>
-                        <button id="shareBtn" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white/80 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 py-2 px-4 rounded-lg shadow">Compartir WhatsApp</button>
+                        <button id="calculateBtn" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-r from-emerald-500 to-blue-600 hover:from-emerald-600 hover:to-blue-700 text-white px-4 py-3 rounded-xl font-semibold shadow-lg shadow-emerald-500/20 transition">
+                            Calcular
+                        </button>
+                        <button id="downloadBtn" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white/80 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 px-4 py-3 rounded-xl font-semibold hover:bg-slate-50 dark:hover:bg-slate-700 transition">
+                            Descargar PDF
+                        </button>
+                        <button id="shareBtn" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white/80 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 px-4 py-3 rounded-xl font-semibold hover:bg-slate-50 dark:hover:bg-slate-700 transition">
+                            Compartir
+                        </button>
                     </div>
                 </form>
 
@@ -131,39 +148,34 @@
         </div>
 
         <footer class="mt-6 flex flex-col items-center justify-center gap-2 text-sm muted text-center">
-    <img 
-        src="Imagenes/iconoGt.png" 
-        alt="Logo" 
-        class="h-14 w-14 mx-auto rounded-full object-cover border-2 border-slate-300 shadow-md"
-    >
-    
-    <div>© Creado por Licdo. Carlos E. González C.</div>
-</footer>
-
+            <img 
+                src="Imagenes/iconoGt.png" 
+                alt="Logo" 
+                class="h-14 w-14 mx-auto rounded-full object-cover border-2 border-slate-300 shadow-md"
+            >
+            <div>© Creado por Licdo. Carlos E. González C.</div>
+        </footer>
     </main>
 
-    <!-- Dark mode toggle -->
     <div id="darkModeToggle" title="Cambiar modo claro/oscuro" role="button" aria-pressed="false">
         <svg id="iconSunMoon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="text-yellow-400">
-            <path id="sun" d="M12 4.5V3m0 18v-1.5M4.5 12H3m18 0h-1.5M6.34 6.34L5.22 5.22m13.56 13.56l-1.12-1.12M17.66 6.34l1.12-1.12M6.34 17.66L5.22 18.78" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <path id="sun" d="M12 4.5V3m0 18v-1.5M4.5 12H3m18 0h-1.5M6.34 6.34L5.22 5.22m13.56 13.56l-1.12-1.12M17.66 6.34l1.12-1.12M6.34 17.66L5.22 18.78" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
             <circle id="moon" cx="12" cy="12" r="5" fill="currentColor" style="display:none"></circle>
         </svg>
     </div>
 
     <script>
-        // --- Utilidades ---
         const $ = (id) => document.getElementById(id);
         const formatMoney = (v) => {
             return 'B/. ' + Number(v).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2});
         };
 
-        // --- Dark mode persistente ---
+        // Dark mode
         const darkToggle = document.getElementById('darkModeToggle');
         function setDarkMode(on){
             document.documentElement.classList.toggle('dark', on);
             document.body.classList.toggle('dark', on);
             darkToggle.setAttribute('aria-pressed', on ? 'true' : 'false');
-            // swap icons
             const sun = document.getElementById('sun');
             const moon = document.getElementById('moon');
             if(on){ sun.style.display='none'; moon.style.display='block'; }
@@ -174,14 +186,13 @@
             setDarkMode(newVal);
             localStorage.setItem('prefersDark', newVal ? '1' : '0');
         });
-        // Init
+
         (function(){
             const pref = localStorage.getItem('prefersDark');
             const systemDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
             if(pref !== null) setDarkMode(pref === '1'); else setDarkMode(systemDark);
         })();
 
-        // --- Cálculo (misma lógica original, mejor validación y UX) ---
         function calculateDecimoAndDeductions(){
             let salario = parseFloat($('salaryInput').value);
             if(isNaN(salario) || salario <= 0){
@@ -189,11 +200,9 @@
                 return;
             }
 
-            // Lógica original conservada
             let decimo = salario / 3;
-            let css = decimo * 0.0725; // 7.25% sobre décimo
+            let css = decimo * 0.0725;
 
-            // ISR: calculado sobre salario anual (salario * 13) y distribuido mensualmente, luego el décimo recibe 1/3
             let isrMensual = 0;
             let salarioAnual = salario * 13;
             if (salarioAnual <= 11000) {
@@ -207,7 +216,6 @@
 
             let decimoNeto = decimo - css - isrDecimo;
 
-            // Mostrar resultados
             $('decimoResult').textContent = formatMoney(decimo);
             $('cssResult').textContent = formatMoney(css);
             $('isrResult').textContent = formatMoney(isrDecimo);
@@ -219,10 +227,8 @@
             return { salario, decimo, css, isrDecimo, decimoNeto };
         }
 
-        // --- Manejo de botones ---
         document.getElementById('calculateBtn').addEventListener('click', calculateDecimoAndDeductions);
 
-        // PDF (mejor manejo de fuente y fallback) 
         async function descargarPDF(){
             if($('result').classList.contains('hidden')){ alert('Calcula el resultado antes de descargar el PDF.'); return; }
             const data = calculateDecimoAndDeductions();
@@ -242,16 +248,14 @@
             doc.text('Descuento ISR: ' + formatMoney(isrDecimo), 20, y); y += 8;
             doc.text('Décimo Neto Recibido: ' + formatMoney(decimoNeto), 20, y); y += 12;
 
-            // Añadir logo si carga
             const logo = new Image();
             logo.crossOrigin = 'anonymous';
             logo.src = 'Imagenes/GestorLogo.png';
             logo.onload = function(){
                 try{
-                    // dibuja imagen centrada
                     const maxW = 40; const x = (210 - maxW)/2;
                     doc.addImage(logo, 'JPEG', x, y, maxW, 15);
-                }catch(e){ /* fallback */ }
+                }catch(e){}
                 doc.setFontSize(10);
                 doc.setTextColor(60, 90, 160);
                 doc.text('© Creado por Licdo. Carlos E. González', 105, 280, {align: 'center'});
@@ -266,7 +270,6 @@
         }
         document.getElementById('downloadBtn').addEventListener('click', descargarPDF);
 
-        // Compartir por WhatsApp
         function compartirWhatsApp(e){
             e && e.preventDefault();
             if($('result').classList.contains('hidden')){ alert('Calcula el resultado antes de compartir.'); return; }
@@ -287,7 +290,6 @@
         }
         document.getElementById('shareBtn').addEventListener('click', compartirWhatsApp);
 
-        // Mejora UX: enter en input hace el cálculo
         document.getElementById('salaryInput').addEventListener('keydown', function(e){
             if(e.key === 'Enter'){
                 e.preventDefault();
@@ -295,12 +297,10 @@
             }
         });
 
-        // Inicializar valor y acceso teclado
         window.addEventListener('load', ()=>{
             const input = $('salaryInput');
             if(!input.value) input.value = '0';
         });
-
     </script>
 </body>
 </html>

@@ -5,12 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Contador de Tiempo Compensatorios</title>
-<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mi Página</title>
   <link rel="icon" type="image/png" href="Imagenes/iconoGt.png">
-</head>
+
   <style>
     * {
       box-sizing: border-box;
@@ -28,10 +27,6 @@
       margin: auto;
       padding: 32px 18px;
     }
-
-    /* =========================
-       ENCABEZADO Y LOGO
-       ========================= */
 
     .header {
       display: flex;
@@ -74,10 +69,6 @@
       text-transform: uppercase;
       letter-spacing: 1px;
     }
-
-    /* =========================
-       TARJETAS
-       ========================= */
 
     .grid {
       display: grid;
@@ -122,10 +113,6 @@
       gap: 12px;
     }
 
-    /* =========================
-       DÍAS
-       ========================= */
-
     .days {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -152,10 +139,6 @@
       border-color: #75f2fa;
       font-weight: bold;
     }
-
-    /* =========================
-       BOTONES
-       ========================= */
 
     .actions {
       display: flex;
@@ -190,10 +173,6 @@
     .reset:hover {
       background: #344b65;
     }
-
-    /* =========================
-       RESULTADOS
-       ========================= */
 
     .result {
       background: linear-gradient(135deg, #089bb6, #1556bf);
@@ -236,12 +215,26 @@
       display: none;
     }
 
-    /* =========================
-       RESPONSIVE
-       ========================= */
+    footer {
+      margin-top: 24px;
+      text-align: center;
+      color: #9fb1c5;
+      font-size: 14px;
+    }
+
+    .footer-logo {
+      width: 48px;
+      height: 48px;
+      max-width: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #cbd5e1;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      display: block;
+      margin: 0 auto 8px;
+    }
 
     @media(max-width: 700px) {
-
       .grid,
       .row {
         grid-template-columns: 1fr;
@@ -277,10 +270,14 @@
     }
 
     @media(max-width: 450px) {
-
       .logo {
         width: 58px;
         height: 58px;
+      }
+
+      .footer-logo {
+        width: 40px;
+        height: 40px;
       }
 
       .header {
@@ -295,7 +292,6 @@
         font-size: 12px;
       }
     }
-
   </style>
 </head>
 
@@ -303,12 +299,7 @@
 
   <div class="wrap">
 
-    <!-- =========================
-         ENCABEZADO
-         ========================= -->
-
     <div class="header">
-
       <img
         src="Imagenes/GestorLogo.png"
         alt="Logo"
@@ -316,30 +307,19 @@
       >
 
       <div class="header-text">
-
         <h1>CONTADOR DE TIEMPO COMPENSATORIOS</h1>
-
         <div class="sub">
           Convierte horas acumuladas en días y calcula fechas según el horario laboral elegido.
         </div>
-
       </div>
-
     </div>
-
-
-    <!-- =========================
-         PRIMERA PARTE
-         ========================= -->
 
     <div class="section-title">
       Primera parte
     </div>
 
     <div class="grid">
-
       <section class="card">
-
         <h2>Convertidor de horas a días</h2>
 
         <div class="small">
@@ -371,175 +351,74 @@
         >
 
         <div class="actions">
-
-          <button
-            class="main"
-            onclick="convertTime()"
-          >
-            CONVERTIR
-          </button>
-
-          <button
-            class="reset"
-            onclick="resetConverter()"
-          >
-            Restablecer
-          </button>
-
+          <button class="main" onclick="convertTime()">CONVERTIR</button>
+          <button class="reset" onclick="resetConverter()">Restablecer</button>
         </div>
-
       </section>
 
-
       <section class="card result">
-
         <h2>Conversión</h2>
 
-        <div
-          id="converterWelcome"
-          class="small"
-        >
+        <div id="converterWelcome" class="small">
           Introduce las horas y pulsa CONVERTIR.
         </div>
 
-        <div
-          id="converterOut"
-          class="converter-result"
-        ></div>
-
+        <div id="converterOut" class="converter-result"></div>
       </section>
-
     </div>
-
-
-    <!-- =========================
-         SEGUNDA PARTE
-         ========================= -->
 
     <div class="section-title">
       Segunda parte
     </div>
 
     <div class="grid">
-
       <section class="card">
-
         <h2>Contador de días laborables</h2>
 
-        <label for="start">
-          Fecha de inicio
-        </label>
-
-        <input
-          id="start"
-          type="date"
-        >
+        <label for="start">Fecha de inicio</label>
+        <input id="start" type="date">
 
         <div class="row">
-
           <div>
-
-            <label for="count">
-              Días laborables a contar
-            </label>
-
-            <input
-              id="count"
-              type="number"
-              min="1"
-              value="1"
-            >
-
+            <label for="count">Días laborables a contar</label>
+            <input id="count" type="number" min="1" value="1">
           </div>
 
           <div>
-
-            <label for="hours">
-              Horas por día
-            </label>
-
-            <input
-              id="hours"
-              type="number"
-              min="0.25"
-              step="0.25"
-              value="8"
-            >
-
+            <label for="hours">Horas por día</label>
+            <input id="hours" type="number" min="0.25" step="0.25" value="8">
           </div>
-
         </div>
 
-
-        <label>
-          Días que trabajas
-        </label>
-
-        <div
-          class="days"
-          id="days"
-        ></div>
-
+        <label>Días que trabajas</label>
+        <div class="days" id="days"></div>
 
         <div class="actions">
-
-          <button
-            class="main"
-            onclick="calc()"
-          >
-            CALCULAR
-          </button>
-
-          <button
-            class="reset"
-            onclick="resetAll()"
-          >
-            Restablecer
-          </button>
-
+          <button class="main" onclick="calc()">CALCULAR</button>
+          <button class="reset" onclick="resetAll()">Restablecer</button>
         </div>
-
       </section>
-
 
       <section class="card result">
-
         <h2>Resultado</h2>
-
-        <div
-          id="out"
-          class="small"
-        >
+        <div id="out" class="small">
           Completa los datos y pulsa CALCULAR.
         </div>
-
       </section>
-
     </div>
 
+    <footer>
+      <img
+        src="Imagenes/iconoGt.png"
+        alt="Logo"
+        class="footer-logo"
+      >
+      <div>© Creado por Licdo. Carlos E. González C.</div>
+    </footer>
 
-    <!-- =========================
-         PIE DE PÁGINA
-         ========================= -->
-
-    <footer class="mt-6 flex flex-col items-center justify-center gap-2 text-sm muted text-center">
-    <img 
-        src="Imagenes/iconoGt.png" 
-        alt="Logo" 
-        class="h-14 w-14 mx-auto rounded-full object-cover border-2 border-slate-300 shadow-md"
-    >
-    
-    <div>© Creado por Licdo. Carlos E. González C.</div>
-</footer>
-
-
+  </div>
 
   <script>
-
-    /* =========================
-       DÍAS LABORABLES
-       ========================= */
-
     const names = [
       [1, 'Lunes'],
       [2, 'Martes'],
@@ -551,49 +430,22 @@
     ];
 
     let selected = new Set([1, 2, 3, 4, 5]);
-
     const days = document.getElementById('days');
 
-
-    /* =========================
-       FORMATO DE NÚMEROS
-       ========================= */
-
     function formatNumber(value, decimals = 2) {
-
-      return value.toLocaleString(
-        'es-ES',
-        {
-          maximumFractionDigits: decimals
-        }
-      );
-
+      return value.toLocaleString('es-ES', {
+        maximumFractionDigits: decimals
+      });
     }
 
-
-    /* =========================
-       CONVERTIDOR
-       ========================= */
-
     function convertTime() {
-
-      const totalHours =
-        Number(document.getElementById('convertHours').value);
-
-      const hoursPerDay =
-        Number(document.getElementById('workdayHours').value);
-
-      const welcome =
-        document.getElementById('converterWelcome');
-
-      const output =
-        document.getElementById('converterOut');
-
+      const totalHours = Number(document.getElementById('convertHours').value);
+      const hoursPerDay = Number(document.getElementById('workdayHours').value);
+      const welcome = document.getElementById('converterWelcome');
+      const output = document.getElementById('converterOut');
 
       welcome.style.display = 'none';
-
       output.style.display = 'block';
-
 
       if (
         !Number.isFinite(totalHours) ||
@@ -601,395 +453,154 @@
         !Number.isFinite(hoursPerDay) ||
         hoursPerDay <= 0
       ) {
-
         output.innerHTML =
           '<div class="error">Introduce una cantidad de horas válida y una jornada mayor que cero.</div>';
-
         return;
-
       }
 
+      const decimalDays = totalHours / hoursPerDay;
+      const completeDays = Math.floor(decimalDays);
+      const remainingHours = Number(
+        (totalHours - completeDays * hoursPerDay).toFixed(2)
+      );
 
-      const decimalDays =
-        totalHours / hoursPerDay;
-
-
-      const completeDays =
-        Math.floor(decimalDays);
-
-
-      const remainingHours =
-        Number(
-          (
-            totalHours -
-            completeDays * hoursPerDay
-          ).toFixed(2)
-        );
-
-
-      const dayText =
-        completeDays === 1
-          ? 'día laboral completo'
-          : 'días laborales completos';
-
-
-      const hourText =
-        remainingHours === 1
-          ? 'hora adicional'
-          : 'horas adicionales';
-
+      const dayText = completeDays === 1 ? 'día laboral completo' : 'días laborales completos';
+      const hourText = remainingHours === 1 ? 'hora adicional' : 'horas adicionales';
 
       output.innerHTML = `
-
         <div class="box">
-
-          <div class="small">
-            Equivalencia decimal
-          </div>
-
-          <div class="big">
-            ${formatNumber(decimalDays)} días
-          </div>
-
+          <div class="small">Equivalencia decimal</div>
+          <div class="big">${formatNumber(decimalDays)} días</div>
         </div>
 
-
         <div class="box">
-
-          <div class="small">
-            Equivalencia detallada
-          </div>
-
-          <div class="big">
-            ${completeDays}
-            ${completeDays === 1 ? 'día' : 'días'}
-          </div>
-
-          <div>
-            <b>${formatNumber(remainingHours)}</b>
-            ${hourText}
-          </div>
-
+          <div class="small">Equivalencia detallada</div>
+          <div class="big">${completeDays} ${completeDays === 1 ? 'día' : 'días'}</div>
+          <div><b>${formatNumber(remainingHours)}</b> ${hourText}</div>
         </div>
-
 
         <div class="box small">
-
-          ${formatNumber(totalHours)} horas
-          ÷
-          ${formatNumber(hoursPerDay)} horas por jornada
-          =
+          ${formatNumber(totalHours)} horas ÷ ${formatNumber(hoursPerDay)} horas por jornada =
           ${formatNumber(decimalDays)} días.
-
           <br>
-
           Resultado:
-
-          <b>
-            ${completeDays} ${dayText}
-          </b>
-
-          ${
-            remainingHours > 0
-              ? ` y <b>${formatNumber(remainingHours)} ${hourText}</b>`
-              : ''
-          }.
-
+          <b>${completeDays} ${dayText}</b>
+          ${remainingHours > 0 ? ` y <b>${formatNumber(remainingHours)} ${hourText}</b>` : ''}.
         </div>
-
       `;
-
     }
-
-
-    /* =========================
-       RESTABLECER CONVERTIDOR
-       ========================= */
 
     function resetConverter() {
-
       document.getElementById('convertHours').value = 8;
-
       document.getElementById('workdayHours').value = 8;
-
       document.getElementById('converterWelcome').style.display = 'block';
-
       document.getElementById('converterOut').style.display = 'none';
-
       document.getElementById('converterOut').innerHTML = '';
-
     }
-
-
-    /* =========================
-       RENDERIZAR DÍAS
-       ========================= */
 
     function render() {
-
       days.innerHTML = '';
 
-
       names.forEach(([n, s]) => {
-
-        const button =
-          document.createElement('button');
-
-
+        const button = document.createElement('button');
         button.type = 'button';
-
-
-        button.className =
-          'day ' +
-          (selected.has(n) ? 'on' : '');
-
-
+        button.className = 'day ' + (selected.has(n) ? 'on' : '');
         button.textContent = s;
 
-
         button.onclick = () => {
-
           if (selected.has(n)) {
-
             selected.delete(n);
-
           } else {
-
             selected.add(n);
-
           }
-
           render();
-
         };
 
-
         days.appendChild(button);
-
       });
-
     }
-
 
     render();
 
-
-    /* =========================
-       CALCULAR DÍAS
-       ========================= */
-
     function calc() {
+      const startValue = document.getElementById('start').value;
+      const count = Math.floor(Number(document.getElementById('count').value));
+      const hours = Number(document.getElementById('hours').value);
+      const output = document.getElementById('out');
 
-      const startValue =
-        document.getElementById('start').value;
-
-
-      const count =
-        Math.floor(
-          Number(
-            document.getElementById('count').value
-          )
-        );
-
-
-      const hours =
-        Number(
-          document.getElementById('hours').value
-        );
-
-
-      const output =
-        document.getElementById('out');
-
-
-      if (
-        !startValue ||
-        count < 1 ||
-        hours <= 0 ||
-        !selected.size
-      ) {
-
+      if (!startValue || count < 1 || hours <= 0 || !selected.size) {
         output.innerHTML =
           '<div class="error">Completa la fecha, los días, las horas y selecciona al menos un día laboral.</div>';
-
         return;
-
       }
 
-
-      const [year, month, day] =
-        startValue
-          .split('-')
-          .map(Number);
-
-
-      const current =
-        new Date(
-          year,
-          month - 1,
-          day
-        );
-
+      const [year, month, day] = startValue.split('-').map(Number);
+      const current = new Date(year, month - 1, day);
 
       let firstWorkday = null;
-
       let counted = 0;
 
-
       while (counted < count) {
-
-        if (
-          selected.has(
-            current.getDay()
-          )
-        ) {
-
+        if (selected.has(current.getDay())) {
           if (!firstWorkday) {
-
-            firstWorkday =
-              new Date(current);
-
+            firstWorkday = new Date(current);
           }
-
-
           counted++;
 
-
           if (counted === count) {
-
             break;
-
           }
-
         }
-
-
-        current.setDate(
-          current.getDate() + 1
-        );
-
+        current.setDate(current.getDate() + 1);
       }
 
-
-      const total =
-        count * hours;
-
-
-      const naturalDays =
-        Math.round(
-          (current - firstWorkday) /
-          86400000
-        ) + 1;
-
-
-      const dateFormat =
-        new Intl.DateTimeFormat(
-          'es-ES',
-          {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric'
-          }
-        );
-
+      const total = count * hours;
+      const naturalDays = Math.round((current - firstWorkday) / 86400000) + 1;
+      const dateFormat = new Intl.DateTimeFormat('es-ES', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
+      });
 
       output.innerHTML = `
-
         <div class="box">
-
-          <div class="small">
-            Tiempo total
-          </div>
-
-          <div class="big">
-            ${formatNumber(total)} horas
-          </div>
-
+          <div class="small">Tiempo total</div>
+          <div class="big">${formatNumber(total)} horas</div>
         </div>
-
 
         <div class="row">
-
           <div class="box">
-
-            <div class="small">
-              Días de trabajo
-            </div>
-
-            <div class="big">
-              ${count}
-            </div>
-
+            <div class="small">Días de trabajo</div>
+            <div class="big">${count}</div>
           </div>
 
-
           <div class="box">
-
-            <div class="small">
-              Días naturales
-            </div>
-
-            <div class="big">
-              ${naturalDays}
-            </div>
-
+            <div class="small">Días naturales</div>
+            <div class="big">${naturalDays}</div>
           </div>
-
         </div>
-
 
         <div class="box">
-
           Fecha final:
-
-          <b>
-            ${dateFormat.format(current)}
-          </b>
-
+          <b>${dateFormat.format(current)}</b>
           <br>
-
           <span class="small">
-
-            ${count} días
-            ×
-            ${formatNumber(hours)} horas
-            =
-            ${formatNumber(total)} horas
-
+            ${count} días × ${formatNumber(hours)} horas = ${formatNumber(total)} horas
           </span>
-
         </div>
-
       `;
-
     }
-
-
-    /* =========================
-       RESTABLECER
-       ========================= */
 
     function resetAll() {
-
       document.getElementById('start').value = '';
-
       document.getElementById('count').value = 1;
-
       document.getElementById('hours').value = 8;
 
-
-      selected =
-        new Set([1, 2, 3, 4, 5]);
-
-
+      selected = new Set([1, 2, 3, 4, 5]);
       render();
 
-
-      document.getElementById('out').textContent =
-        'Completa los datos y pulsa CALCULAR.';
-
+      document.getElementById('out').textContent = 'Completa los datos y pulsa CALCULAR.';
     }
-
   </script>
 
 </body>

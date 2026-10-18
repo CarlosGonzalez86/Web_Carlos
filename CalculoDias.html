@@ -1,667 +1,558 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Calculadora de Díaz Pro</title>
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mi Página</title>
-  <link rel="icon" type="image/png" href="Imagenes/iconoGt.png">
-</head>
-<style>
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Segoe UI',sans-serif;
-}
-
-body{
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding:20px;
-
-    background:
-    linear-gradient(
-    135deg,
-    #ffffff,
-    #84c3be ,
-    #0f172a);
-
-    overflow-x:hidden;
-    position:relative;
-}
-
-body::before{
-    content:"";
-    position:absolute;
-    width:600px;
-    height:600px;
-    background:rgba(255,255,255,.04);
-    border-radius:50%;
-    top:-200px;
-    right:-200px;
-    animation:flotar 8s infinite ease-in-out;
-}
-
-body::after{
-    content:"";
-    position:absolute;
-    width:400px;
-    height:400px;
-    background:rgba(255,255,255,.03);
-    border-radius:50%;
-    bottom:-150px;
-    left:-100px;
-    animation:flotar 10s infinite ease-in-out;
-}
-
-@keyframes flotar{
-    50%{
-        transform:translateY(30px);
-    }
-}
-
-.container{
-    width:100%;
-    max-width:700px;
-
-    padding:35px;
-
-    border-radius:25px;
-
-    background:rgba(255,255,255,.12);
-
-    backdrop-filter:blur(18px);
-
-    border:1px solid rgba(255,255,255,.15);
-
-    box-shadow:0 15px 30px rgba(0,0,0,.25);
-
-    z-index:1;
-
-    animation:entrada .8s ease;
-}
-
-@keyframes entrada{
-
-    from{
-        opacity:0;
-        transform:translateY(40px);
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calculadora de Días Pro</title>
+  <link rel="icon" type="image/png" href="Imagenes/iconoGt.png" />
+  <style>
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+        font-family:'Segoe UI',sans-serif;
     }
 
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
-}
+    body{
+        min-height:100vh;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        padding:20px;
 
-/* LOGO */
+        background:
+        linear-gradient(
+        135deg,
+        #ffffff,
+        #84c3be ,
+        #0f172a);
 
-.logo-container{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    margin-bottom:25px;
-}
-
-.logo-ring{
-    position:relative;
-    width:140px;
-    height:140px;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-}
-
-.logo-ring::before{
-    content:"";
-
-    position:absolute;
-
-    width:140px;
-    height:140px;
-
-    border-radius:50%;
-
-    background:
-    conic-gradient(
-        #ff0000,
-        #ff7b00,
-        #ffff00,
-        #00ff00,
-        #00ffff,
-        #0066ff,
-        #8a2be2,
-        #ff1493,
-        #ff0000
-    );
-
-    animation:
-        girarLogo 4s linear infinite,
-        rainbow 8s linear infinite;
-
-    z-index:0;
-}
-
-.logo-ring::after{
-    content:"";
-
-    position:absolute;
-
-    width:126px;
-    height:126px;
-
-    background:#0f172a;
-
-    border-radius:50%;
-
-    z-index:1;
-}
-
-.logo-ring img{
-    position:relative;
-    z-index:2;
-
-    width:110px;
-    height:110px;
-
-    object-fit:cover;
-
-    border-radius:50%;
-
-    border:3px solid rgba(255,255,255,.25);
-
-    transition:.4s;
-}
-
-.logo-ring:hover img{
-    transform:scale(1.08);
-}
-
-@keyframes girarLogo{
-
-    from{
-        transform:rotate(0deg);
+        overflow-x:hidden;
+        position:relative;
     }
 
-    to{
-        transform:rotate(360deg);
+    body::before{
+        content:"";
+        position:absolute;
+        width:600px;
+        height:600px;
+        background:rgba(255,255,255,.04);
+        border-radius:50%;
+        top:-200px;
+        right:-200px;
+        animation:flotar 8s infinite ease-in-out;
     }
-}
 
-@keyframes rainbow{
-
-    from{
-        filter:
-            hue-rotate(0deg)
-            blur(2px);
+    body::after{
+        content:"";
+        position:absolute;
+        width:400px;
+        height:400px;
+        background:rgba(255,255,255,.03);
+        border-radius:50%;
+        bottom:-150px;
+        left:-100px;
+        animation:flotar 10s infinite ease-in-out;
     }
 
-    to{
-        filter:
-            hue-rotate(360deg)
-            blur(2px);
+    @keyframes flotar{
+        50%{
+            transform:translateY(30px);
+        }
     }
-}
 
-h1{
-    color:black;
-    text-align:center;
-    margin-bottom:10px;
-}
+    .container{
+        width:100%;
+        max-width:700px;
 
-.subtitulo{
-    text-align:center;
-    color:#dbeafe;
-    margin-bottom:25px;
-}
+        padding:35px;
 
-label{
-    display:block;
-    color:black;
-    font-weight:600;
-    margin-top:15px;
-}
+        border-radius:25px;
 
-input{
-    width:100%;
-    padding:14px;
-    margin-top:8px;
-    border:none;
-    border-radius:12px;
-    font-size:16px;
-}
+        background:rgba(255,255,255,.12);
 
-.acciones{
-    display:flex;
-    gap:10px;
-    margin-top:10px;
-}
+        backdrop-filter:blur(18px);
 
-.mini-btn{
-    flex:1;
+        border:1px solid rgba(255,255,255,.15);
 
-    padding:10px;
+        box-shadow:0 15px 30px rgba(0,0,0,.25);
 
-    border:none;
+        z-index:1;
 
-    border-radius:10px;
+        animation:entrada .8s ease;
+    }
 
-    color:white;
+    @keyframes entrada{
+        from{
+            opacity:0;
+            transform:translateY(40px);
+        }
+        to{
+            opacity:1;
+            transform:translateY(0);
+        }
+    }
 
-    background:#1e40af;
+    /* LOGO */
 
-    cursor:pointer;
+    .logo-container{
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        margin-bottom:25px;
+    }
 
-    transition:.3s;
-}
+    .logo-ring{
+        position:relative;
+        width:140px;
+        height:140px;
 
-.mini-btn:hover{
-    background:#2563eb;
-}
+        display:flex;
+        justify-content:center;
+        align-items:center;
+    }
 
-.btn-principal{
-    width:100%;
+    /* Se elimina el aro multicolor: ocultamos el pseudo-elemento ::before */
+    .logo-ring::before{
+        display:none;
+        content:"";
+    }
 
-    margin-top:25px;
+    /* Mantenemos un fondo interno oscuro y discreto */
+    .logo-ring::after{
+        content:"";
+        position:absolute;
+        width:126px;
+        height:126px;
+        background:#0f172a;
+        border-radius:50%;
+        z-index:1;
+    }
 
-    padding:15px;
+    .logo-ring img{
+        position:relative;
+        z-index:2;
 
-    border:none;
+        width:110px;
+        height:110px;
 
-    border-radius:12px;
+        object-fit:cover;
 
-    color:white;
+        border-radius:50%;
 
-    font-size:17px;
+        border:3px solid rgba(255,255,255,.25);
 
-    font-weight:bold;
+        transition:.4s;
+    }
 
-    cursor:pointer;
+    .logo-ring:hover img{
+        transform:scale(1.08);
+    }
 
-    background:
-    linear-gradient(
-    90deg,
-    #00b2ff,
-    #005cff);
+    h1{
+        color:black;
+        text-align:center;
+        margin-bottom:10px;
+    }
 
-    transition:.3s;
-}
+    .subtitulo{
+        text-align:center;
+        color:#dbeafe;
+        margin-bottom:25px;
+    }
 
-.btn-principal:hover{
-    transform:translateY(-2px);
-}
+    label{
+        display:block;
+        color:black;
+        font-weight:600;
+        margin-top:15px;
+    }
 
-.resultado{
-    display:none;
-    margin-top:25px;
-}
+    input{
+        width:100%;
+        padding:14px;
+        margin-top:8px;
+        border:none;
+        border-radius:12px;
+        font-size:16px;
+    }
 
-.card{
-    background:white;
+    .acciones{
+        display:flex;
+        gap:10px;
+        margin-top:10px;
+    }
 
-    border-left:5px solid #0057ff;
+    .mini-btn{
+        flex:1;
 
-    border-radius:15px;
+        padding:10px;
 
-    padding:15px;
+        border:none;
 
-    margin-bottom:12px;
-}
+        border-radius:10px;
 
-.card h3{
-    color:#0057ff;
-    margin-bottom:5px;
-}
+        color:white;
 
-.card p{
-    color:#374151;
-    font-size:18px;
-    font-weight:bold;
-}
+        background:#1e40af;
 
-.resumen{
-    background:
-    linear-gradient(
-    135deg,
-    #0057ff,
-    #00a2ff);
+        cursor:pointer;
 
-    color:white;
-}
+        transition:.3s;
+    }
 
-.resumen h3{
-    color:white;
-}
+    .mini-btn:hover{
+        background:#2563eb;
+    }
 
-.stats{
-    display:flex;
-    justify-content:space-around;
-    margin-top:15px;
-    text-align:center;
-}
+    .btn-principal{
+        width:100%;
 
-.stats span{
-    display:block;
-    font-size:28px;
-    font-weight:bold;
-}
+        margin-top:25px;
 
-.timeline{
-    width:100%;
-    height:18px;
-    border-radius:50px;
-    overflow:hidden;
-    background:#ced4da;
-    margin-top:20px;
-}
+        padding:15px;
 
-.progress{
-    width:0%;
-    height:100%;
+        border:none;
 
-    background:
-    linear-gradient(
-    90deg,
-    #00b2ff,
-    #004cff);
+        border-radius:12px;
 
-    transition:2s;
-}
+        color:white;
 
-footer{
-    text-align:center;
-    margin-top:20px;
-    color:#dbeafe;
-    font-size:13px;
-}
+        font-size:17px;
 
-@media(max-width:600px){
+        font-weight:bold;
+
+        cursor:pointer;
+
+        background:
+        linear-gradient(
+        90deg,
+        #00b2ff,
+        #005cff);
+
+        transition:.3s;
+    }
+
+    .btn-principal:hover{
+        transform:translateY(-2px);
+    }
+
+    .resultado{
+        display:none;
+        margin-top:25px;
+    }
+
+    .card{
+        background:white;
+
+        border-left:5px solid #0057ff;
+
+        border-radius:15px;
+
+        padding:15px;
+
+        margin-bottom:12px;
+    }
+
+    .card h3{
+        color:#0057ff;
+        margin-bottom:5px;
+    }
+
+    .card p{
+        color:#374151;
+        font-size:18px;
+        font-weight:bold;
+    }
+
+    .resumen{
+        background:
+        linear-gradient(
+        135deg,
+        #0057ff,
+        #00a2ff);
+
+        color:white;
+    }
+
+    .resumen h3{
+        color:white;
+    }
 
     .stats{
-        flex-direction:column;
-        gap:15px;
+        display:flex;
+        justify-content:space-around;
+        margin-top:15px;
+        text-align:center;
     }
-}
 
-</style>
+    .stats span{
+        display:block;
+        font-size:28px;
+        font-weight:bold;
+    }
 
+    .timeline{
+        width:100%;
+        height:18px;
+        border-radius:50px;
+        overflow:hidden;
+        background:#ced4da;
+        margin-top:20px;
+    }
+
+    .progress{
+        width:0%;
+        height:100%;
+
+        background:
+        linear-gradient(
+        90deg,
+        #00b2ff,
+        #004cff);
+
+        transition:2s;
+    }
+
+    footer{
+        text-align:center;
+        margin-top:20px;
+        color:#dbeafe;
+        font-size:13px;
+    }
+
+    /* Ajustes específicos del footer: reducir tamaño del logo y quitar sombras/resplandores */
+    footer img{
+        width:44px;              /* tamaño más pequeño para el footer */
+        height:44px;
+        border-radius:50%;
+        object-fit:cover;
+        border:2px solid rgba(255,255,255,0.15); /* borde sutil */
+        box-shadow:none;         /* quitar sombras si las hubiera */
+        display:block;
+        margin:0 auto 8px auto;
+    }
+
+    @media(max-width:600px){
+        .stats{
+            flex-direction:column;
+            gap:15px;
+        }
+    }
+  </style>
 </head>
-
 <body>
+  <div class="container">
 
-<div class="container">
+      <div class="logo-container">
+          <div class="logo-ring">
+              <img src="Imagenes/GestorLogo.png" alt="Logo">
+          </div>
+      </div>
 
-    <div class="logo-container">
-        <div class="logo-ring">
-            <img src="Imagenes/GestorLogo.png" alt="Logo">
-        </div>
-    </div>
+      <h1>Contador de Días Pro</h1>
 
-    <h1>Contador de Días Pro</h1>
+      <p class="subtitulo">
+          Calcula fechas por días calendario
+      </p>
 
-    <p class="subtitulo">
-        Calcula fechas por días calendario
-    </p>
+      <label for="fechaInicio">Fecha de inicio</label>
 
-    <label for="fechaInicio">Fecha de inicio</label>
+      <input type="date" id="fechaInicio">
 
-    <input type="date" id="fechaInicio">
+      <div class="acciones">
+          <button class="mini-btn" onclick="ponerHoy()">Hoy</button>
+          <button class="mini-btn" onclick="ponerManana()">Mañana</button>
+          <button class="mini-btn" onclick="limpiarFormulario()">Limpiar</button>
+      </div>
 
-    <div class="acciones">
-        <button class="mini-btn" onclick="ponerHoy()">Hoy</button>
-        <button class="mini-btn" onclick="ponerManana()">Mañana</button>
-        <button class="mini-btn" onclick="limpiarFormulario()">Limpiar</button>
-    </div>
+      <label for="dias">Periodo de Días a Cálcular</label>
 
-    <label for="dias">Periodo de Días a Cálcular</label>
+      <input
+          type="number"
+          id="dias"
+          min="1"
+          placeholder="Ejemplo: 120">
 
-    <input
-        type="number"
-        id="dias"
-        min="1"
-        placeholder="Ejemplo: 120">
+      <button
+          class="btn-principal"
+          onclick="calcularVacaciones()">
 
-    <button
-        class="btn-principal"
-        onclick="calcularVacaciones()">
+          🚀 Calcular Días
 
-        🚀 Calcular Días 
+      </button>
 
-    </button>
+      <div class="resultado" id="resultado">
 
-    <div class="resultado" id="resultado">
+          <div class="card">
+              <h3>Fecha de Inicio</h3>
+              <p id="inicio"></p>
+          </div>
 
-        <div class="card">
-            <h3>Fecha de Inicio</h3>
-            <p id="inicio"></p>
-        </div>
+          <div class="card">
+              <h3>🏁 Fecha Final</h3>
+              <p id="fin"></p>
+          </div>
 
-        <div class="card">
-            <h3>🏁 Fecha Final</h3>
-            <p id="fin"></p>
-        </div>
+          <div class="card">
+              <h3>✅ Total de Días</h3>
+              <p id="total"></p>
+          </div>
 
-        <div class="card">
-            <h3>✅ Total de Días</h3>
-            <p id="total"></p>
-        </div>
+          <div class="card">
+              <h3>Años Involucrados</h3>
+              <p id="anio"></p>
+          </div>
 
-        <div class="card">
-            <h3>Años Involucrados</h3>
-            <p id="anio"></p>
-        </div>
+          <div class="card resumen">
 
-        <div class="card resumen">
+              <h3>📊 Resumen Ejecutivo</h3>
 
-            <h3>📊 Resumen Ejecutivo</h3>
+              <div class="stats">
 
-            <div class="stats">
+                  <div>
+                      <span id="meses">0</span>
+                      <small>Meses</small>
+                  </div>
 
-                <div>
-                    <span id="meses">0</span>
-                    <small>Meses</small>
-                </div>
+                  <div>
+                      <span id="semanas">0</span>
+                      <small>Semanas</small>
+                  </div>
 
-                <div>
-                    <span id="semanas">0</span>
-                    <small>Semanas</small>
-                </div>
+                  <div>
+                      <span id="cruce">No</span>
+                      <small>Cruza Año</small>
+                  </div>
 
-                <div>
-                    <span id="cruce">No</span>
-                    <small>Cruza Año</small>
-                </div>
+              </div>
 
-            </div>
+          </div>
 
-        </div>
+          <div class="timeline">
+              <div class="progress" id="progress"></div>
+          </div>
 
-        <div class="timeline">
-            <div class="progress" id="progress"></div>
-        </div>
+      </div>
 
-    </div>
+      <footer class="mt-6 flex flex-col items-center justify-center gap-2 text-sm muted text-center">
+        <img
+            src="Imagenes/iconoGt.png"
+            alt="Logo Footer"
+        >
+        <div>© Creado por Licdo. Carlos E. González C.</div>
+      </footer>
 
-    <footer class="mt-6 flex flex-col items-center justify-center gap-2 text-sm muted text-center">
-    <img 
-        src="Imagenes/iconoGt.png" 
-        alt="Logo" 
-        class="h-14 w-14 mx-auto rounded-full object-cover border-2 border-slate-300 shadow-md"
-    >
-    
-    <div>© Creado por Licdo. Carlos E. González C.</div>
-</footer>
+  </div>
 
-    
-        
-    
+  <script>
+    window.onload = () => {
+        ponerManana();
+    };
 
-</div>
-
-<script>
-
-window.onload = () => {
-    ponerManana();
-};
-
-function ponerHoy(){
-
-    let hoy = new Date();
-
-    document.getElementById("fechaInicio").value =
-    hoy.toISOString().split("T")[0];
-}
-
-function ponerManana(){
-
-    let manana = new Date();
-
-    manana.setDate(manana.getDate() + 1);
-
-    document.getElementById("fechaInicio").value =
-    manana.toISOString().split("T")[0];
-}
-
-function limpiarFormulario(){
-
-    document.getElementById("fechaInicio").value = "";
-    document.getElementById("dias").value = "";
-
-    document.getElementById("resultado").style.display = "none";
-
-    document.getElementById("progress").style.width = "0%";
-}
-
-function formatearFecha(fecha){
-
-    return fecha.toLocaleDateString("es-ES",{
-
-        weekday:"long",
-        day:"numeric",
-        month:"long",
-        year:"numeric"
-
-    });
-}
-
-function calcularVacaciones(){
-
-    const fechaInput =
-    document.getElementById("fechaInicio").value;
-
-    const dias =
-    parseInt(document.getElementById("dias").value);
-
-    if(!fechaInput || !dias || dias <= 0){
-
-        alert("Ingrese una fecha y una cantidad válida.");
-        return;
+    function ponerHoy(){
+        let hoy = new Date();
+        document.getElementById("fechaInicio").value =
+        hoy.toISOString().split("T")[0];
     }
 
-    const partes = fechaInput.split("-");
-
-    let inicio = new Date(
-        partes[0],
-        partes[1] - 1,
-        partes[2]
-    );
-
-    let fin = new Date(inicio);
-
-    fin.setDate(fin.getDate() + dias - 1);
-
-    document.getElementById("inicio").textContent =
-    formatearFecha(inicio);
-
-    document.getElementById("fin").textContent =
-    formatearFecha(fin);
-
-    document.getElementById("total").textContent =
-    dias + " días calendario";
-
-    let años = [];
-
-    for(
-        let a = inicio.getFullYear();
-        a <= fin.getFullYear();
-        a++
-    ){
-        años.push(a);
+    function ponerManana(){
+        let manana = new Date();
+        manana.setDate(manana.getDate() + 1);
+        document.getElementById("fechaInicio").value =
+        manana.toISOString().split("T")[0];
     }
 
-    document.getElementById("anio").textContent =
-    años.join(" - ");
+    function limpiarFormulario(){
+        document.getElementById("fechaInicio").value = "";
+        document.getElementById("dias").value = "";
+        document.getElementById("resultado").style.display = "none";
+        document.getElementById("progress").style.width = "0%";
+    }
 
-    let meses = (dias / 30.44).toFixed(1);
+    function formatearFecha(fecha){
+        return fecha.toLocaleDateString("es-ES",{
+            weekday:"long",
+            day:"numeric",
+            month:"long",
+            year:"numeric"
+        });
+    }
 
-    let semanas = Math.floor(dias / 7);
+    function calcularVacaciones(){
+        const fechaInput =
+        document.getElementById("fechaInicio").value;
 
-    document.getElementById("meses").textContent =
-    meses;
+        const dias =
+        parseInt(document.getElementById("dias").value);
 
-    document.getElementById("semanas").textContent =
-    semanas;
+        if(!fechaInput || !dias || dias <= 0){
+            alert("Ingrese una fecha y una cantidad válida.");
+            return;
+        }
 
-    document.getElementById("cruce").textContent =
-    inicio.getFullYear() !== fin.getFullYear()
-    ? "Sí"
-    : "No";
+        const partes = fechaInput.split("-");
 
-    document.getElementById("resultado").style.display =
-    "block";
+        let inicio = new Date(
+            partes[0],
+            partes[1] - 1,
+            partes[2]
+        );
 
-    document.getElementById("progress").style.width =
-    "0%";
+        let fin = new Date(inicio);
 
-    requestAnimationFrame(() => {
+        fin.setDate(fin.getDate() + dias - 1);
+
+        document.getElementById("inicio").textContent =
+        formatearFecha(inicio);
+
+        document.getElementById("fin").textContent =
+        formatearFecha(fin);
+
+        document.getElementById("total").textContent =
+        dias + " días calendario";
+
+        let años = [];
+
+        for(
+            let a = inicio.getFullYear();
+            a <= fin.getFullYear();
+            a++
+        ){
+            años.push(a);
+        }
+
+        document.getElementById("anio").textContent =
+        años.join(" - ");
+
+        let meses = (dias / 30.44).toFixed(1);
+
+        let semanas = Math.floor(dias / 7);
+
+        document.getElementById("meses").textContent =
+        meses;
+
+        document.getElementById("semanas").textContent =
+        semanas;
+
+        document.getElementById("cruce").textContent =
+        inicio.getFullYear() !== fin.getFullYear()
+        ? "Sí"
+        : "No";
+
+        document.getElementById("resultado").style.display =
+        "block";
+
         document.getElementById("progress").style.width =
-        "100%";
-    });
-}
+        "0%";
 
-/* RESPLANDOR RGB */
+        requestAnimationFrame(() => {
+            document.getElementById("progress").style.width =
+            "100%";
+        });
+    }
 
-window.addEventListener("load", ()=>{
-
-    const colores = [
-        "#ff0000",
-        "#ff7b00",
-        "#ffff00",
-        "#00ff00",
-        "#00ffff",
-        "#0066ff",
-        "#8a2be2",
-        "#ff1493"
-    ];
-
-    setInterval(()=>{
-
-        const aro =
-        document.querySelector(".logo-ring");
-
-        const color =
-        colores[Math.floor(Math.random()*colores.length)];
-
-        aro.style.filter =
-        `drop-shadow(0 0 15px ${color})
-         drop-shadow(0 0 30px ${color})
-         drop-shadow(0 0 50px ${color})`;
-
-    },700);
-
-});
-
-</script>
-
+    /* Nota: se quitó el bloque que generaba el resplandor RGB y la animación del aro multicolor */
+  </script>
 </body>
 </html>

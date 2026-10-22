@@ -15,11 +15,58 @@
       box-sizing: border-box;
     }
 
+    :root {
+      --bg: #07111f;
+      --bg-soft: #0a1625;
+      --card: #101d2e;
+      --card-border: #22354b;
+      --text: #eef7ff;
+      --muted: #9fb1c5;
+      --label: #c9d7e5;
+      --input-bg: #0a1625;
+      --input-border: #31465e;
+      --primary: #38d9e6;
+      --primary-strong: #75f2fa;
+      --button-dark: #26384d;
+      --button-dark-hover: #344b65;
+      --day-bg: #122237;
+      --day-text: #cfe1f3;
+      --result-grad-1: #089bb6;
+      --result-grad-2: #1556bf;
+      --error-bg: #782b42;
+      --shadow: #0005;
+      --box-bg: rgba(255,255,255,0.12);
+    }
+
+    body.light-mode {
+      --bg: #edf4fb;
+      --bg-soft: #ffffff;
+      --card: #ffffff;
+      --card-border: #d9e5f2;
+      --text: #102231;
+      --muted: #4d687d;
+      --label: #31465e;
+      --input-bg: #f7fbff;
+      --input-border: #cbd9ea;
+      --primary: #0ea5c9;
+      --primary-strong: #1abdd8;
+      --button-dark: #e2ebf5;
+      --button-dark-hover: #d0deed;
+      --day-bg: #eef4fb;
+      --day-text: #1d2d3d;
+      --result-grad-1: #8ad9f4;
+      --result-grad-2: #5d86d6;
+      --error-bg: #f7d9e0;
+      --shadow: rgba(15, 30, 55, 0.12);
+      --box-bg: rgba(0,0,0,0.04);
+    }
+
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: #07111f;
-      color: #eef7ff;
+      background: var(--bg);
+      color: var(--text);
+      transition: background 0.25s ease, color 0.25s ease;
     }
 
     .wrap {
@@ -53,7 +100,7 @@
     }
 
     .sub {
-      color: #9fb1c5;
+      color: var(--muted);
       margin: 0;
       line-height: 1.5;
     }
@@ -64,7 +111,7 @@
 
     .section-title {
       margin: 28px 0 12px;
-      color: #7cecf3;
+      color: var(--primary);
       font-size: 15px;
       text-transform: uppercase;
       letter-spacing: 1px;
@@ -77,16 +124,17 @@
     }
 
     .card {
-      background: #101d2e;
-      border: 1px solid #22354b;
+      background: var(--card);
+      border: 1px solid var(--card-border);
       border-radius: 20px;
       padding: 22px;
-      box-shadow: 0 12px 35px #0005;
+      box-shadow: 0 12px 35px var(--shadow);
+      transition: background 0.25s ease, border-color 0.25s ease;
     }
 
     label {
       display: block;
-      color: #c9d7e5;
+      color: var(--label);
       font-size: 14px;
       margin: 14px 0 7px;
     }
@@ -95,16 +143,17 @@
       width: 100%;
       padding: 13px;
       border-radius: 11px;
-      border: 1px solid #31465e;
-      background: #0a1625;
-      color: #fff;
+      border: 1px solid var(--input-border);
+      background: var(--input-bg);
+      color: var(--text);
       font-size: 16px;
       outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
     }
 
     input:focus {
-      border-color: #38d9e6;
-      box-shadow: 0 0 0 3px #38d9e625;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(56, 217, 230, 0.16);
     }
 
     .row {
@@ -120,9 +169,9 @@
     }
 
     .day {
-      border: 1px solid #31465e;
-      background: #122237;
-      color: #cfe1f3;
+      border: 1px solid var(--input-border);
+      background: var(--day-bg);
+      color: var(--day-text);
       border-radius: 11px;
       padding: 11px;
       cursor: pointer;
@@ -130,13 +179,13 @@
     }
 
     .day:hover {
-      border-color: #38d9e6;
+      border-color: var(--primary);
     }
 
     .day.on {
-      background: #38d9e6;
+      background: var(--primary);
       color: #061219;
-      border-color: #75f2fa;
+      border-color: var(--primary-strong);
       font-weight: bold;
     }
 
@@ -147,35 +196,52 @@
     }
 
     button.main,
-    .reset {
-      padding: 13px;
+    .reset,
+    .theme-toggle {
+      padding: 13px 14px;
       border: 0;
       border-radius: 11px;
       font-weight: bold;
       cursor: pointer;
+      transition: 0.2s ease;
     }
 
     .main {
       flex: 1;
-      background: #38d9e6;
+      background: var(--primary);
       color: #061219;
     }
 
     .main:hover {
-      background: #75f2fa;
+      background: var(--primary-strong);
     }
 
     .reset {
-      background: #26384d;
-      color: #fff;
+      background: var(--button-dark);
+      color: var(--text);
     }
 
     .reset:hover {
-      background: #344b65;
+      background: var(--button-dark-hover);
+    }
+
+    .theme-toggle {
+      background: var(--button-dark);
+      color: var(--text);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-left: auto;
+      white-space: nowrap;
+    }
+
+    .theme-toggle:hover {
+      background: var(--button-dark-hover);
     }
 
     .result {
-      background: linear-gradient(135deg, #089bb6, #1556bf);
+      background: linear-gradient(135deg, var(--result-grad-1), var(--result-grad-2));
+      color: #fff;
     }
 
     .big {
@@ -185,7 +251,7 @@
     }
 
     .box {
-      background: #ffffff20;
+      background: var(--box-bg);
       border-radius: 15px;
       padding: 16px;
       margin: 12px 0;
@@ -193,18 +259,19 @@
 
     .small {
       font-size: 13px;
-      color: #cceef5;
+      color: inherit;
       line-height: 1.5;
     }
 
     .error {
-      background: #782b42;
+      background: var(--error-bg);
+      color: var(--text);
       padding: 14px;
       border-radius: 12px;
     }
 
     .note {
-      color: #71869d;
+      color: var(--muted);
       font-size: 12px;
       margin-top: 20px;
       line-height: 1.5;
@@ -218,7 +285,7 @@
     footer {
       margin-top: 24px;
       text-align: center;
-      color: #9fb1c5;
+      color: var(--muted);
       font-size: 14px;
     }
 
@@ -296,9 +363,7 @@
 </head>
 
 <body>
-
   <div class="wrap">
-
     <div class="header">
       <img
         src="Imagenes/DragonLogo.png "
@@ -312,6 +377,11 @@
           Convierte horas acumuladas en días y calcula fechas según el horario laboral elegido.
         </div>
       </div>
+
+      <button id="themeToggle" class="theme-toggle" type="button" aria-label="Cambiar modo">
+        <span id="themeIcon">☀️</span>
+        <span id="themeText">Modo claro</span>
+      </button>
     </div>
 
     <div class="section-title">
@@ -415,11 +485,40 @@
       >
       <div>© Creado por Licdo. Carlos E. González C.</div>
     </footer>
-
-
   </div>
 
   <script>
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    const themeText = document.getElementById('themeText');
+
+    function applyTheme(theme) {
+      const isDark = theme === 'dark';
+      document.body.classList.toggle('light-mode', !isDark);
+
+      themeIcon.textContent = isDark ? '☀️' : '🌙';
+      themeText.textContent = isDark ? 'Modo claro' : 'Modo oscuro';
+      themeToggle.setAttribute('aria-label', isDark ? 'Activar modo claro' : 'Activar modo oscuro');
+
+      try {
+        localStorage.setItem('theme', theme);
+      } catch (error) {
+        console.warn('No se pudo guardar el tema:', error);
+      }
+    }
+
+    try {
+      const savedTheme = localStorage.getItem('theme') || 'dark';
+      applyTheme(savedTheme);
+    } catch (error) {
+      applyTheme('dark');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      const nextTheme = document.body.classList.contains('light-mode') ? 'dark' : 'light';
+      applyTheme(nextTheme);
+    });
+
     const names = [
       [1, 'Lunes'],
       [2, 'Martes'],
@@ -521,7 +620,14 @@
       });
     }
 
-    render();
+    function resetAll() {
+      selected = new Set([1, 2, 3, 4, 5]);
+      document.getElementById('start').value = '';
+      document.getElementById('count').value = 1;
+      document.getElementById('hours').value = 8;
+      document.getElementById('out').innerHTML = 'Completa los datos y pulsa CALCULAR.';
+      render();
+    }
 
     function calc() {
       const startValue = document.getElementById('start').value;
@@ -589,11 +695,10 @@
             ${count} días × ${formatNumber(hours)} horas = ${formatNumber(total)} horas
           </span>
         </div>
-    selected = new Set([1, 2, 3, 4, 5]);
-      render();
-
-      document.getElementById('out').textContent = 'Completa los datos y pulsa CALCULAR.';
+      `;
     }
+
+    render();
   </script>
 
 </body>

@@ -8,7 +8,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mi Página</title>
-  <link rel="icon" type="image/png" href="Imagenes/iconoGt.png">
+  <link rel="icon" type="image/png" href="Imagenes/Logo.png">
 
   <style>
     * {
@@ -409,7 +409,7 @@
 
     <footer>
       <img
-        src="Imagenes/iconoGt.png"
+        src="Imagenes/Logo.png"
         alt="Logo"
         class="footer-logo"
       >
@@ -588,15 +588,7 @@
             ${count} días × ${formatNumber(hours)} horas = ${formatNumber(total)} horas
           </span>
         </div>
-      `;
-    }
-
-    function resetAll() {
-      document.getElementById('start').value = '';
-      document.getElementById('count').value = 1;
-      document.getElementById('hours').value = 8;
-
-      selected = new Set([1, 2, 3, 4, 5]);
+    selected = new Set([1, 2, 3, 4, 5]);
       render();
 
       document.getElementById('out').textContent = 'Completa los datos y pulsa CALCULAR.';

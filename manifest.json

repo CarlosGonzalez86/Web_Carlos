@@ -1,20 +1,22 @@
 {
-  "name": "Calculadora de Vacaciones Pro",
-  "short_name": "Vacaciones Pro",
+  "name": "Gestor Tecnológico C.G",
+  "short_name": "C.G",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#001f54",
   "theme_color": "#0048ff",
   "icons": [
     {
-      "src": "Imagenes/1000176228 (1).png",
-      "sizes": "192x192",
-      "type": "image/jpeg"
+      "src": "Imagenes/IconoDr.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "Imagenes/Screenshot_20260813_220411_com_microsoft_copilot_MainActivity.jpg",
-      "sizes": "512x512",
-      "type": "image/jpeg"
+      "src": "Imagenes/iconoGt.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }

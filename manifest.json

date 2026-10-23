@@ -7,7 +7,7 @@
   "theme_color": "#0048ff",
   "icons": [
     {
-      "src": "Imagenes/IconoDr.png",
+      "src": "Imagenes/Android.png ",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
